@@ -1,8 +1,8 @@
 ## Decentralized Green Energy Certification on the top of a Web3 Based Energy Geo Browser
 
 Master Thesis Proposal<br />
-MSc Photogrammetry and Geoinformatics<br />
 Summer Semester 2018<br />
+MSc Photogrammetry and Geoinformatics
 
 ***
 
@@ -14,12 +14,18 @@ Summer Semester 2018<br />
 
 ***
 
+## Keywords
+
+Infrastructure, Decentralized, GIS, Web3, Browser, Spatial Distribution, Renewable Energy, Ethereum, Blockchain, Certification
+
+***
+
 ## Supervisors
 
-Prof. Dr. Franz-Josef Behr<br />
+** Prof. Dr. Franz-Josef Behr ** <br />
 Hochschule für Technik Stuttgart
 
-Dr. Thomas Brenner<br />
+** Dr. Thomas Brenner ** <br />
 OLI Systems GmbH
 
 ***

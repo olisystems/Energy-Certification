@@ -13,8 +13,6 @@ Hochschule für Technik Stuttgart
 
 <p align="justify"> The current project is aimed to develop a web3 based energy Geo browser having a spatial distribution of renewable energy sources with a simple use case on top of Ethereum blockchain backend. The thesis will describe a vertical slice to evaluate current potentials, issues, and limitations concerning blockchain technology in the energy sector with a strong focus on energy certification.</p>
 
-***
-
 ## Keywords
 
 Infrastructure, Decentralized, GIS, Web3, Browser, Spatial Distribution, Renewable Energy, Ethereum, Blockchain, Certification

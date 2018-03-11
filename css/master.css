@@ -1,0 +1,30 @@
+header.custom-header {
+  background: #111;
+}
+.mdl-layout__header-row span.mdl-layout-title {
+  color: #ffb648;
+  text-transform: uppercase;
+}
+.custom-header .material-icons {
+  color: #fff;
+}
+.custom-header a.mdl-navigation__link {
+  color: #eee;
+  font-weight: 700;
+  font-size: 14px;
+}
+.custom-header a.mdl-navigation__link:hover {
+  color: #fff;
+}
+.mdl-layout__drawer span.mdl-layout-title {
+  background: #111;
+  color: #ffb648;
+}
+.mdl-layout__drawer a.mdl-navigation__link {
+  color: #eee;
+  font-weight: 700;
+  font-size: 14px;
+}
+.mdl-layout__drawer a.mdl-navigation__link:hover {
+  color: #000;
+}

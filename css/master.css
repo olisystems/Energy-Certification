@@ -1,54 +1,75 @@
-html, body {
-  font-family: 'Roboto', 'Helvetica', sans-serif;
+.navbar {
+  background-color: #154360;
 }
 
-#map {
-  height: 100%;
+.navbar a {
+  color: white;
+}
+
+.container {
+  align-content: center;
+}
+
+.headalign {
+  text-align: center;
+  margin: 30px;
+  color: orange;
+}
+
+.img-fluid {
   width: 100%;
-  position: center;
+}
+
+.card-block {
+  display: table;
   margin: auto;
 }
 
-.custom-content {
-  max-width: 1100px;
-}
-
-.logo {
-  width: 120px;
-  height: 120px;
-  border-radius: 60px;
-  margin-top: 20px;
+.card-deck, p {
+  margin: 0 auto;
   margin-bottom: 20px;
 }
 
-.custom-layout-title {
-  background-color: lightgray;
+.card-title {
+  padding: 10px;
+  background: #154360;
+  color: white;
 }
 
-.custom-layout .custom-navigation .mdl-navigation__link:hover {
-  background-color: green;
-  color: #37474F;
+button {
+  margin: 10px;
 }
 
-.custom-navigation .mdl-navigation__link .material-icons {
-  font-size: 24px;
-  margin-right: 32px;
 }
 
-.mdl-layout__header-row span.mdl-layout-title {
-  color: orange;
-  text-transform: uppercase;
+.oliCharts {
+  width: 100% !important;
+  position: center;
+  word-break: break-all;
+  word-wrap: break-word;
+  padding: 10px;
 }
 
-.mdl-layout__header .material-icons {
-  color: #fff;
+div.scroll {
+  float: left;
+  overflow-y: auto;
+  height: 200px;
 }
 
-.mdl-layout__header a.mdl-navigation__link {
-  color: #eee;
+.card {
+  overflow: hidden;
+  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  -webkit-transition: .25s box-shadow;
+  transition: .25s box-shadow;
 }
 
-.mdl-layout__header a.mdl-navigation__link:hover {
-  color: orange;
-  font-weight: bold;
+.card:focus {
+  box-shadow: 0 6px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+.table {
+  border-radius: 5px;
+  width: 50%;
+  margin: 0px auto;
+  float: none;
 }

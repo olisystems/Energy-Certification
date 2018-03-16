@@ -1,0 +1,22 @@
+{
+  "name": "energy-certification",
+  "version": "1.0.0",
+  "description": "Master Thesis Proposal<br />\r Summer Semester 2018<br />\r MSc Photogrammetry and Geoinformatics<br />\r Hochschule für Technik Stuttgart",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olisystems/Energy-Certification.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olisystems/Energy-Certification/issues"
+  },
+  "homepage": "https://github.com/olisystems/Energy-Certification#readme",
+  "dependencies": {
+    "web3": "github:ethereum/web3.js"
+  }
+}

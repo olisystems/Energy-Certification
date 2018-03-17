@@ -5,7 +5,7 @@ Summer Semester 2018<br />
 MSc Photogrammetry and Geoinformatics<br />
 Hochschule für Technik Stuttgart
 
-[Overview](https://olisystems.github.io/Energy-Certification/)
+[Dashboard](https://olisystems.github.io/Energy-Certification/)
 
 ***
 

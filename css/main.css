@@ -25,7 +25,7 @@
   margin: auto;
 }
 
-.card-deck, p {
+.card-deck {
   margin: 0 auto;
   margin-bottom: 20px;
 }
@@ -36,10 +36,10 @@
   color: white;
 }
 
-button {
+button, p {
   margin: 10px;
-}
-
+  white-space: normal !important;
+  word-wrap: break-word;
 }
 
 .oliCharts {

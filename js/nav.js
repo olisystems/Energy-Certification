@@ -1,3 +1,10 @@
-$('.navbar-nav>li>a').on('click', function(){
-    $('.navbar-collapse').collapse('hide');
+$(document).click(function (event) {
+if ($(event.target).parents(".navbar-collapse").length < 1) {
+    var clickover = $(event.target);
+    var $navbar = $(".navbar-collapse");
+    var _opened = $navbar.hasClass("in");
+    if (_opened === true && !clickover.hasClass("navbar-toggle")) {
+        $navbar.collapse('hide');
+    }
+  }
 });

@@ -1,8 +1,8 @@
+body{
+  padding-top: 50px;
+}
 .navbar {
   background-color: #154360;
-}
-
-.navbar a {
   color: white;
 }
 

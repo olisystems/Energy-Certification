@@ -161,9 +161,14 @@
                             ((result[i].args.longOfLocation)/10000) + ") | Transformer ID: " + trafo_id + " | Circuit: " + circuit[circuit_index] +
                         " | Connection Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
                     }
+                    for (let i = 0; i < result.length; i++) {
+                        const element = result[i];
+                        
+                    }
                 }
             });
         }
+
         var mcp;
         var cycle = [];
         var runn = 0;

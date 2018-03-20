@@ -94,7 +94,7 @@
 
       <div class="card">
         <h4 class="card-title">Watch MCP Update</h4>
-        <p class="card-text">Here is a shorter description of the card.</p>
+        <p class="card-text">Real time MCP and PV production.</p>
         <div class="card-footer">
           <button class="btn btn-success" onclick="watchMCP()">Watch MCP Update</button>
           <button class="btn btn-success" onclick="stopWatchingMCP()">Stop Watching MCP</button>
@@ -277,6 +277,7 @@
           </table>
 
         </div>
+
         <div class="card-footer">
           <small class="text-muted">
             <button class="btn btn-success" onclick="coinChart()">Get Agents' Coin Balance</button>
@@ -285,12 +286,13 @@
       </div>
     </div>
 
-    <h1 class="headalign">Interact with a contract</h1>
-
+<h1 class="headalign">Interact with a contract</h1>
     <div class="card-deck">
-      <div class="card text-center">
-        <h4 class="card-title">Watch New Oli</h4>
-        <div id="events_n" class="oliCharts scroll"></div>
+      <div class="card">
+        <h4 class="card-title" style="text-align:center">Get All Added OLI's</h4>
+        <div class="scroll table table-striped table-bordered text-centered" id="getAllAddedOlisTable" style="width:1000px">
+
+        </div>
         <div class="card-footer">
           <small class="text-muted">
             <button class="btn btn-success" onclick="watchNewAddedOlis()">Watch New Oli</button>
@@ -299,6 +301,11 @@
           </small>
         </div>
       </div>
+    </div>
+
+    <div class="card-deck">
+      <div id="map" style="width: 1000px; height: 400px"></div>
+      <script src="js/oliChain.js"></script>
     </div>
 
     <div class="card-deck">
@@ -352,11 +359,6 @@
           </form>
         </div>
       </div>
-    </div>
-
-    <div class="card-deck">
-      <div id="map" style="width: 1000px; height: 400px"></div>
-      <script src="js/myMap.js"></script>
     </div>
 
   </div>

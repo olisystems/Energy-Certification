@@ -28,15 +28,16 @@ var myEvent;
 var trafo_id;
 var circuit = ['First', 'Second'];
 var circuit_index;
-var p_type = ['PV','Wind','CCP','CHP','Coal','Battery','Battery','Consumer','DNO'];
+var p_type = ['PV', 'Wind', 'CCP', 'CHP', 'Coal', 'Battery', 'Battery', 'Consumer', 'DNO'];
 var p_type_index;
 var peak;
 var traf_aray = [];
 var regStock;
 var stockBid;
+
 function nowTime() {
     var info = web3.eth.getBlock('latest');
-    var date = new Date((info.timestamp)*1000);
+    var date = new Date((info.timestamp) * 1000);
     // Hours part from the timestamp
     var hours = date.getHours();
     // Minutes part from the timestamp
@@ -47,11 +48,15 @@ function nowTime() {
     var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     return formattedTime;
 }
+
 function watchNewStock() {
-    regStock = contract_bilateral_instance.NewStock({fromBlock: 'latest' , toBlock:'latest'});
+    regStock = contract_bilateral_instance.NewStock({
+        fromBlock: 'latest',
+        toBlock: 'latest'
+    });
     console.log(regStock);
-    regStock.watch(function(error, result) {
-        if(error) {
+    regStock.watch(function (error, result) {
+        if (error) {
             console.log(error);
         } else {
             console.log(result);
@@ -60,10 +65,11 @@ function watchNewStock() {
                 " | Availability Period: " + result.args.speriod + " | Bidding Time: " + result.args.sbiddingTime;
             setTimeout(function () {
                 bilateralContract(result.args.saccount);
-            }, parseInt(result.args.sbiddingTime)*1000);
-            }
+            }, parseInt(result.args.sbiddingTime) * 1000);
+        }
     });
 }
+
 function bilateralContract(_prod) {
     var _cons = contract_bilateral_instance.get_stockBidder(_prod);
     var _amount = contract_bilateral_instance.get_stockAmount(_prod);
@@ -71,16 +77,21 @@ function bilateralContract(_prod) {
     document.getElementById("bic").innerHTML += "<br />" +
         "Current Time: " + nowTime() + " | Producer Address: " + _prod + " | Consumer Address: " + _cons + " | Amount: " + _amount + " | Rate: " + _rate;
 }
+
 function stopWatchingNewStock() {
-    if(regStock !== undefined) {
+    if (regStock !== undefined) {
         regStock.stopWatching();
     }
 }
+
 function watchNewStockBid() {
-    stockBid = contract_bilateral_instance.NewStockBid({fromBlock: 'latest' , toBlock:'latest'});
+    stockBid = contract_bilateral_instance.NewStockBid({
+        fromBlock: 'latest',
+        toBlock: 'latest'
+    });
     console.log(stockBid);
-    stockBid.watch(function(error, result) {
-        if(error) {
+    stockBid.watch(function (error, result) {
+        if (error) {
             console.log(error);
         } else {
             console.log(result);
@@ -90,16 +101,21 @@ function watchNewStockBid() {
         }
     });
 }
+
 function stopWatchingNewStockBid() {
-    if(stockBid !== undefined) {
+    if (stockBid !== undefined) {
         stockBid.stopWatching();
     }
-}
+};
+
 function watchNewAddedOlis() {
-    myEvent = contract_origin_instance.newAddedOli({fromBlock: 'latest' , toBlock:'latest'});
+    myEvent = contract_origin_instance.newAddedOli({
+        fromBlock: 'latest',
+        toBlock: 'latest'
+    });
     console.log(myEvent);
-    myEvent.watch(function(error, result) {
-        if(error) {
+    myEvent.watch(function (error, result) {
+        if (error) {
             console.log(error);
         } else {
             console.log(result);
@@ -107,62 +123,199 @@ function watchNewAddedOlis() {
             circuit_index = parseInt(contract_origin_instance.get_oliCkt(result.args.paymentAddress));
             p_type_index = parseInt(contract_origin_instance.get_oliType(result.args.paymentAddress));
             if (p_type_index == 8) {
-                for (a=0;a<=circuit_index;a++){
-                    traf_aray.push(parseInt(contract_origin_instance.get_oliPeakLoad(result.args.paymentAddress,parseInt(a))));
+                for (a = 0; a <= circuit_index; a++) {
+                    traf_aray.push(parseInt(contract_origin_instance.get_oliPeakLoad(result.args.paymentAddress, parseInt(a))));
                 }
                 document.getElementById("gso").innerHTML += "<br />" + "<br />" +
-                    "Oli Payment Address: " + result.args.paymentAddress + " | Oli GPS Coordinates: (" + ((result.args.latOfLocation)/10000) + "," +
-                    ((result.args.longOfLocation)/10000) + ") | Transformer ID: " + trafo_id + " | Circuits: " + circuit_index +
+                    "Oli Payment Address: " + result.args.paymentAddress + " | Oli GPS Coordinates: (" + ((result.args.latOfLocation) / 10000) + "," +
+                    ((result.args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Circuits: " + circuit_index +
                     " | Agent Type: " + p_type[p_type_index] + " | Transformer Power: " + traf_aray[0] + " | Circuit Capacity: " + traf_aray.slice(1);
                 traf_aray = [];
-            }
-            else {
-                peak = parseInt(contract_origin_instance.get_oliPeakLoad(result.args.paymentAddress,parseInt(0)));
+            } else {
+                peak = parseInt(contract_origin_instance.get_oliPeakLoad(result.args.paymentAddress, parseInt(0)));
                 document.getElementById("events_n").innerHTML += "<br />" + "<br />" +
-                    "Oli Payment Address: " + result.args.paymentAddress + " | Oli GPS Coordinates: (" + ((result.args.latOfLocation)/10000) + "," +
-                    ((result.args.longOfLocation)/10000) + ") | Transformer ID: " + trafo_id + " | Circuit: " + circuit[circuit_index] +
+                    "Oli Payment Address: " + result.args.paymentAddress + " | Oli GPS Coordinates: (" + ((result.args.latOfLocation) / 10000) + "," +
+                    ((result.args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Circuit: " + circuit[circuit_index] +
                     " | Connection Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
             }
         }
     });
-}
+};
+
 function stopWatchingEvents() {
-    if(myEvent !== undefined) {
+    if (myEvent !== undefined) {
         myEvent.stopWatching();
-    }
-}
+    };
+};
+
+
 function getAllAddedOlis() {
-    contract_origin_instance.newAddedOli({}, {fromBlock: 0 , toBlock: 'latest'}).get(function(error, result) {
-        if(error) {
+    contract_origin_instance.newAddedOli({}, {
+        fromBlock: 0,
+        toBlock: 'latest'
+    }).get(function (error, result) {
+        if (error) {
             console.error(error);
         } else {
+
+            // declaring empty arrays to dynamically store the values
+            var address = [];
+            var coordinates = [];
+            var transformerId = [];
+            var circuit = [];
+            var connection = [];
+            var peakPower = [];
+            var markers = [];
+
             console.log(result);
             for (i = 0; i < result.length; i++) {
                 trafo_id = contract_origin_instance.get_oliTrafoid(result[i].args.paymentAddress);
                 circuit_index = parseInt(contract_origin_instance.get_oliCkt(result[i].args.paymentAddress));
                 p_type_index = parseInt(contract_origin_instance.get_oliType(result[i].args.paymentAddress));
-                peak = parseInt(contract_origin_instance.get_oliPeakLoad(result[i].args.paymentAddress,parseInt(0)));
-                document.getElementById("events_n").innerHTML += "<br />" +
-                    "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation)/10000) + "," +
-                    ((result[i].args.longOfLocation)/10000) + ") | Transformer ID: " + trafo_id + " | Circuit: " + circuit[circuit_index] +
-                " | Connection Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
+                peak = parseInt(contract_origin_instance.get_oliPeakLoad(result[i].args.paymentAddress, parseInt(0)));
+
+                // storing values in variables to bind them with arrays
+                var address1 = result[i].args.paymentAddress;
+                var coordinates1 = (result[i].args.latOfLocation) / 10000 + ' ' + (result[i].args.longOfLocation) / 10000;
+                var transformerId1 = trafo_id;
+                var circuit1 = circuit[circuit_index];
+                var connection1 = p_type[p_type_index];
+                var peakPower1 = peak;
+                // for leaflet
+                var lat = (result[i].args.latOfLocation)/ 10000;
+                var long = (result[i].args.longOfLocation)/ 10000;
+                var markers1 = lat + ', ' + long;
+
+                address.push(address1);
+                coordinates.push(coordinates1);
+                transformerId.push(transformerId1);
+                circuit.push(circuit1);
+                connection.push(connection1);
+                peakPower.push(peakPower1);
+                  markers.push(markers1);
+
+                console.log(markers);
             }
+
+            // table starts from here
+            var header = new Array();
+            header.push(["Address", 'Coordinates', 'Transformer Id', 'Circuit', 'Connection', 'PeakPower']);
+            for (var i = 0; i < address.length; i++) {
+                header.push([address[i], coordinates[i], transformerId[i], circuit[i], connection[i], peakPower[i]]);
+            }
+            //Create a HTML Table element.
+            var table = document.createElement("Table");
+
+            //Get the count of columns.
+            var columnCount = header[0].length;
+
+            //Add the header row.
+            var row = table.insertRow(-1);
+            for (var i = 0; i < columnCount; i++) {
+                var headerCell = document.createElement("TH");
+                headerCell.innerHTML = header[0][i];
+                row.appendChild(headerCell);
+            }
+
+            //Add the data rows.
+            for (var i = 1; i < header.length; i++) {
+                row = table.insertRow(-1);
+                for (var j = 0; j < columnCount; j++) {
+                    var cell = row.insertCell(-1);
+                    cell.innerHTML = header[i][j];
+                }
+            }
+
+            var dvTable = document.getElementById("getAllAddedOlisTable");
+            dvTable.innerHTML = "";
+            dvTable.appendChild(table);
+
+            // to insert the following text create new div with id events_n
+            // document.getElementById("events_n").innerHTML += "<br />" +
+            //     "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation)/10000) + "," +
+            //     ((result[i].args.longOfLocation)/10000) + ") | Transformer ID: " + trafo_id + " | Circuit: " + circuit[circuit_index] +
+            // " | Connection Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
+            var map = L.map('map').setView([48.77538056, 9.16277778], 14);
+            mapLink =
+              '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+            L.tileLayer(
+              'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; ' + mapLink + ' Contributors',
+                maxZoom: 18,
+              }).addTo(map);
+            var marker = L.marker([48.77538056, 9.16277778]).addTo(map);
+
+          // // binding popoup
+          //   marker.bindPopup("OLI Systems GmbH");
+          //   marker.on('mouseover', function(e) {
+          //     this.openPopup();
+          //   });
+          //   marker.on('mouseout', function(e) {
+          //     this.closePopup();
+          //   });
+
+          // // showing mouse click position
+          //   var popup = L.popup();
+          //   function onMapClick(e) {
+          //     popup
+          //       .setLatLng(e.latlng)
+          //       .setContent("You clicked the map at " + e.latlng.toString())
+          //       .openOn(map);
+          //   }
+          //
+          //   map.on('click', onMapClick);
+
+          // var markers = [
+          //             [49.3, 8.35, "Big Ben" ],
+          //             [48.39, 9.97, "London Eye" ],
+          //             [48.77, 9.16, "Nelson's" ]
+          //          ];
+
+
+            console.log("-----------\nmarkers: \n" + markers + "\n---------------------------");
+            console.log("-----------\nmarker index 0: \n" + markers[0] + "\n---------------------------");
+            for (var i=0; i<markers.length; i++) {
+
+            var lon = markers[i][0];
+            var lat = markers[i][1];
+            var popupText = markers[i][2];
+            console.log("long: " + lon);
+            console.log("lat: " + lat);
+            console.log("text: " + popupText);
+
+
+             var markerLocation = new L.LatLng(lat, lon);
+             var marker = new L.Marker(markerLocation);
+             map.addLayer(marker);
+
+             marker.bindPopup(popupText);
+         }
+
+
+
         }
     });
+
 }
+
+
 var mcp;
 var cycle = [];
 var runn = 0;
 var ckt;
+
 function watchMCP() {
-    mcp = contract_daughter_instance.NewMcp({fromBlock: 'latest' , toBlock:'latest'});
+    mcp = contract_daughter_instance.NewMcp({
+        fromBlock: 'latest',
+        toBlock: 'latest'
+    });
     console.log(mcp);
-    mcp.watch(function(error, result) {
-        if(error) {
+    mcp.watch(function (error, result) {
+        if (error) {
             console.log(error);
         } else {
-            document.getElementById("pbid").innerHTML ='&nbsp';
-            document.getElementById("cbid").innerHTML ='&nbsp';
+            document.getElementById("pbid").innerHTML = '&nbsp';
+            document.getElementById("cbid").innerHTML = '&nbsp';
             //console.log(result);
             document.getElementById("mcp").innerHTML += "<br />" + "<br />" +
                 "New MCP: " + result.args.cbid + " | Time:" + nowTime();
@@ -182,26 +335,30 @@ function watchMCP() {
                 cycle[0] = result.blockNumber;
                 cycle[1] = result.blockNumber;
                 console.log("Block Cycle: " + cycle);
-            }
-            else {
+            } else {
                 cycle[0] = cycle[1];
                 cycle[1] = result.blockNumber;
                 console.log("Block Cycle: " + cycle);
-                contract_daughter_instance.NewGenBid({}, {fromBlock: cycle[0] , toBlock: cycle[1]}).get(function(error, result) {
-                    if(error) {
+                contract_daughter_instance.NewGenBid({}, {
+                    fromBlock: cycle[0],
+                    toBlock: cycle[1]
+                }).get(function (error, result) {
+                    if (error) {
                         console.error(error);
                     } else {
                         for (i = 0; i < result.length; i++) {
                             ygbidaxis.push(parseInt(result[i].args.grate));
                         }
-                        ygbidaxis.sort(function(a, b){return a - b});
+                        ygbidaxis.sort(function (a, b) {
+                            return a - b
+                        });
                         //console.log(ygbidaxis);
                         for (j = 0; j < result.length; j++) {
                             xgbidaxis[parseInt(ygbidaxis.indexOf(parseInt(result[j].args.grate)))] = parseInt(result[j].args.gamount);
                         }
                         //console.log(xgbidaxis);
                         for (k = 1; k < xgbidaxis.length; k++) {
-                            xgbidaxis[k] += xgbidaxis[k-1];
+                            xgbidaxis[k] += xgbidaxis[k - 1];
                         }
                         ygbidaxis.unshift(parseInt(ygbidaxis[0]));
                         xgbidaxis.unshift(parseInt(0));
@@ -210,21 +367,26 @@ function watchMCP() {
                         //Plotly.newPlot('moa', biddata, layout3);
                     }
                 });
-                contract_daughter_instance.NewConBid({}, {fromBlock: cycle[0] , toBlock: cycle[1]}).get(function(error, result) {
-                    if(error) {
+                contract_daughter_instance.NewConBid({}, {
+                    fromBlock: cycle[0],
+                    toBlock: cycle[1]
+                }).get(function (error, result) {
+                    if (error) {
                         console.error(error);
                     } else {
                         for (l = 0; l < result.length; l++) {
                             ycbidaxis.push(parseInt(result[l].args.crate));
                         }
-                        ycbidaxis.sort(function(a, b){return b - a});
+                        ycbidaxis.sort(function (a, b) {
+                            return b - a
+                        });
                         //console.log(ygbidaxis);
                         for (m = 0; m < result.length; m++) {
                             xcbidaxis[parseInt(ycbidaxis.indexOf(parseInt(result[m].args.crate)))] = parseInt(result[m].args.camount);
                         }
                         //console.log(xgbidaxis);
                         for (m = 1; m < xcbidaxis.length; m++) {
-                            xcbidaxis[m] += xcbidaxis[m-1];
+                            xcbidaxis[m] += xcbidaxis[m - 1];
                         }
                         ycbidaxis.unshift(parseInt(ycbidaxis[0]));
                         xcbidaxis.unshift(parseInt(0));
@@ -245,41 +407,51 @@ function watchMCP() {
         }
     });
 }
+
 function stopWatchingMCP() {
-    if(mcp !== undefined) {
+    if (mcp !== undefined) {
         mcp.stopWatching();
     }
 }
 var pbid;
 var gamt;
+
 function watchpbid() {
-    pbid = contract_daughter_instance.NewGenBid({fromBlock: 'latest' , toBlock:'latest'});
+    pbid = contract_daughter_instance.NewGenBid({
+        fromBlock: 'latest',
+        toBlock: 'latest'
+    });
     console.log(pbid);
-    pbid.watch(function(error, result) {
-        if(error) {
+    pbid.watch(function (error, result) {
+        if (error) {
             console.log(error);
         } else {
             //console.log(result);
             document.getElementById("pbid").innerHTML += "<br />" + "<br />" +
                 "Address: " + result.args.gaddr + " | Rate: " + result.args.grate + " | Amount: " + result.args.gamount;
-            if (result.args.gaddr == web3.eth.accounts[1]){
+            if (result.args.gaddr == web3.eth.accounts[1]) {
                 gamt = parseInt(result.args.gamount);
                 //console.log(gamt);
             }
         }
     });
 }
+
 function stopWatchingpbid() {
-    if(pbid !== undefined) {
+    if (pbid !== undefined) {
         pbid.stopWatching();
     }
 }
 var cbid;
+
 function watchcbid() {
-    cbid = contract_daughter_instance.NewConBid({fromBlock: 'latest' , toBlock:'latest'});
+    cbid = contract_daughter_instance.NewConBid({
+        fromBlock: 'latest',
+        toBlock: 'latest'
+    });
     console.log(cbid);
-    cbid.watch(function(error, result) {
-        if(error) {
+    cbid.watch(function (error, result) {
+        if (error) {
             console.log(error);
         } else {
             //console.log(result);
@@ -288,8 +460,9 @@ function watchcbid() {
         }
     });
 }
+
 function stopWatchingcbid() {
-    if(cbid !== undefined) {
+    if (cbid !== undefined) {
         cbid.stopWatching();
     }
 }
@@ -301,7 +474,9 @@ var trace = {
     y: yaxis,
     mode: 'lines+markers',
     name: 'hv',
-    line: {shape: 'hv'},
+    line: {
+        shape: 'hv'
+    },
     type: 'scatter'
 };
 var mcpdata = [trace];
@@ -314,7 +489,8 @@ var layout = {
         title: 'cents/KW)'
     }
 };
-function mcpgraph(){
+
+function mcpgraph() {
     Plotly.newPlot('mcpg', mcpdata, layout);
 }
 var xpvaxis = [];
@@ -324,7 +500,9 @@ var trace2 = {
     y: ypvaxis,
     mode: 'lines+markers',
     name: 'hv',
-    line: {shape: 'hv'},
+    line: {
+        shape: 'hv'
+    },
     type: 'scatter'
 };
 var pvdata = [trace2];
@@ -337,7 +515,8 @@ var layout2 = {
         title: '(KW)'
     }
 };
-function pvgraph(){
+
+function pvgraph() {
     Plotly.newPlot('pvg', pvdata, layout2);
 }
 //Merit Order Graph
@@ -348,7 +527,9 @@ var trace3 = {
     y: ygbidaxis,
     mode: 'lines+markers',
     name: 'Producer',
-    line: {shape: 'vh'},
+    line: {
+        shape: 'vh'
+    },
     type: 'scatter'
 };
 var xcbidaxis = [];
@@ -358,7 +539,9 @@ var trace4 = {
     y: ycbidaxis,
     mode: 'lines+markers',
     name: 'consumer',
-    line: {shape: 'vh'},
+    line: {
+        shape: 'vh'
+    },
     type: 'scatter'
 };
 var biddata = [trace3, trace4];
@@ -371,16 +554,18 @@ var layout3 = {
         title: 'cents/KW'
     }
 };
-function bidgraph(){
+
+function bidgraph() {
     Plotly.newPlot('moa', biddata, layout3);
 }
 var listAccounts = ["0xbe695f7a1d8e2c067ece450f776634cb97df62f5", "0x8d4cc2430a69d2ff5531cb5b543fa8a801b9a052", "0x70c2df548200573304e68103e09332b267527d3d", "0x157e9fac2f0fce439f2a74112a20ade62f4aae4a", "0x831ca5e9fd7f657057c1f26a8a1b31d7c6afe4ac", "0xe2ce89c7e81428018067ee5491e075ed7563222a", "0x85794a34ff485c3ff78fdbebae94eb8b80840f00", "0x3cba5c8df0c87912dedcd1e4e74a3b956b99dd43", "0x6ce80ebfd0b5d3ac0e1dcd1b058a1ceaf82b2e2f", "0xa3da6c30a3ed293dc05040d084f5d06486ddd349", "0xda9f248c4df6047df32c1c2254613db838080c3b", "0x72e777ed91bf13a1d23c49f86854b270cc7364c1", "0x9633783b5acd7792f984ef6e6e28e4099e9e995d", "0xa388592f2994b98f59119e5c67f67840616b98b0", "0xecf5cd0e0d46a119a18c49ec742060eea0abd154", "0xb7c92d1a3464752eefba79c003ae1dfe983136ca", "0xb8b90cc6c1aa8aaa69e3049cf0ff3d7bf018e14d", "0x57343b07e5024d06b1eaf8e4b589dca9030e41fc", "0xfa0ec7bf98a55358dd936d1c80d91357e20dd7e0", "0xff64f98ff75e05ac97802747904a38137a05fca0", "0xa9322a0fc5d21b0ecf6cf3b3a8a9c5027f8e3838", "0xbfd6614d47b71c8f731a6e029f7e9637afd038cf", "0x0794825bc62933ec7851dad84235ba5b5bdd8a90"]
 var coinBalance = [];
+
 function coinChart() {
-    for (g=1;g<listAccounts.length;g++) {
+    for (g = 1; g < listAccounts.length; g++) {
         coinBalance[g] = contract_Coin_instance.get_coinBalance(listAccounts[g]);
     }
-    document.getElementById("acb").innerHTML ="Time: " + nowTime();
+    document.getElementById("acb").innerHTML = "Time: " + nowTime();
     document.getElementById("r1c1").innerHTML = listAccounts[1];
     document.getElementById("r2c1").innerHTML = listAccounts[2];
     document.getElementById("r3c1").innerHTML = listAccounts[3];
@@ -430,13 +615,16 @@ var sid;
 var spw;
 var cn;
 var rid;
+
 function getCoinBalance() {
     sid = document.getElementById("numb").value;
     spw = document.getElementById("numb1").value;
     cn = document.getElementById("numb2").value;
     rid = document.getElementById("numb3").value;
     web3.personal.unlockAccount(sid, spw);
-    contract_Coin_instance.transfer(rid,cn, {from: sid}, function (error, result) {
+    contract_Coin_instance.transfer(rid, cn, {
+        from: sid
+    }, function (error, result) {
         if (error) {
             console.error(error);
         } else {
@@ -446,6 +634,7 @@ function getCoinBalance() {
         }
     });
 }
+
 function callWhenMined(txHash, callback) {
     web3.eth.getTransactionReceipt(txHash, function (error, rcpt) {
         if (error) {
@@ -471,7 +660,9 @@ var traceGFee = {
     y: yGFee,
     mode: 'lines+markers',
     name: 'hv',
-    line: {shape: 'hv'},
+    line: {
+        shape: 'hv'
+    },
     type: 'scatter'
 };
 var gFeeData = [traceGFee];
@@ -494,7 +685,9 @@ var traceLoad = {
     y: yLoad,
     mode: 'lines+markers',
     name: 'hv',
-    line: {shape: 'hv'},
+    line: {
+        shape: 'hv'
+    },
     type: 'scatter'
 };
 var cktLoad;
@@ -510,32 +703,32 @@ var layoutgLoad = {
         title: '(Percentage)'
     }
 };
-function gridFee(){
+
+function gridFee() {
     gCkt = parseInt(contract_origin_instance.get_oliCkt(contract_origin_instance.get_gsoAddr(parseInt(67376))));
-    for (e=0;e<gCkt;e++) {
+    for (e = 0; e < gCkt; e++) {
         cktGFee[e] = contract_gridFee_instance.get_gridFee(parseInt(67376), parseInt(e + 5));
     }
     console.log("Circuit Grid Fee: " + cktGFee);
     xGFee.push(tGFee);
     yGFee.push(parseInt(cktGFee[0]));
-    cktLoad = parseInt(contract_gridFee_instance.get_cktAmount(parseInt(67376),parseInt(0)));
-    peakLoad = parseInt(contract_origin_instance.get_oliPeakLoad(contract_origin_instance.get_gsoAddr(parseInt(67376)),parseInt(1)));
-    perLoad = (cktLoad/peakLoad)*100;
-    console.log ("Fee Cycle: " + xGFee);
-    console.log ("Grid Usage Rate: " + yGFee);
-    console.log ("Load Cycle: " + xLoad);
-    console.log ("Circuit Load: " + cktLoad);
-    console.log ("Peak Load: " + peakLoad);
-    console.log ("Percentage Load: " + yLoad);
-    if (tGFee>0) {
+    cktLoad = parseInt(contract_gridFee_instance.get_cktAmount(parseInt(67376), parseInt(0)));
+    peakLoad = parseInt(contract_origin_instance.get_oliPeakLoad(contract_origin_instance.get_gsoAddr(parseInt(67376)), parseInt(1)));
+    perLoad = (cktLoad / peakLoad) * 100;
+    console.log("Fee Cycle: " + xGFee);
+    console.log("Grid Usage Rate: " + yGFee);
+    console.log("Load Cycle: " + xLoad);
+    console.log("Circuit Load: " + cktLoad);
+    console.log("Peak Load: " + peakLoad);
+    console.log("Percentage Load: " + yLoad);
+    if (tGFee > 0) {
         Plotly.newPlot('gf', gFeeData, layoutgFee);
         Plotly.newPlot('gl', gLoadData, layoutgLoad);
-    }
-    else {
+    } else {
         xGFee.shift();
         yGFee.shift();
     }
-    xLoad.push(tGFee+1);
+    xLoad.push(tGFee + 1);
     yLoad.push(perLoad);
     tGFee++;
 }

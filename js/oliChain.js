@@ -186,7 +186,7 @@ function getAllAddedOlis() {
                 // for leaflet
                 var lat1 = (result[i].args.latOfLocation)/ 10000;
                 var long1 = (result[i].args.longOfLocation)/ 10000;
-                var markers1 = lat + ', ' + long;
+                var markers1 = lat1 + ', ' + long1;
 
                 address.push(address1);
                 coordinates.push(coordinates1);
@@ -288,7 +288,7 @@ function getAllAddedOlis() {
             // console.log("text: " + popupText);
 
             for (var i = 0; i < lat2.length; i++) {
-              var lon = lon2[i][0];
+              var lon = long2[i][0];
               var lat = lat2[i][0];
 
 

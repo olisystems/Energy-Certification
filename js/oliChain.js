@@ -166,6 +166,8 @@ function getAllAddedOlis() {
             var connection = [];
             var peakPower = [];
             var markers = [];
+            var lat2 = [];
+            var long2 = [];
 
             console.log(result);
             for (i = 0; i < result.length; i++) {
@@ -182,8 +184,8 @@ function getAllAddedOlis() {
                 var connection1 = p_type[p_type_index];
                 var peakPower1 = peak;
                 // for leaflet
-                var lat = (result[i].args.latOfLocation)/ 10000;
-                var long = (result[i].args.longOfLocation)/ 10000;
+                var lat1 = (result[i].args.latOfLocation)/ 10000;
+                var long1 = (result[i].args.longOfLocation)/ 10000;
                 var markers1 = lat + ', ' + long;
 
                 address.push(address1);
@@ -192,7 +194,9 @@ function getAllAddedOlis() {
                 circuit.push(circuit1);
                 connection.push(connection1);
                 peakPower.push(peakPower1);
-                  markers.push(markers1);
+                markers.push(markers1);
+                lat2.push(lat1);
+                long2.push(long1);
 
                 console.log(markers);
             }
@@ -274,14 +278,19 @@ function getAllAddedOlis() {
 
             console.log("-----------\nmarkers: \n" + markers + "\n---------------------------");
             console.log("-----------\nmarker index 0: \n" + markers[0] + "\n---------------------------");
-            for (var i=0; i<markers.length; i++) {
+            // for (var i=0; i<markers.length; i++) {
+            //
+            // var lon = markers[i][0];
+            // var lat = markers[i][1];
+            // var popupText = markers[i][2];
+            // console.log("long: " + lon);
+            // console.log("lat: " + lat);
+            // console.log("text: " + popupText);
 
-            var lon = markers[i][0];
-            var lat = markers[i][1];
-            var popupText = markers[i][2];
-            console.log("long: " + lon);
-            console.log("lat: " + lat);
-            console.log("text: " + popupText);
+            for (var i = 0; i < lat2.length; i++) {
+              var lon = lon2[i][0];
+              var lat = lat2[i][0];
+
 
 
              var markerLocation = new L.LatLng(lat, lon);

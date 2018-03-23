@@ -92,21 +92,23 @@
         </div>
       </div>
 
+
+    </div>
+    <div class="card-deck">
       <div class="card text-center">
         <h4 class="card-title text-center">Watch MCP Update</h4>
-        <p class="card-text" id='mcp'>Real time MCP and PV production.</p>
+        <div id='mcp'></div>
         <div class="card-footer">
           <button class="btn btn-success" onclick="watchMCP()">Watch MCP Update</button>
           <button class="btn btn-warning" onclick="stopWatchingMCP()">Stop Watching MCP</button>
         </div>
       </div>
     </div>
-
     <h1 class="headalign">Watch Bid's</h1>
     <div class="card-deck">
       <div class="card text-center">
         <h4 class="card-title">Watch Producer's Bid</h4>
-        <div class="oliCharts scroll" id="pbid"></div>
+        <div class="scroll table table-striped table-bordered text-centered" id="pbid" style="width:500px"></div>
         <div class="card-footer">
           <small class="text-muted">
             <button class="btn btn-success" onclick="watchpbid()">Watch Producers's Bid Update</button>
@@ -117,7 +119,7 @@
 
       <div class="card text-center">
         <h4 class="card-title">Watch Consumer's Bid</h4>
-        <div class="oliCharts scroll" id="cbid"></div>
+        <div class="scroll table table-striped table-bordered text-centered" id="cbid" style="width:500px"></div>
         <div class="card-footer">
           <small class="text-muted">
             <button class="btn btn-success" onclick="watchcbid()">Watch Consumer's Bid Update</button>
@@ -175,9 +177,10 @@
 
     <div class="card-deck">
       <div class="card text-center">
-        <h4 class="card-title" style="text-align:center">Get Agents' Coin Balance</h4>
+        <h4 class="card-title">Get Agents' Coin Balance</h4>
         <div class="scroll">
           <table class="table table-striped table-bordered text-centered">
+
             <thead class="thead-light">
               <tr>
                 <th scope="col">Address</th>
@@ -284,12 +287,11 @@
       </div>
     </div>
 
-<h1 class="headalign">Interact with a contract</h1>
+    <h1 class="headalign">Interact with a contract</h1>
     <div class="card-deck">
       <div class="card text-center">
         <h4 class="card-title" style="text-align:center">Get All Added OLI's</h4>
-        <div class="scroll table table-striped table-bordered text-centered" id="getAllAddedOlisTable" style="width:1000px">
-
+        <div class="scroll table table-striped table-bordered text-centered" id="getAllAddedOlisTable" style="width:500px">
         </div>
         <div class="card-footer">
           <small class="text-muted">
@@ -299,11 +301,12 @@
           </small>
         </div>
       </div>
-    </div>
 
-    <div class="card-deck">
-      <div id="map" style="width: 1000px; height: 400px"></div>
-      <script src="js/oliChain.js"></script>
+      <div class="card">
+        <div id="map" style="width: 100%; height: 380px"></div>
+        <script src="js/oliChain.js"></script>
+      </div>
+
     </div>
 
     <div class="card-deck">
@@ -365,8 +368,8 @@
 
   </div>
 
-  <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 

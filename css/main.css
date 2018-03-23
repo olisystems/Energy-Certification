@@ -1,6 +1,7 @@
-body{
+body {
   padding-top: 50px;
 }
+
 .navbar {
   background-color: #154360;
   color: white;
@@ -72,7 +73,20 @@ div.scroll {
   border-radius: 5px;
   width: 50%;
   margin: 0px auto;
-  float: none;
+  table-layout: fixed;
+}
+
+table tbody, table thead {
+  display: block;
+}
+
+table tbody {
+  overflow: auto;
+  height: 200px;
+}
+
+th, td {
+  width: 100%;
 }
 
 #map {
@@ -82,6 +96,7 @@ div.scroll {
   margin: auto;
   margin-top: 20px;
 }
-.myButton{
+
+.myButton {
   justify-content: center;
 }

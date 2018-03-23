@@ -148,6 +148,8 @@ function stopWatchingEvents() {
     };
 };
 
+var header = new Array();
+header.push(["Address", 'Coordinates', 'Transformer Id', 'Circuit', 'Connection', 'PeakPower']);
 
 function getAllAddedOlis() {
     contract_origin_instance.newAddedOli({}, {
@@ -184,8 +186,8 @@ function getAllAddedOlis() {
                 var connection1 = p_type[p_type_index];
                 var peakPower1 = peak;
                 // for leaflet
-                var lat1 = (result[i].args.latOfLocation)/ 10000;
-                var long1 = (result[i].args.longOfLocation)/ 10000;
+                var lat1 = (result[i].args.latOfLocation) / 10000;
+                var long1 = (result[i].args.longOfLocation) / 10000;
                 var markers1 = lat1 + ', ' + long1;
 
                 address.push(address1);
@@ -197,13 +199,10 @@ function getAllAddedOlis() {
                 markers.push(markers1);
                 lat2.push(lat1);
                 long2.push(long1);
-
-                console.log(markers);
             }
 
             // table starts from here
-            var header = new Array();
-            header.push(["Address", 'Coordinates', 'Transformer Id', 'Circuit', 'Connection', 'PeakPower']);
+
             for (var i = 0; i < address.length; i++) {
                 header.push([address[i], coordinates[i], transformerId[i], circuit[i], connection[i], peakPower[i]]);
             }
@@ -241,66 +240,35 @@ function getAllAddedOlis() {
             // " | Connection Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
             var map = L.map('map').setView([48.77538056, 9.16277778], 14);
             mapLink =
-              '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+                '<a href="http://openstreetmap.org">OpenStreetMap</a>';
             L.tileLayer(
-              'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; ' + mapLink + ' Contributors',
-                maxZoom: 18,
-              }).addTo(map);
+                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; ' + mapLink + ' Contributors',
+                    maxZoom: 14,
+                }).addTo(map);
+
             var marker = L.marker([48.77538056, 9.16277778]).addTo(map);
+            marker.bindPopup("OLI Systems GmbH");
+            marker.on('mouseover', function (e) {
+                this.openPopup();
+            });
+            marker.on('mouseout', function (e) {
+                this.closePopup();
+            });
 
-          // // binding popoup
-          //   marker.bindPopup("OLI Systems GmbH");
-          //   marker.on('mouseover', function(e) {
-          //     this.openPopup();
-          //   });
-          //   marker.on('mouseout', function(e) {
-          //     this.closePopup();
-          //   });
-
-          // // showing mouse click position
-          //   var popup = L.popup();
-          //   function onMapClick(e) {
-          //     popup
-          //       .setLatLng(e.latlng)
-          //       .setContent("You clicked the map at " + e.latlng.toString())
-          //       .openOn(map);
-          //   }
-          //
-          //   map.on('click', onMapClick);
-
-          // var markers = [
-          //             [49.3, 8.35, "Big Ben" ],
-          //             [48.39, 9.97, "London Eye" ],
-          //             [48.77, 9.16, "Nelson's" ]
-          //          ];
+            //for (var i = 0; i < long2.length; i++) {
+            for (var i = 0; i < 22; i++) {
 
 
-            console.log("-----------\nmarkers: \n" + markers + "\n---------------------------");
-            console.log("-----------\nmarker index 0: \n" + markers[0] + "\n---------------------------");
-            // for (var i=0; i<markers.length; i++) {
-            //
-            // var lon = markers[i][0];
-            // var lat = markers[i][1];
-            // var popupText = markers[i][2];
-            // console.log("long: " + lon);
-            // console.log("lat: " + lat);
-            // console.log("text: " + popupText);
+                var lon = long2[i];
+                var lat = lat2[i];
+                var popupText = "<br />" + "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation) / 10000) + "," + ((result[i].args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Connection Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
 
-            for (var i = 0; i < lat2.length; i++) {
-              var lon = long2[i][0];
-              var lat = lat2[i][0];
-
-
-
-             var markerLocation = new L.LatLng(lat, lon);
-             var marker = new L.Marker(markerLocation);
-             map.addLayer(marker);
-
-             marker.bindPopup(popupText);
-         }
-
-
+                var markerLocation = new L.LatLng(lat, lon);
+                var marker = new L.Marker(markerLocation);
+                map.addLayer(marker);
+                marker.bindPopup(popupText);
+            }
 
         }
     });
@@ -311,6 +279,9 @@ var mcp;
 var cycle = [];
 var runn = 0;
 var ckt;
+
+var cBid = [];
+var time = [];
 
 function watchMCP() {
     mcp = contract_daughter_instance.NewMcp({
@@ -325,96 +296,108 @@ function watchMCP() {
             document.getElementById("pbid").innerHTML = '&nbsp';
             document.getElementById("cbid").innerHTML = '&nbsp';
             //console.log(result);
-            document.getElementById("mcp").innerHTML += "<br />" + "<br />" +
-                "New MCP: " + result.args.cbid + " | Time:" + nowTime();
-            coinChart();
-            xaxis.push(td);
-            xpvaxis.push(td);
-            td++;
-            yaxis.push(parseInt(result.args.cbid));
-            ypvaxis.push(gamt);
-            console.log("Value Cycle: " + xaxis);
-            console.log("MCP: " + yaxis);
-            console.log("Value Cycle: " + xpvaxis);
-            console.log("PV Power: " + ypvaxis);
-            console.log("Current Block: " + result.blockNumber);
-            if (runn == 0) {
-                runn++;
-                cycle[0] = result.blockNumber;
-                cycle[1] = result.blockNumber;
-                console.log("Block Cycle: " + cycle);
-            } else {
-                cycle[0] = cycle[1];
-                cycle[1] = result.blockNumber;
-                console.log("Block Cycle: " + cycle);
-                contract_daughter_instance.NewGenBid({}, {
-                    fromBlock: cycle[0],
-                    toBlock: cycle[1]
-                }).get(function (error, result) {
-                    if (error) {
-                        console.error(error);
-                    } else {
-                        for (i = 0; i < result.length; i++) {
-                            ygbidaxis.push(parseInt(result[i].args.grate));
-                        }
-                        ygbidaxis.sort(function (a, b) {
-                            return a - b
-                        });
-                        //console.log(ygbidaxis);
-                        for (j = 0; j < result.length; j++) {
-                            xgbidaxis[parseInt(ygbidaxis.indexOf(parseInt(result[j].args.grate)))] = parseInt(result[j].args.gamount);
-                        }
-                        //console.log(xgbidaxis);
-                        for (k = 1; k < xgbidaxis.length; k++) {
-                            xgbidaxis[k] += xgbidaxis[k - 1];
-                        }
-                        ygbidaxis.unshift(parseInt(ygbidaxis[0]));
-                        xgbidaxis.unshift(parseInt(0));
-                        console.log("GenBid: " + ygbidaxis);
-                        console.log("GenAmount: " + xgbidaxis);
-                        //Plotly.newPlot('moa', biddata, layout3);
-                    }
-                });
-                contract_daughter_instance.NewConBid({}, {
-                    fromBlock: cycle[0],
-                    toBlock: cycle[1]
-                }).get(function (error, result) {
-                    if (error) {
-                        console.error(error);
-                    } else {
-                        for (l = 0; l < result.length; l++) {
-                            ycbidaxis.push(parseInt(result[l].args.crate));
-                        }
-                        ycbidaxis.sort(function (a, b) {
-                            return b - a
-                        });
-                        //console.log(ygbidaxis);
-                        for (m = 0; m < result.length; m++) {
-                            xcbidaxis[parseInt(ycbidaxis.indexOf(parseInt(result[m].args.crate)))] = parseInt(result[m].args.camount);
-                        }
-                        //console.log(xgbidaxis);
-                        for (m = 1; m < xcbidaxis.length; m++) {
-                            xcbidaxis[m] += xcbidaxis[m - 1];
-                        }
-                        ycbidaxis.unshift(parseInt(ycbidaxis[0]));
-                        xcbidaxis.unshift(parseInt(0));
-                        console.log("ConsBid: " + ycbidaxis);
-                        console.log("ConsAmount: " + xcbidaxis);
-                        Plotly.newPlot('moa', biddata, layout3);
-                        xgbidaxis.length = parseInt(0);
-                        ygbidaxis.length = parseInt(0);
-                        xcbidaxis.length = parseInt(0);
-                        ycbidaxis.length = parseInt(0);
-                    }
-                });
-            }
-            mcpgraph();
-            pvgraph();
-            gridFee();
-            //bidgraph();
+            // document.getElementById("mcp").innerHTML += "<br />" + "<br />" +
+            //   "New MCP: " + result.args.cbid + " | Time:" + nowTime();
+            cBid.push(result.args.cbid.c[0]);
+            time.push(nowTime());
+            var data = [{
+                x: time,
+                y: cBid,
+                type: 'scatter'
+            }];
+            console.log("data" + data);
+
+            Plotly.newPlot('mcp', data);
+
         }
+
+        coinChart();
+        xaxis.push(td);
+        xpvaxis.push(td);
+        td++;
+        yaxis.push(parseInt(result.args.cbid));
+        ypvaxis.push(gamt);
+        console.log("Value Cycle: " + xaxis);
+        console.log("MCP: " + yaxis);
+        console.log("Value Cycle: " + xpvaxis);
+        console.log("PV Power: " + ypvaxis);
+        console.log("Current Block: " + result.blockNumber);
+        if (runn == 0) {
+            runn++;
+            cycle[0] = result.blockNumber;
+            cycle[1] = result.blockNumber;
+            console.log("Block Cycle: " + cycle);
+        } else {
+            cycle[0] = cycle[1];
+            cycle[1] = result.blockNumber;
+            console.log("Block Cycle: " + cycle);
+            contract_daughter_instance.NewGenBid({}, {
+                fromBlock: cycle[0],
+                toBlock: cycle[1]
+            }).get(function (error, result) {
+                if (error) {
+                    console.error(error);
+                } else {
+                    for (i = 0; i < result.length; i++) {
+                        ygbidaxis.push(parseInt(result[i].args.grate));
+                    }
+                    ygbidaxis.sort(function (a, b) {
+                        return a - b
+                    });
+                    //console.log(ygbidaxis);
+                    for (j = 0; j < result.length; j++) {
+                        xgbidaxis[parseInt(ygbidaxis.indexOf(parseInt(result[j].args.grate)))] = parseInt(result[j].args.gamount);
+                    }
+                    //console.log(xgbidaxis);
+                    for (k = 1; k < xgbidaxis.length; k++) {
+                        xgbidaxis[k] += xgbidaxis[k - 1];
+                    }
+                    ygbidaxis.unshift(parseInt(ygbidaxis[0]));
+                    xgbidaxis.unshift(parseInt(0));
+                    console.log("GenBid: " + ygbidaxis);
+                    console.log("GenAmount: " + xgbidaxis);
+                    //Plotly.newPlot('moa', biddata, layout3);
+                }
+            });
+            contract_daughter_instance.NewConBid({}, {
+                fromBlock: cycle[0],
+                toBlock: cycle[1]
+            }).get(function (error, result) {
+                if (error) {
+                    console.error(error);
+                } else {
+                    for (l = 0; l < result.length; l++) {
+                        ycbidaxis.push(parseInt(result[l].args.crate));
+                    }
+                    ycbidaxis.sort(function (a, b) {
+                        return b - a
+                    });
+                    //console.log(ygbidaxis);
+                    for (m = 0; m < result.length; m++) {
+                        xcbidaxis[parseInt(ycbidaxis.indexOf(parseInt(result[m].args.crate)))] = parseInt(result[m].args.camount);
+                    }
+                    //console.log(xgbidaxis);
+                    for (m = 1; m < xcbidaxis.length; m++) {
+                        xcbidaxis[m] += xcbidaxis[m - 1];
+                    }
+                    ycbidaxis.unshift(parseInt(ycbidaxis[0]));
+                    xcbidaxis.unshift(parseInt(0));
+                    console.log("ConsBid: " + ycbidaxis);
+                    console.log("ConsAmount: " + xcbidaxis);
+                    Plotly.newPlot('moa', biddata, layout3);
+                    xgbidaxis.length = parseInt(0);
+                    ygbidaxis.length = parseInt(0);
+                    xcbidaxis.length = parseInt(0);
+                    ycbidaxis.length = parseInt(0);
+                }
+            });
+        }
+        mcpgraph();
+        pvgraph();
+        gridFee();
+        //bidgraph();
     });
-}
+};
 
 function stopWatchingMCP() {
     if (mcp !== undefined) {
@@ -423,6 +406,9 @@ function stopWatchingMCP() {
 }
 var pbid;
 var gamt;
+
+var header = new Array();
+header.push(["Address", 'Rate', 'Amount']);
 
 function watchpbid() {
     pbid = contract_daughter_instance.NewGenBid({
@@ -435,12 +421,42 @@ function watchpbid() {
             console.log(error);
         } else {
             //console.log(result);
-            document.getElementById("pbid").innerHTML += "<br />" + "<br />" +
-                "Address: " + result.args.gaddr + " | Rate: " + result.args.grate + " | Amount: " + result.args.gamount;
-            if (result.args.gaddr == web3.eth.accounts[1]) {
-                gamt = parseInt(result.args.gamount);
-                //console.log(gamt);
+            // document.getElementById("pbid").innerHTML += "<br />" + "<br />" +
+            //     "Address: " + result.args.gaddr + " | Rate: " + result.args.grate + " | Amount: " + result.args.gamount;
+            // if (result.args.gaddr == web3.eth.accounts[1]) {
+            //     gamt = parseInt(result.args.gamount);
+
+            // table starts from here
+
+            header.push([result.args.gaddr, result.args.grate, result.args.gamount]);
+
+            //Create a HTML Table element.
+            var table = document.createElement("Table");
+
+            //Get the count of columns.
+            var columnCount = header[0].length;
+
+            //Add the header row.
+            var row = table.insertRow(-1);
+            for (var i = 0; i < columnCount; i++) {
+                var headerCell = document.createElement("TH");
+                headerCell.innerHTML = header[0][i];
+                row.appendChild(headerCell);
             }
+
+            //Add the data rows.
+            for (var i = 1; i < header.length; i++) {
+                row = table.insertRow(-1);
+                for (var j = 0; j < columnCount; j++) {
+                    var cell = row.insertCell(-1);
+                    cell.innerHTML = header[i][j];
+                }
+            }
+
+            var dvTable = document.getElementById("pbid");
+            dvTable.innerHTML = "";
+            dvTable.appendChild(table);
+            //console.log(gamt);
         }
     });
 }
@@ -451,6 +467,9 @@ function stopWatchingpbid() {
     }
 }
 var cbid;
+
+var header = new Array();
+header.push(["Address", 'Rate', 'Amount']);
 
 function watchcbid() {
     cbid = contract_daughter_instance.NewConBid({
@@ -463,8 +482,40 @@ function watchcbid() {
             console.log(error);
         } else {
             //console.log(result);
-            document.getElementById("cbid").innerHTML += "<br />" + "<br />" +
-                "Address: " + result.args.caddr + " | Rate: " + result.args.crate + " | Amount: " + result.args.camount;
+            // document.getElementById("cbid").innerHTML += "<br />" + "<br />" +
+            //     "Address: " + result.args.caddr + " | Rate: " + result.args.crate + " | Amount: " + result.args.camount;
+
+            // table starts from here
+
+            header.push([result.args.caddr, result.args.crate, result.args.camount]);
+
+            //Create a HTML Table element.
+            var table = document.createElement("Table");
+
+            //Get the count of columns.
+            var columnCount = header[0].length;
+
+            //Add the header row.
+            var row = table.insertRow(-1);
+            for (var i = 0; i < columnCount; i++) {
+                var headerCell = document.createElement("TH");
+                headerCell.innerHTML = header[0][i];
+                row.appendChild(headerCell);
+            }
+
+            //Add the data rows.
+            for (var i = 1; i < header.length; i++) {
+                row = table.insertRow(-1);
+                for (var j = 0; j < columnCount; j++) {
+                    var cell = row.insertCell(-1);
+                    cell.innerHTML = header[i][j];
+                }
+            }
+
+            var dvTable = document.getElementById("cbid");
+            dvTable.innerHTML = "";
+            dvTable.appendChild(table);
+            //console.log(gamt);
         }
     });
 }

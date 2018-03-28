@@ -1,20 +1,65 @@
 body {
-  padding-top: 50px;
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
 }
 
-.navbar {
-  background-color: #154360;
+h1, h3 {
+  color: #333;
+  font-weight: 300;
+}
+
+h1 {
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+  -ms-hyphens: auto;
+  -o-hyphens: auto;
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  background: #1CBCAD;
+  background: url(../img/header-bg2.jpg) no-repeat center top;
+  background-attachment: relative;
+  background-position: center center;
+  -webkit-background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: 100%;
+  -moz-background-size: cover;
+  -o-background-size: 100%;
+  -o-background-size: cover;
+  background-size: 100%;
+  background-size: cover;
+}
+
+.header h1, h3 {
+  padding:10px;
+
   color: white;
+  font-size: 40px;
+  margin-bottom: 10px;
 }
 
-.container {
+.header h3 {
+  font-size: 25px;
+  padding-top: 0px;
+}
+
+.container-fluid {
+  margin-bottom: 10px;
+}
+
+/* loading container css*/
+
+.container-fluid {
   align-content: center;
 }
 
-.headalign {
-  text-align: center;
-  margin: 30px;
-  color: orange;
+.card{
+  margin-bottom: 20px;
 }
 
 /* .img-fluid {
@@ -33,7 +78,7 @@ body {
 
 .card-title {
   padding: 10px;
-  background: #154360;
+  background: #69A206;
   color: white;
 }
 
@@ -101,9 +146,8 @@ img {
   width: 100% !important;
   position: center;
   margin: auto;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
-
 .myButton {
   justify-content: center;
 }

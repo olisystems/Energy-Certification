@@ -275,6 +275,8 @@ function getAllAddedOlis() {
 
 }
 
+window.onload = getAllAddedOlis;
+
 var mcp;
 var cycle = [];
 var runn = 0;
@@ -399,6 +401,8 @@ function watchMCP() {
     });
 };
 
+window.onload = watchMCP;
+
 function stopWatchingMCP() {
     if (mcp !== undefined) {
         mcp.stopWatching();
@@ -520,6 +524,8 @@ function watchcbid() {
     });
 }
 
+window.onload = watchcbid;
+
 function stopWatchingcbid() {
     if (cbid !== undefined) {
         cbid.stopWatching();
@@ -617,6 +623,8 @@ var layout3 = {
 function bidgraph() {
     Plotly.newPlot('moa', biddata, layout3);
 }
+
+window.onload = bidgraph;
 var listAccounts = ["0xbe695f7a1d8e2c067ece450f776634cb97df62f5", "0x8d4cc2430a69d2ff5531cb5b543fa8a801b9a052", "0x70c2df548200573304e68103e09332b267527d3d", "0x157e9fac2f0fce439f2a74112a20ade62f4aae4a", "0x831ca5e9fd7f657057c1f26a8a1b31d7c6afe4ac", "0xe2ce89c7e81428018067ee5491e075ed7563222a", "0x85794a34ff485c3ff78fdbebae94eb8b80840f00", "0x3cba5c8df0c87912dedcd1e4e74a3b956b99dd43", "0x6ce80ebfd0b5d3ac0e1dcd1b058a1ceaf82b2e2f", "0xa3da6c30a3ed293dc05040d084f5d06486ddd349", "0xda9f248c4df6047df32c1c2254613db838080c3b", "0x72e777ed91bf13a1d23c49f86854b270cc7364c1", "0x9633783b5acd7792f984ef6e6e28e4099e9e995d", "0xa388592f2994b98f59119e5c67f67840616b98b0", "0xecf5cd0e0d46a119a18c49ec742060eea0abd154", "0xb7c92d1a3464752eefba79c003ae1dfe983136ca", "0xb8b90cc6c1aa8aaa69e3049cf0ff3d7bf018e14d", "0x57343b07e5024d06b1eaf8e4b589dca9030e41fc", "0xfa0ec7bf98a55358dd936d1c80d91357e20dd7e0", "0xff64f98ff75e05ac97802747904a38137a05fca0", "0xa9322a0fc5d21b0ecf6cf3b3a8a9c5027f8e3838", "0xbfd6614d47b71c8f731a6e029f7e9637afd038cf", "0x0794825bc62933ec7851dad84235ba5b5bdd8a90"]
 var coinBalance = [];
 
@@ -670,6 +678,8 @@ function coinChart() {
     document.getElementById("r21c2").innerHTML = coinBalance[21];
     document.getElementById("r22c2").innerHTML = coinBalance[22];
 }
+
+window.onload = coinChart;
 var sid;
 var spw;
 var cn;
@@ -791,3 +801,5 @@ function gridFee() {
     yLoad.push(perLoad);
     tGFee++;
 }
+
+window.onload = gridFee;

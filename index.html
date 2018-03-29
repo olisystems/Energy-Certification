@@ -6,17 +6,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap 4 CSS -->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-  />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="css/dashboard.css">
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-    crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-    crossorigin=""></script>
-  <script src="web3.js/dist/web3.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+  <script src="node_modules/web3/dist/web3.min.js"></script>
   <script src="js/oliDashboard.js"></script>
 
 </head>
@@ -53,7 +49,7 @@
 
         <div class="card">
           <div id="map" style="width: 100%; height: 200px"></div>
-          <script src="js/oliChain.js"></script>
+          <script src="js/oliDashboard.js"></script>
         </div>
 
         <div class="card" style="height:205px">
@@ -75,19 +71,19 @@
       </div>
       <!-- first column ends here -->
 
-      <div class="col-sm-5 oliCharts">
+      <div class="col-sm-5">
         <!-- middle column starts here -->
-        <div class="card" style="height:450px">
+        <div class="card oliGraphs" style="height:450px; max-height:450px;">
           <div class="card-body">
             <h5 class="card-title">Merit Order Graphs</h5>
-            <div id="moa"></div>
+            <div id="moa" class="oliGraphs2" style="height:420px !important;"></div>
           </div>
         </div>
 
-        <div class="card" style="height:450px">
+        <div class="card oliGraphs" style="height:450px; max-height:450px;">
           <div class="card-body">
             <h5 class="card-title">Market Price Time Graph</h5>
-            <div id='mcp'></div>
+            <div id='mcp' class="oliGraphs2" style="height:420px !important;"></div>
           </div>
         </div>
       </div>
@@ -96,29 +92,29 @@
       <div class="col-sm-3">
         <!-- third column starts here -->
 
-        <div class="card" style="height:330px; max-height: 500px;">
+        <div class="card oliGraphs" style="height:330px;">
           <div class="card-body">
             <h5 class="card-title">Grid Fee</h5>
-            <div id="gf"></div>
+            <div id="gf" class="oliGraphs2" style="height:300px !important;"></div>
           </div>
         </div>
-        <div class="card" style="height:330px">
+        <div class="card oliGraphs" style="height:330px;">
           <div class="card-body">
             <h5 class="card-title">Circuit Loading</h5>
-            <div id="gl"></div>
+            <div id="gl" class="oliGraphs2" style="height:300px !important;"></div>
           </div>
         </div>
 
         <div class="card" style="height:220px; width: 100%">
           <div class="card-body">
             <h5 class="card-title">Coin Balances</h5>
-            <div class="scroll" style="height:200px; ;">
-              <table class="table table-striped table-bordered text-centered">
+            <div class="scroll" style="height:130px;">
+              <table class="table table-striped table-bordered text-centered table-hover">
 
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col">Address</th>
-                    <th scope="col">Balance</th>
+                    <th scope="col" class="coinBalanceHeaderAdress">Address</th>
+                    <th scope="col" class="coinBalanceHeaderBalance">Balance</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -223,191 +219,6 @@
     <!-- row starts here -->
   </div>
 
-  <h1>Interact with a contract</h1>
-
-  <button onclick="watchNewAddedOlis()">Watch New Oli</button>
-  <button onclick="stopWatchingEvents()">Stop Watching Event</button>
-  <button onclick="getAllAddedOlis()">Get All Added Olis</button>
-  <br />
-  <button onclick="watchNewStock()">Watch New Stock</button>
-  <button onclick="stopWatchingNewStock()">Stop Watching New Stock</button>
-  <button onclick="watchNewStockBid()">Watch New Bid</button>
-  <button onclick="stopWatchingNewStockBid()">Stop Watching Bid</button>
-  <br />
-  <button onclick="watchMCP()">Watch MCP Update</button>
-  <button onclick="stopWatchingMCP()">Stop Watching MCP</button>
-  <br />
-  <button onclick="watchpbid()">Watch Producers's Bid Update</button>
-  <button onclick="stopWatchingpbid()">Stop Watching Producers's Bid</button>
-  <br />
-  <button onclick="watchcbid()">Watch Consumer's Bid Update</button>
-  <button onclick="stopWatchingcbid()">Stop Watching Consumer's Bid</button>
-  <br />
-  <button onclick="mcpgraph()">Watch Real Time MCP</button>
-  <button onclick="stopWatchRealTime()">Stop Real Time</button>
-  <br />
-  <button onclick="pvgraph()">Watch Real Time PV Production</button>
-  <button onclick="stopWatchRealTime()">Stop Real Time</button>
-  <br />
-  <button onclick="bidgraph()">Watch Merit Order Graph</button>
-  <button onclick="stopWatchRealTime()">Stop Real Time</button>
-
-
-  <br />
-  <br />
-  <h2>New Added Olis:</h2>
-  <div id="events_n"></div>
-  <br />
-  <br />
-  <h2>Oli History:</h2>
-  <div id="events_h"></div>
-  <br />
-  <br />
-  <h2>GSO Details:</h2>
-  <div id="gso"></div>
-  <br />
-  <h2>New Stock:</h2>
-  <div id="nstk"></div>
-  <br />
-  <h2>Stock Bidders:</h2>
-  <br />
-  <div id="nstkb"></div>
-  <h2>Bilateral Contract:</h2>
-  <br />
-  <div id="bic"></div>
-  <br />
-  <h2>Coin Balance:</h2>
-  <div id="balance"></div>
-  <br />
-  <h2>Producers' Bid:</h2>
-  <div id="pbid"></div>
-  <br />
-  <h2>Consumers' Bid:</h2>
-  <div id="cbid"></div>
-  <br />
-  <h2>Market Clearing Price:</h2>
-  <div id="mcp"></div>
-  <h2>Merit Order Affect</h2>
-  <div id="moa"></div>
-  <h2>Market Clearing Price Graph</h2>
-  <div id="mcpg"></div>
-  <h2>PV Production</h2>
-  <div id="pvg"></div>
-  <h2>Grid Fee</h2>
-  <br />
-  <button onclick="gridFee()">Grid Fee</button>
-  <div id="gf"></div>
-  <br />
-  <div id="gl"></div>
-  <br />
-  <h2>Agents' CoinBalance</h2>
-  <div id="acb"></div>
-
-  <table>
-      <tr>
-          <td>Address</td>
-          <td>Balance</td>
-      </tr>
-      <tr>
-          <td id="r1c1">Row1 Col1</td>
-          <td id="r1c2">Row1 Col2</td>
-      </tr>
-      <tr>
-          <td id="r2c1">Row2 Col1</td>
-          <td id="r2c2">Row2 Col2</td>
-      </tr>
-      <tr>
-          <td id="r3c1">Row3 Col1</td>
-          <td id="r3c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r4c1">Row3 Col1</td>
-          <td id="r4c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r5c1">Row3 Col1</td>
-          <td id="r5c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r6c1">Row3 Col1</td>
-          <td id="r6c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r7c1">Row3 Col1</td>
-          <td id="r7c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r8c1">Row3 Col1</td>
-          <td id="r8c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r9c1">Row3 Col1</td>
-          <td id="r9c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r10c1">Row3 Col1</td>
-          <td id="r10c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r11c1">Row3 Col1</td>
-          <td id="r11c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r12c1">Row3 Col1</td>
-          <td id="r12c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r13c1">Row3 Col1</td>
-          <td id="r13c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r14c1">Row3 Col1</td>
-          <td id="r14c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r15c1">Row3 Col1</td>
-          <td id="r15c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r16c1">Row3 Col1</td>
-          <td id="r16c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r17c1">Row3 Col1</td>
-          <td id="r17c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r18c1">Row3 Col1</td>
-          <td id="r18c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r19c1">Row3 Col1</td>
-          <td id="r19c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r20c1">Row3 Col1</td>
-          <td id="r20c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r21c1">Row3 Col1</td>
-          <td id="r21c2">Row3 Col2</td>
-      </tr>
-      <tr>
-          <td id="r22c1">Row3 Col1</td>
-          <td id="r22c2">Row3 Col2</td>
-      </tr>
-  </table>
-  <button type="button" onclick="coinChart()">Get Agents' Coin Balance</button>
-
-  <br />
-  <h4>Coin Settlements</h4>
-  <input id="numb" value="Sender's Eth Address">
-  <input id="numb1" value="Sender's Eth Password">
-  <input id="numb2" value="Coins to transfer">
-  <input id="numb3" value="Recepient's Eth Address">
-
-  <button type="button" onclick="getCoinBalance()">Submit</button>
-  <br />
   <!-- container ends -->
 
   <!-- Bootstrap 4 Scripts -->
@@ -416,18 +227,12 @@
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </body>
 
 </html>

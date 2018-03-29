@@ -48,14 +48,11 @@ h1 {
   padding-top: 0px;
 }
 
-.container-fluid {
-  margin-bottom: 10px;
-}
-
 /* loading container css*/
 
 .container-fluid {
   align-content: center;
+  margin-bottom: 10px;
 }
 
 .card{
@@ -100,7 +97,7 @@ button, p {
 div.scroll {
   float: left;
   overflow-y: auto;
-  height: 200px;
+  height: 150px;
 }
 
 .card, #map {
@@ -116,12 +113,12 @@ div.scroll {
 
 .table {
   border-radius: 5px;
-  width: 50%;
+  width: 100%;
   margin: 0px auto;
   table-layout: fixed;
 }
 
-table tbody, table thead {
+/* table tbody, table thead {
   display: block;
 }
 
@@ -132,7 +129,7 @@ table tbody {
 
 th, td {
   width: 100%;
-}
+} */
 img {
   display: block;
   max-width:70px;

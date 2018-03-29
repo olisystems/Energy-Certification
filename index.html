@@ -75,7 +75,7 @@
       </div>
       <!-- first column ends here -->
 
-      <div class="col-sm-5">
+      <div class="col-sm-5 oliCharts">
         <!-- middle column starts here -->
         <div class="card" style="height:450px">
           <div class="card-body">
@@ -96,7 +96,7 @@
       <div class="col-sm-3">
         <!-- third column starts here -->
 
-        <div class="card" style="height:330px">
+        <div class="card" style="height:330px; max-height: 500px;">
           <div class="card-body">
             <h5 class="card-title">Grid Fee</h5>
             <div id="gf"></div>
@@ -109,11 +109,110 @@
           </div>
         </div>
 
-        <div class="card" style="height:220px;">
+        <div class="card" style="height:220px; width: 100%">
           <div class="card-body">
             <h5 class="card-title">Coin Balances</h5>
-            <div id="balance" class="oliCharts scroll"></div>
-          </div>
+            <div class="scroll" style="height:200px; ;">
+              <table class="table table-striped table-bordered text-centered">
+
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Address</th>
+                    <th scope="col">Balance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td id="r1c1">Row1 Col1</td>
+                    <td id="r1c2">Row1 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r2c1">Row2 Col1</td>
+                    <td id="r2c2">Row2 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r3c1">Row3 Col1</td>
+                    <td id="r3c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r4c1">Row3 Col1</td>
+                    <td id="r4c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r5c1">Row3 Col1</td>
+                    <td id="r5c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r6c1">Row3 Col1</td>
+                    <td id="r6c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r7c1">Row3 Col1</td>
+                    <td id="r7c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r8c1">Row3 Col1</td>
+                    <td id="r8c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r9c1">Row3 Col1</td>
+                    <td id="r9c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r10c1">Row3 Col1</td>
+                    <td id="r10c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r11c1">Row3 Col1</td>
+                    <td id="r11c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r12c1">Row3 Col1</td>
+                    <td id="r12c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r13c1">Row3 Col1</td>
+                    <td id="r13c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r14c1">Row3 Col1</td>
+                    <td id="r14c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r15c1">Row3 Col1</td>
+                    <td id="r15c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r16c1">Row3 Col1</td>
+                    <td id="r16c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r17c1">Row3 Col1</td>
+                    <td id="r17c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r18c1">Row3 Col1</td>
+                    <td id="r18c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r19c1">Row3 Col1</td>
+                    <td id="r19c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r20c1">Row3 Col1</td>
+                    <td id="r20c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r21c1">Row3 Col1</td>
+                    <td id="r21c2">Row3 Col2</td>
+                  </tr>
+                  <tr>
+                    <td id="r22c1">Row3 Col1</td>
+                    <td id="r22c2">Row3 Col2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -123,6 +222,192 @@
     </div>
     <!-- row starts here -->
   </div>
+
+  <h1>Interact with a contract</h1>
+
+  <button onclick="watchNewAddedOlis()">Watch New Oli</button>
+  <button onclick="stopWatchingEvents()">Stop Watching Event</button>
+  <button onclick="getAllAddedOlis()">Get All Added Olis</button>
+  <br />
+  <button onclick="watchNewStock()">Watch New Stock</button>
+  <button onclick="stopWatchingNewStock()">Stop Watching New Stock</button>
+  <button onclick="watchNewStockBid()">Watch New Bid</button>
+  <button onclick="stopWatchingNewStockBid()">Stop Watching Bid</button>
+  <br />
+  <button onclick="watchMCP()">Watch MCP Update</button>
+  <button onclick="stopWatchingMCP()">Stop Watching MCP</button>
+  <br />
+  <button onclick="watchpbid()">Watch Producers's Bid Update</button>
+  <button onclick="stopWatchingpbid()">Stop Watching Producers's Bid</button>
+  <br />
+  <button onclick="watchcbid()">Watch Consumer's Bid Update</button>
+  <button onclick="stopWatchingcbid()">Stop Watching Consumer's Bid</button>
+  <br />
+  <button onclick="mcpgraph()">Watch Real Time MCP</button>
+  <button onclick="stopWatchRealTime()">Stop Real Time</button>
+  <br />
+  <button onclick="pvgraph()">Watch Real Time PV Production</button>
+  <button onclick="stopWatchRealTime()">Stop Real Time</button>
+  <br />
+  <button onclick="bidgraph()">Watch Merit Order Graph</button>
+  <button onclick="stopWatchRealTime()">Stop Real Time</button>
+
+
+  <br />
+  <br />
+  <h2>New Added Olis:</h2>
+  <div id="events_n"></div>
+  <br />
+  <br />
+  <h2>Oli History:</h2>
+  <div id="events_h"></div>
+  <br />
+  <br />
+  <h2>GSO Details:</h2>
+  <div id="gso"></div>
+  <br />
+  <h2>New Stock:</h2>
+  <div id="nstk"></div>
+  <br />
+  <h2>Stock Bidders:</h2>
+  <br />
+  <div id="nstkb"></div>
+  <h2>Bilateral Contract:</h2>
+  <br />
+  <div id="bic"></div>
+  <br />
+  <h2>Coin Balance:</h2>
+  <div id="balance"></div>
+  <br />
+  <h2>Producers' Bid:</h2>
+  <div id="pbid"></div>
+  <br />
+  <h2>Consumers' Bid:</h2>
+  <div id="cbid"></div>
+  <br />
+  <h2>Market Clearing Price:</h2>
+  <div id="mcp"></div>
+  <h2>Merit Order Affect</h2>
+  <div id="moa"></div>
+  <h2>Market Clearing Price Graph</h2>
+  <div id="mcpg"></div>
+  <h2>PV Production</h2>
+  <div id="pvg"></div>
+  <h2>Grid Fee</h2>
+  <br />
+  <button onclick="gridFee()">Grid Fee</button>
+  <div id="gf"></div>
+  <br />
+  <div id="gl"></div>
+  <br />
+  <h2>Agents' CoinBalance</h2>
+  <div id="acb"></div>
+
+  <table>
+      <tr>
+          <td>Address</td>
+          <td>Balance</td>
+      </tr>
+      <tr>
+          <td id="r1c1">Row1 Col1</td>
+          <td id="r1c2">Row1 Col2</td>
+      </tr>
+      <tr>
+          <td id="r2c1">Row2 Col1</td>
+          <td id="r2c2">Row2 Col2</td>
+      </tr>
+      <tr>
+          <td id="r3c1">Row3 Col1</td>
+          <td id="r3c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r4c1">Row3 Col1</td>
+          <td id="r4c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r5c1">Row3 Col1</td>
+          <td id="r5c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r6c1">Row3 Col1</td>
+          <td id="r6c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r7c1">Row3 Col1</td>
+          <td id="r7c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r8c1">Row3 Col1</td>
+          <td id="r8c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r9c1">Row3 Col1</td>
+          <td id="r9c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r10c1">Row3 Col1</td>
+          <td id="r10c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r11c1">Row3 Col1</td>
+          <td id="r11c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r12c1">Row3 Col1</td>
+          <td id="r12c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r13c1">Row3 Col1</td>
+          <td id="r13c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r14c1">Row3 Col1</td>
+          <td id="r14c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r15c1">Row3 Col1</td>
+          <td id="r15c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r16c1">Row3 Col1</td>
+          <td id="r16c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r17c1">Row3 Col1</td>
+          <td id="r17c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r18c1">Row3 Col1</td>
+          <td id="r18c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r19c1">Row3 Col1</td>
+          <td id="r19c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r20c1">Row3 Col1</td>
+          <td id="r20c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r21c1">Row3 Col1</td>
+          <td id="r21c2">Row3 Col2</td>
+      </tr>
+      <tr>
+          <td id="r22c1">Row3 Col1</td>
+          <td id="r22c2">Row3 Col2</td>
+      </tr>
+  </table>
+  <button type="button" onclick="coinChart()">Get Agents' Coin Balance</button>
+
+  <br />
+  <h4>Coin Settlements</h4>
+  <input id="numb" value="Sender's Eth Address">
+  <input id="numb1" value="Sender's Eth Password">
+  <input id="numb2" value="Coins to transfer">
+  <input id="numb3" value="Recepient's Eth Address">
+
+  <button type="button" onclick="getCoinBalance()">Submit</button>
+  <br />
   <!-- container ends -->
 
   <!-- Bootstrap 4 Scripts -->

@@ -178,27 +178,16 @@ function getAllAddedOlis() {
         p_type_index = parseInt(contract_origin_instance.get_oliType(result[i].args.paymentAddress));
         peak = parseInt(contract_origin_instance.get_oliPeakLoad(result[i].args.paymentAddress, parseInt(0)));
 
-        // storing values in variables to bind them with arrays
-        var address1 = result[i].args.paymentAddress;
-        var coordinates1 = (result[i].args.latOfLocation) / 10000 + ' ' + (result[i].args.longOfLocation) / 10000;
-        var transformerId1 = trafo_id;
-        var circuit1 = circuit[circuit_index];
-        var connection1 = p_type[p_type_index];
-        var peakPower1 = peak;
-        // for leaflet
-        var lat1 = (result[i].args.latOfLocation) / 10000;
-        var long1 = (result[i].args.longOfLocation) / 10000;
-        var markers1 = lat1 + ', ' + long1;
+        address.push(result[i].args.paymentAddress);
+        coordinates.push((result[i].args.latOfLocation) / 10000 + ' ' + (result[i].args.longOfLocation) / 10000);
+        transformerId.push(trafo_id);
+        circuit.push(circuit[circuit_index]);
+        connection.push(p_type[p_type_index]);
+        peakPower.push(peak);
+        lat2.push((result[i].args.latOfLocation) / 10000);
+        long2.push((result[i].args.longOfLocation) / 10000);
+        markers.push(lat1 + ', ' + long1);
 
-        address.push(address1);
-        coordinates.push(coordinates1);
-        transformerId.push(transformerId1);
-        circuit.push(circuit1);
-        connection.push(connection1);
-        peakPower.push(peakPower1);
-        markers.push(markers1);
-        lat2.push(lat1);
-        long2.push(long1);
       }
 
       // table starts from here

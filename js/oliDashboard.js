@@ -186,7 +186,7 @@ function getAllAddedOlis() {
         peakPower.push(peak);
         lat2.push((result[i].args.latOfLocation) / 10000);
         long2.push((result[i].args.longOfLocation) / 10000);
-        markers.push(lat1 + ', ' + long1);
+        markers.push((result[i].args.latOfLocation) / 10000 + ', ' + (result[i].args.longOfLocation) / 10000);
 
       }
 

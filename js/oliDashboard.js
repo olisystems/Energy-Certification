@@ -149,7 +149,7 @@ function stopWatchingEvents() {
 };
 
 var header = new Array();
-header.push(["Address", 'Coordinates', 'Transformer Id', 'Circuit', 'Connection', 'PeakPower']);
+header.push(["Address", 'Coordinates', 'Transformer Id', 'Connection', 'PeakPower']);
 
 function getAllAddedOlis() {
   contract_origin_instance.newAddedOli({}, {
@@ -193,16 +193,19 @@ function getAllAddedOlis() {
       // table starts from here
 
       for (var i = 0; i < address.length; i++) {
-        header.push([address[i], coordinates[i], transformerId[i], circuit[i], connection[i], peakPower[i]]);
+        header.push([address[i], coordinates[i], transformerId[i], connection[i], peakPower[i]]);
       }
+
       //Create a HTML Table element.
       var table = document.createElement("Table");
+      table.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
 
       //Get the count of columns.
       var columnCount = header[0].length;
 
       //Add the header row.
       var row = table.insertRow(-1);
+
       for (var i = 0; i < columnCount; i++) {
         var headerCell = document.createElement("TH");
         headerCell.innerHTML = header[0][i];
@@ -214,6 +217,7 @@ function getAllAddedOlis() {
         row = table.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
           var cell = row.insertCell(-1);
+          cell.style.cssText ='white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
           cell.innerHTML = header[i][j];
         }
       }
@@ -303,7 +307,7 @@ function watchMCP() {
         margin: {
           l: 60,
           r: 15,
-          b: 120,
+          b: 130,
           t: 15,
           pad: 4
         }
@@ -435,6 +439,7 @@ function watchpbid() {
 
       //Create a HTML Table element.
       var table2 = document.createElement("Table");
+      table2.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 11px; word-break: break-word:display: block;';
 
       //Get the count of columns.
       var columnCount = header2[0].length;
@@ -452,6 +457,7 @@ function watchpbid() {
         row = table2.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
           var cell = row.insertCell(-1);
+          cell.style.cssText ='white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
           cell.innerHTML = header2[i][j];
         }
       }
@@ -494,6 +500,7 @@ function watchcbid() {
 
       //Create a HTML Table element.
       var table1 = document.createElement("Table");
+      table1.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 11px; word-break: break-word:display: block;';
 
       //Get the count of columns.
       var columnCount = header1[0].length;
@@ -511,6 +518,7 @@ function watchcbid() {
         row = table1.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
           var cell = row.insertCell(-1);
+          cell.style.cssText ='white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
           cell.innerHTML = header1[i][j];
         }
       }
@@ -548,7 +556,7 @@ var layout = {
     title: 'Time (cycles)'
   },
   yaxis: {
-    title: 'cents/KW)'
+    title: '‎€/Kw)'
   }
 };
 
@@ -609,15 +617,15 @@ var trace4 = {
 var biddata = [trace3, trace4];
 var layout3 = {
   xaxis: {
-    title: 'Power (W)'
+    title: 'Power (w)'
   },
   yaxis: {
-    title: 'cents/KW'
+    title: '‎€/Kw'
   },
   margin: {
     l: 55,
     r: 15,
-    b: 120,
+    b: 130,
     t: 15,
     pad: 4
   }
@@ -636,50 +644,50 @@ function coinChart() {
   }
   /*disabled for one page dashboard*/
   // document.getElementById("acb").innerHTML = "Time: " + nowTime();
-  document.getElementById("r1c1").innerHTML = listAccounts[1];
-  document.getElementById("r2c1").innerHTML = listAccounts[2];
-  document.getElementById("r3c1").innerHTML = listAccounts[3];
-  document.getElementById("r4c1").innerHTML = listAccounts[4];
-  document.getElementById("r5c1").innerHTML = listAccounts[5];
-  document.getElementById("r6c1").innerHTML = listAccounts[6];
-  document.getElementById("r7c1").innerHTML = listAccounts[7];
-  document.getElementById("r8c1").innerHTML = listAccounts[8];
-  document.getElementById("r9c1").innerHTML = listAccounts[9];
-  document.getElementById("r10c1").innerHTML = listAccounts[10];
-  document.getElementById("r11c1").innerHTML = listAccounts[11];
-  document.getElementById("r12c1").innerHTML = listAccounts[12];
-  document.getElementById("r13c1").innerHTML = listAccounts[13];
-  document.getElementById("r14c1").innerHTML = listAccounts[14];
-  document.getElementById("r15c1").innerHTML = listAccounts[15];
-  document.getElementById("r16c1").innerHTML = listAccounts[16];
-  document.getElementById("r17c1").innerHTML = listAccounts[17];
-  document.getElementById("r18c1").innerHTML = listAccounts[18];
-  document.getElementById("r19c1").innerHTML = listAccounts[19];
-  document.getElementById("r20c1").innerHTML = listAccounts[20];
-  document.getElementById("r21c1").innerHTML = listAccounts[21];
-  document.getElementById("r22c1").innerHTML = listAccounts[22];
-  document.getElementById("r1c2").innerHTML = coinBalance[1];
-  document.getElementById("r2c2").innerHTML = coinBalance[2];
-  document.getElementById("r3c2").innerHTML = coinBalance[3];
-  document.getElementById("r4c2").innerHTML = coinBalance[4];
-  document.getElementById("r5c2").innerHTML = coinBalance[5];
-  document.getElementById("r6c2").innerHTML = coinBalance[6];
-  document.getElementById("r7c2").innerHTML = coinBalance[7];
-  document.getElementById("r8c2").innerHTML = coinBalance[8];
-  document.getElementById("r9c2").innerHTML = coinBalance[9];
-  document.getElementById("r10c2").innerHTML = coinBalance[10];
-  document.getElementById("r11c2").innerHTML = coinBalance[11];
-  document.getElementById("r12c2").innerHTML = coinBalance[12];
-  document.getElementById("r13c2").innerHTML = coinBalance[13];
-  document.getElementById("r14c2").innerHTML = coinBalance[14];
-  document.getElementById("r15c2").innerHTML = coinBalance[15];
-  document.getElementById("r16c2").innerHTML = coinBalance[16];
-  document.getElementById("r17c2").innerHTML = coinBalance[17];
-  document.getElementById("r18c2").innerHTML = coinBalance[18];
-  document.getElementById("r19c2").innerHTML = coinBalance[19];
-  document.getElementById("r20c2").innerHTML = coinBalance[20];
-  document.getElementById("r21c2").innerHTML = coinBalance[21];
-  document.getElementById("r22c2").innerHTML = coinBalance[22];
+  // document.getElementById("r1c1").innerHTML = listAccounts[1];
+  // document.getElementById("r2c1").innerHTML = listAccounts[2];
+  // document.getElementById("r3c1").innerHTML = listAccounts[3];
+  // document.getElementById("r4c1").innerHTML = listAccounts[4];
+  // document.getElementById("r5c1").innerHTML = listAccounts[5];
+  // document.getElementById("r6c1").innerHTML = listAccounts[6];
+  // document.getElementById("r7c1").innerHTML = listAccounts[7];
+  // document.getElementById("r8c1").innerHTML = listAccounts[8];
+  // document.getElementById("r9c1").innerHTML = listAccounts[9];
+  // document.getElementById("r10c1").innerHTML = listAccounts[10];
+  // document.getElementById("r11c1").innerHTML = listAccounts[11];
+  // document.getElementById("r12c1").innerHTML = listAccounts[12];
+  // document.getElementById("r13c1").innerHTML = listAccounts[13];
+  // document.getElementById("r14c1").innerHTML = listAccounts[14];
+  // document.getElementById("r15c1").innerHTML = listAccounts[15];
+  // document.getElementById("r16c1").innerHTML = listAccounts[16];
+  // document.getElementById("r17c1").innerHTML = listAccounts[17];
+  // document.getElementById("r18c1").innerHTML = listAccounts[18];
+  // document.getElementById("r19c1").innerHTML = listAccounts[19];
+  // document.getElementById("r20c1").innerHTML = listAccounts[20];
+  // document.getElementById("r21c1").innerHTML = listAccounts[21];
+  // document.getElementById("r22c1").innerHTML = listAccounts[22];
+  // document.getElementById("r1c2").innerHTML = coinBalance[1];
+  // document.getElementById("r2c2").innerHTML = coinBalance[2];
+  // document.getElementById("r3c2").innerHTML = coinBalance[3];
+  // document.getElementById("r4c2").innerHTML = coinBalance[4];
+  // document.getElementById("r5c2").innerHTML = coinBalance[5];
+  // document.getElementById("r6c2").innerHTML = coinBalance[6];
+  // document.getElementById("r7c2").innerHTML = coinBalance[7];
+  // document.getElementById("r8c2").innerHTML = coinBalance[8];
+  // document.getElementById("r9c2").innerHTML = coinBalance[9];
+  // document.getElementById("r10c2").innerHTML = coinBalance[10];
+  // document.getElementById("r11c2").innerHTML = coinBalance[11];
+  // document.getElementById("r12c2").innerHTML = coinBalance[12];
+  // document.getElementById("r13c2").innerHTML = coinBalance[13];
+  // document.getElementById("r14c2").innerHTML = coinBalance[14];
+  // document.getElementById("r15c2").innerHTML = coinBalance[15];
+  // document.getElementById("r16c2").innerHTML = coinBalance[16];
+  // document.getElementById("r17c2").innerHTML = coinBalance[17];
+  // document.getElementById("r18c2").innerHTML = coinBalance[18];
+  // document.getElementById("r19c2").innerHTML = coinBalance[19];
+  // document.getElementById("r20c2").innerHTML = coinBalance[20];
+  // document.getElementById("r21c2").innerHTML = coinBalance[21];
+  // document.getElementById("r22c2").innerHTML = coinBalance[22];
 }
 
 var sid;
@@ -743,7 +751,7 @@ var layoutgFee = {
     title: 'Time (cycles)'
   },
   yaxis: {
-    title: 'Cents/KW'
+    title: '‎€/kw'
   },
   margin: {
     l: 50,
@@ -805,13 +813,13 @@ function gridFee() {
   console.log("Circuit Load: " + cktLoad);
   console.log("Peak Load: " + peakLoad);
   console.log("Percentage Load: " + yLoad);
-  if (tGFee > 0) {
-    Plotly.newPlot('gf', gFeeData, layoutgFee);
-    Plotly.newPlot('gl', gLoadData, layoutgLoad);
-  } else {
-    xGFee.shift();
-    yGFee.shift();
-  }
+  // if (tGFee > 0) {
+  //   Plotly.newPlot('gf', gFeeData, layoutgFee);
+  //   Plotly.newPlot('gl', gLoadData, layoutgLoad);
+  // } else {
+  //   xGFee.shift();
+  //   yGFee.shift();
+  // }
   xLoad.push(tGFee + 1);
   yLoad.push(perLoad);
   tGFee++;

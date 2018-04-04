@@ -1,5 +1,14 @@
+
 body {
   padding-top: 50px;
+  font-family: 'myFirstFont';
+}
+
+
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
 }
 
 .navbar {
@@ -74,6 +83,7 @@ div.scroll {
   width: 50%;
   margin: 0px auto;
   table-layout: fixed;
+  font-size: 12px;
 }
 
 table tbody, table thead {
@@ -87,13 +97,8 @@ table tbody {
 
 th, td {
   width: 100%;
-}
-img {
-  display: block;
-  max-width:70px;
-  max-height:70px;
-  width: auto;
-  height: auto;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #map {

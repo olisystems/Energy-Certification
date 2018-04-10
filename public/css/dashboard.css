@@ -3,13 +3,56 @@ body {
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
 }
+
 @font-face {
-   font-family: myFirstFont;
-   src: url(NeoSansArabic.ttf);
+  font-family: 'myFirstFont';
+  src: url(./fonts/NeoSansArabic.ttf);
 }
 
-*{
-   font-family: myFirstFont;
+* {
+  font-family: 'myFirstFont';
+}
+
+.clockControls {
+  text-align: center;
+  top: 1em;
+}
+
+.button {
+  color: #bbb;
+  font-size: 1vw;
+  margin: 0 0.5em;
+}
+
+.button:first-child {
+  margin-left: 0;
+}
+
+.button:last-child {
+  margin-right: 0;
+}
+
+.button:hover {
+  color: gray;
+  text-decoration: none;
+}
+
+.oliClock {
+  font-size: 3vw;
+  font-weight: bold;
+  align-content: center;
+  color: #69A206;
+  padding: 10px;
+  /* font-family: 'Source Sans Pro', sans-serif; */
+}
+
+.oliResults {
+  position: absolute;
+  width: 100%;
+  border-color: lime;
+  list-style: none;
+  margin: 0;
+  padding: 5px;
 }
 
 /* disable plotly graphs toolbar*/
@@ -18,7 +61,8 @@ body {
   display: none !important;
 }
 
-h1, h3 {
+h1,
+h3 {
   color: #333;
   /* color: green !important; */
   font-weight: 300;
@@ -50,7 +94,8 @@ h1 {
   background-size: cover;
 }
 
-.header h1, h3 {
+.header h1,
+h3 {
   margin-bottom: 10px;
   padding: 10px;
   color: white;
@@ -97,7 +142,8 @@ h1 {
   background: #69A206;
 }
 
-button, p {
+button,
+p {
   position: center;
   margin: 10px;
   white-space: normal !important;
@@ -118,7 +164,8 @@ div.scroll {
   height: 150px;
 }
 
-.card, #map {
+.card,
+#map {
   overflow: hidden;
   -webkit-transition: .25s box-shadow;
   transition: .25s box-shadow;

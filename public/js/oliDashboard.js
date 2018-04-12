@@ -395,7 +395,7 @@ console.log(currentTime);
           title: 'Time'
         },
         yaxis: {
-          title: 'Price [ct/kW]'
+          title: 'Price [ct/kWh]'
         },
         margin: {
           l: 50,
@@ -528,7 +528,7 @@ function watchpbid() {
 
 var cbid;
 var header1 = [];
-header1.push(["Eth Address", 'Price [ct/kW]', 'Power [kW]']);
+header1.push(["Eth Address", 'Price [ct/kWh]', 'Power [kW]']);
 var xConsumerRate = [];
 var yConsumerAmount = [];
 

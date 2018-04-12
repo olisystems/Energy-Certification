@@ -392,12 +392,18 @@ console.log(currentTime);
       var timeSeriesGraphLayout = {
         xaxis: {
           title: 'Time',
+          showline: true,
+          linecolor: 'lightgray',
+          linewidth: 0.5,
           titlefont: {
             color:'black'
           }
         },
         yaxis: {
           title: 'Price [ct/kWh]',
+          showline: true,
+          linecolor: 'lightgray',
+          linewidth: 0.5,
           titlefont: {
             color:'black'
           },
@@ -667,14 +673,22 @@ var layout3 = {
   xaxis: {
     title: 'Power [W]',
     tickformat : "none",
+    showline: true,
+    linecolor: 'lightgray',
+    linewidth: 0.5,
     titlefont: {
-      color:'black'
+      color:'black',
+      weight: 'bold'
     }
   },
   yaxis: {
     title: 'Price [‎ct/kWh]',
+    showline: true,
+    linecolor: 'lightgray',
+    linewidth: 0.5,
     titlefont: {
-      color:'black'
+      color:'black',
+      weight: 'bold'
     }
   },
   margin: {

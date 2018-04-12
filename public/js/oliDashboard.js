@@ -137,7 +137,7 @@ function watchNewAddedOlis() {
 };
 
 var header = new Array();
-header.push(["Eth Address", 'Coordinates [Lat-Long]', 'Transformer Id', 'Device Type', 'Peak Power [kW]']);
+header.push(["Eth Address", 'Coordinates [Lat-Long]', 'Transformer Id', 'Device Type', 'Peak Power [W]']);
 
 function getAllAddedOlis() {
   contract_origin_instance.newAddedOli({}, {
@@ -237,7 +237,7 @@ function getAllAddedOlis() {
 
         var lon = long2[i];
         var lat = lat2[i];
-        var popupText = "<br />" + "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation) / 10000) + "," + ((result[i].args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Connection Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
+        var popupText = "<br />" + "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation) / 10000) + "," + ((result[i].args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Device Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
 
         var markerLocation = new L.LatLng(lat, lon);
         var marker = new L.Marker(markerLocation);
@@ -275,7 +275,7 @@ class OliClock {
 
   lapClock() {
     let times = this.times;
-    document.getElementById("testID").innerHTML = "Time laps for last transaction: " + this.format(times);
+    document.getElementById("testID").innerHTML = "Time elapsed for last transaction: " + this.format(times);
 
   }
 
@@ -418,7 +418,7 @@ console.log(currentTime);
 var pbid;
 var gamt;
 var header2 = [];
-header2.push(["Eth Address", 'Price [ct/kW]', 'Power [kW]']);
+header2.push(["Eth Address", 'Price [ct/kWh]', 'Power [W]']);
 var xProducerRate = [];
 var yProducerAmount = [];
 
@@ -483,7 +483,7 @@ function watchpbid() {
 
       if (header2.length > 6) {
         header2 = header2.slice(-5);
-        header2.splice(0, 0, ["Eth Address", 'Price [ct/kW]', 'Power [kW]']);
+        header2.splice(0, 0, ["Eth Address", 'Price [ct/kWh]', 'Power [W]']);
       };
 
       //Create a HTML Table element.

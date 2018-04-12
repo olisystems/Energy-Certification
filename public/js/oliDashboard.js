@@ -177,7 +177,6 @@ function getAllAddedOlis() {
         markers.push((result[i].args.latOfLocation) / 10000 + ', ' + (result[i].args.longOfLocation) / 10000);
 
       }
-
       // table starts from here
 
       for (var i = 0; i < address.length; i++) {
@@ -237,7 +236,7 @@ function getAllAddedOlis() {
 
         var lon = long2[i];
         var lat = lat2[i];
-        var popupText = "<br />" + "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation) / 10000) + "," + ((result[i].args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Device Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
+        var popupText = "<br />" + "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation) / 10000) + "," + ((result[i].args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Device Type: " + connection[i] + " | Peak Power: " + peak;
 
         var markerLocation = new L.LatLng(lat, lon);
         var marker = new L.Marker(markerLocation);
@@ -392,10 +391,16 @@ console.log(currentTime);
 
       var timeSeriesGraphLayout = {
         xaxis: {
-          title: 'Time'
+          title: 'Time',
+          titlefont: {
+            color:'black'
+          }
         },
         yaxis: {
-          title: 'Price [ct/kWh]'
+          title: 'Price [ct/kWh]',
+          titlefont: {
+            color:'black'
+          },
         },
         margin: {
           l: 50,
@@ -660,10 +665,17 @@ var consumerBid = {
 var biddata = [producerBid, consumerBid];
 var layout3 = {
   xaxis: {
-    title: 'Power [W]'
+    title: 'Power [W]',
+    tickformat : "none",
+    titlefont: {
+      color:'black'
+    }
   },
   yaxis: {
-    title: 'Price [‎ct/kWh]'
+    title: 'Price [‎ct/kWh]',
+    titlefont: {
+      color:'black'
+    }
   },
   margin: {
     l: 55,

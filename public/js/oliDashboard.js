@@ -591,7 +591,7 @@ function watchcbid() {
       header1.push([result.args.caddr, result.args.crate, result.args.camount]);
       if (header1.length > 6) {
         header1 = header1.slice(-5);
-        header1.splice(0, 0, ["Eth Address", 'Price [ct/kW]', 'Power [kW]']);
+        header1.splice(0, 0, ["Eth Address", 'Price [ct/kWh]', 'Power [kW]']);
       };
       //Create a HTML Table element.
       var table1 = document.createElement("Table");
@@ -663,7 +663,7 @@ var layout3 = {
     title: 'Power [W]'
   },
   yaxis: {
-    title: 'Price [‎ct/kW]'
+    title: 'Price [‎ct/kWh]'
   },
   margin: {
     l: 55,
@@ -739,7 +739,7 @@ var layoutgFee = {
     title: 'Time (cycles)'
   },
   yaxis: {
-    title: 'Price [ct/kW]'
+    title: 'Price [ct/kWh]'
   },
   margin: {
     l: 50,

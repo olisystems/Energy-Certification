@@ -137,7 +137,7 @@ function watchNewAddedOlis() {
 };
 
 var header = new Array();
-header.push(["Eth Address", 'Coordinates [Lat-Long]', 'Transformer Id', 'Device Type', 'Peak Power [kW]']);
+header.push(["Eth Address", 'Coordinates [Lat-Long]', 'Transformer Id', 'Device Type', 'Peak Power [W]']);
 
 function getAllAddedOlis() {
   contract_origin_instance.newAddedOli({}, {
@@ -177,7 +177,6 @@ function getAllAddedOlis() {
         markers.push((result[i].args.latOfLocation) / 10000 + ', ' + (result[i].args.longOfLocation) / 10000);
 
       }
-
       // table starts from here
 
       for (var i = 0; i < address.length; i++) {
@@ -237,7 +236,7 @@ function getAllAddedOlis() {
 
         var lon = long2[i];
         var lat = lat2[i];
-        var popupText = "<br />" + "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation) / 10000) + "," + ((result[i].args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Connection Type: " + p_type[p_type_index] + " | Peak Power: " + peak;
+        var popupText = "<br />" + "Oli Payment Address: " + result[i].args.paymentAddress + " | Oli GPS Coordinates: (" + ((result[i].args.latOfLocation) / 10000) + "," + ((result[i].args.longOfLocation) / 10000) + ") | Transformer ID: " + trafo_id + " | Device Type: " + connection[i] + " | Peak Power: " + peak;
 
         var markerLocation = new L.LatLng(lat, lon);
         var marker = new L.Marker(markerLocation);
@@ -275,7 +274,7 @@ class OliClock {
 
   lapClock() {
     let times = this.times;
-    document.getElementById("testID").innerHTML = "Time laps for last transaction: " + this.format(times);
+    document.getElementById("testID").innerHTML = "Time elapsed for last transaction: " + this.format(times);
 
   }
 
@@ -392,10 +391,22 @@ console.log(currentTime);
 
       var timeSeriesGraphLayout = {
         xaxis: {
-          title: 'Time'
+          title: 'Time',
+          showline: true,
+          linecolor: 'lightgray',
+          linewidth: 0.5,
+          titlefont: {
+            color:'black'
+          }
         },
         yaxis: {
-          title: 'Price [ct/kW]'
+          title: 'Price [ct/kWh]',
+          showline: true,
+          linecolor: 'lightgray',
+          linewidth: 0.5,
+          titlefont: {
+            color:'black'
+          },
         },
         margin: {
           l: 50,
@@ -418,7 +429,7 @@ console.log(currentTime);
 var pbid;
 var gamt;
 var header2 = [];
-header2.push(["Eth Address", 'Price [ct/kW]', 'Power [kW]']);
+header2.push(["Eth Address", 'Price [ct/kWh]', 'Power [W]']);
 var xProducerRate = [];
 var yProducerAmount = [];
 
@@ -483,7 +494,7 @@ function watchpbid() {
 
       if (header2.length > 6) {
         header2 = header2.slice(-5);
-        header2.splice(0, 0, ["Eth Address", 'Price [ct/kW]', 'Power [kW]']);
+        header2.splice(0, 0, ["Eth Address", 'Price [ct/kWh]', 'Power [W]']);
       };
 
       //Create a HTML Table element.
@@ -528,7 +539,7 @@ function watchpbid() {
 
 var cbid;
 var header1 = [];
-header1.push(["Eth Address", 'Price [ct/kW]', 'Power [kW]']);
+header1.push(["Eth Address", 'Price [ct/kWh]', 'Power [W]']);
 var xConsumerRate = [];
 var yConsumerAmount = [];
 
@@ -591,7 +602,7 @@ function watchcbid() {
       header1.push([result.args.caddr, result.args.crate, result.args.camount]);
       if (header1.length > 6) {
         header1 = header1.slice(-5);
-        header1.splice(0, 0, ["Eth Address", 'Price [ct/kW]', 'Power [kW]']);
+        header1.splice(0, 0, ["Eth Address", 'Price [ct/kWh]', 'Power [W]']);
       };
       //Create a HTML Table element.
       var table1 = document.createElement("Table");
@@ -660,10 +671,25 @@ var consumerBid = {
 var biddata = [producerBid, consumerBid];
 var layout3 = {
   xaxis: {
-    title: 'Power [W]'
+    title: 'Power [W]',
+    tickformat : "none",
+    showline: true,
+    linecolor: 'lightgray',
+    linewidth: 0.5,
+    titlefont: {
+      color:'black',
+      weight: 'bold'
+    }
   },
   yaxis: {
-    title: 'Price [‎ct/kW]'
+    title: 'Price [‎ct/kWh]',
+    showline: true,
+    linecolor: 'lightgray',
+    linewidth: 0.5,
+    titlefont: {
+      color:'black',
+      weight: 'bold'
+    }
   },
   margin: {
     l: 55,
@@ -739,7 +765,7 @@ var layoutgFee = {
     title: 'Time (cycles)'
   },
   yaxis: {
-    title: 'Price [ct/kW]'
+    title: 'Price [ct/kWh]'
   },
   margin: {
     l: 50,

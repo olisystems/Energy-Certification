@@ -222,3 +222,6 @@ img {
   background-color: #3266cd;
   color: white;
 }
+#console, #console1, #console2{
+  margin: 0;
+}

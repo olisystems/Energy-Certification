@@ -823,25 +823,22 @@ function gridFee() {
   tGFee++;
 }
 
-function timeConverter(UNIX_timestamp){
-  var a = new Date(UNIX_timestamp * 1000);
-  var year = a.getFullYear();
-  var month = a.getMonth();
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var sec = a.getSeconds();
-  var parsingTime = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-  return parsingTime;
-};
-
-var blockTimestamp = web3.eth.getBlock('latest').timestamp;
-var peerCount = web3.net.peerCount;
-var latestBlockHash = web3.eth.getBlock('latest').hash;
-var blockNumber = web3.eth.blockNumber;
-
 setInterval(function(){
-   document.getElementById('console').innerHTML = timeConverter(blockTimestamp) + ' Imported ' + '#' + blockNumber + ' ' + latestBlockHash.slice(0, 4) + '...' + latestBlockHash.slice(-4);
+
+    var blockTimestamp = web3.eth.getBlock('latest').timestamp;
+    var peerCount = web3.net.peerCount;
+    var latestBlockHash = web3.eth.getBlock('latest').hash;
+    var blockNumber = web3.eth.blockNumber;
+    var transactionLength = web3.eth.getBlock('latest').transactions.length;
+    var blockSize = (web3.eth.getBlock('latest').size) / 1000;
+    var gasUsed = (web3.eth.getBlock('latest').gasUsed) / 1000000;
+    gasUsed = gasUsed.toFixed(2);
+
+   document.getElementById('console').innerHTML = document.getElementById('console1').innerHTML;
+   document.getElementById('console1').innerHTML = document.getElementById('console2').innerHTML;
+   document.getElementById('console2').innerHTML = 'Block Info: ' + timeConverter(blockTimestamp) + ' Imported ' + '#' + blockNumber + ' ' +
+                                                    latestBlockHash.slice(0, 4) + '...' + latestBlockHash.slice(-4) + ' ' + '( ' + transactionLength +
+                                                    ' txs, ' + blockSize + ' kiB ' + gasUsed + ' Mgas' + ' )';
 }, 3000);
 
 // windows onload functions

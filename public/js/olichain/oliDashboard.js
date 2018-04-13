@@ -835,8 +835,10 @@ function timeConverter(UNIX_timestamp){
   return parsingTime;
 };
 
+var tmpCnt = 0;
 setInterval(function(){
 
+    tmpCnt += 1;
     var blockTimestamp = web3.eth.getBlock('latest').timestamp;
     var peerCount = web3.net.peerCount;
     var latestBlockHash = web3.eth.getBlock('latest').hash;
@@ -848,9 +850,18 @@ setInterval(function(){
 
    document.getElementById('console').innerHTML = document.getElementById('console1').innerHTML;
    document.getElementById('console1').innerHTML = document.getElementById('console2').innerHTML;
-   document.getElementById('console2').innerHTML = 'Block Info: ' + timeConverter(blockTimestamp) + ' Imported ' + '#' + blockNumber + ' ' +
-                                                    latestBlockHash.slice(0, 4) + '...' + latestBlockHash.slice(-4) + ' ' + '( ' + transactionLength +
-                                                    ' txs, ' + blockSize + ' kiB ' + gasUsed + ' Mgas' + ' )';
+   document.getElementById('console2').innerHTML = document.getElementById('console3').innerHTML;
+   document.getElementById('console3').innerHTML = document.getElementById('console4').innerHTML;
+
+   if (tmpCnt < 4) {
+     document.getElementById('console4').innerHTML = 'Block Info: ' + timeConverter(blockTimestamp) + ' Imported ' + '#' + blockNumber + ' ' +
+                                                      latestBlockHash.slice(0, 4) + '...' + latestBlockHash.slice(-4) + ' ' + '( ' + transactionLength +
+                                                      ' txs, ' + blockSize + ' kiB ' + gasUsed + ' Mgas' + ' )';
+   } else {
+     document.getElementById('console4').innerHTML = 'Peer Info: ' + peerCount + '/25 peers';
+     tmpCnt = 0;
+   }
+
 }, 3000);
 
 // windows onload functions

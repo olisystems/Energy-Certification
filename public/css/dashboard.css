@@ -217,3 +217,8 @@ img {
 .myButton {
   justify-content: center;
 }
+
+#cosoleID{
+  background-color: #3266cd;
+  color: white;
+}

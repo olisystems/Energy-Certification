@@ -408,7 +408,7 @@ function watchMCP() {
         margin: {
           l: 50,
           r: 15,
-          b: 130,
+          b: 110,
           t: 15,
           pad: 4
         }

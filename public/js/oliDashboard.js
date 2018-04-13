@@ -408,7 +408,7 @@ function watchMCP() {
         margin: {
           l: 50,
           r: 15,
-          b: 110,
+          b: 130,
           t: 15,
           pad: 4
         }
@@ -767,7 +767,7 @@ var layoutgFee = {
   margin: {
     l: 50,
     r: 15,
-    b: 120,
+    b: 140,
     t: 15,
     pad: 4
   }

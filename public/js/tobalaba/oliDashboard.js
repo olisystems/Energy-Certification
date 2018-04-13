@@ -823,6 +823,18 @@ function gridFee() {
   tGFee++;
 }
 
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp * 1000);
+  var year = a.getFullYear();
+  var month = a.getMonth();
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var parsingTime = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return parsingTime;
+};
+
 setInterval(function(){
 
     var blockTimestamp = web3.eth.getBlock('latest').timestamp;

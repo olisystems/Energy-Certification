@@ -23,7 +23,6 @@ body {
   color: white;
   font-size: 1vw;
   margin: 0 0.5em;
-
 }
 
 .button:first-child {
@@ -58,6 +57,7 @@ body {
 }
 
 /* disable plotly graphs toolbar*/
+
 .modebar {
   display: none !important;
 }
@@ -218,11 +218,12 @@ img {
   justify-content: center;
 }
 
-#cosoleID{
+#cosoleID {
   background-color: #001a4d;
   color: white;
 }
-.cosoleOutput{
+
+.cosoleOutput {
   margin: 0;
   font-size: 11px;
   padding-top: 2px;

@@ -31,6 +31,12 @@ function timeConverter(UNIX_timestamp) {
 function currentTime() {
   var info = web3.eth.getBlock('latest');
   var date = new Date((info.timestamp) * 1000);
+
+  var year = date.getFullYear();
+  //var month = ("0" + date.getMonth()).slice(-2);
+  var month = date.getUTCMonth() + 1; //months from 1-12
+  //var currentDate = ("0" + date.getDate()).slice(-2);
+  var day = ("0" + date.getUTCDate()).slice(-2);
   // Hours part from the timestamp
   var hours = date.getHours();
   // Minutes part from the timestamp
@@ -38,7 +44,8 @@ function currentTime() {
   // Seconds part from the timestamp
   var seconds = "0" + date.getSeconds();
   // Will display time in 10:30:23 format
-  var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+  // var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+  var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
   return formattedTime;
 }
 /*
@@ -209,143 +216,6 @@ function getProCounter() {
   })
 }
 
-// ** Energy consumption mapping setup
-
-var EnerConsumptionEvent;
-// real time energy time graph
-var enerConsumption = [];
-var currentConsTxTime = [];
-var enerConsBlockValues = [];
-
-// real time energy table
-// creating table header
-var header2 = [];
-header2.push(['Eth Address', 'Time', 'Amount']);
-
-function consRealTimeEner() {
-  EnerConsumptionEvent = consumptionContract.EnerConsumptionEvent({
-    fromBlock: 'latest',
-    toBlock: 'latest'
-  });
-
-  EnerConsumptionEvent.watch(function(error, result) {
-
-    if (!error) {
-
-      // table starts from here
-      header2.push([result.args.oliAddr, timeConverter(result.args.eTime), result.args.enerAmount]);
-      //Create a HTML Table element.
-      var table2 = document.createElement("Table");
-      table2.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
-
-      //Get the count of columns.
-      var columnCount = header2[0].length;
-      //Add the header row.
-      var row = table2.insertRow(-1);
-      for (var i = 0; i < columnCount; i++) {
-        var headerCell = document.createElement("TH");
-        headerCell.innerHTML = header2[0][i];
-        row.appendChild(headerCell);
-      }
-      //Add the data rows.
-      for (var i = 1; i < header2.length; i++) {
-        row = table2.insertRow(-1);
-        for (var j = 0; j < columnCount; j++) {
-          var cell = row.insertCell(-1);
-          cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
-          cell.innerHTML = header2[i][j];
-        }
-      }
-
-      var realTimeEnergyConsTable = document.getElementById("realTimeConsumption");
-      realTimeEnergyConsTable.innerHTML = "";
-      realTimeEnergyConsTable.appendChild(table2);
-
-      // ploting real time energy production graph
-      // slicing last ten values
-      enerConsumption.push(result.args.enerAmount.c[0]);
-      currentConsTxTime.push(currentTime());
-
-      // 1
-      var enerConsumptionNew = [],
-        currentConsTxTimeNew = [];
-      // 2 creating single sorted object
-      var outputObject = {};
-      currentConsTxTime.forEach((key, i) => outputObject[key] = enerConsumption[i]);
-
-      // 3 conveting object into single arrays
-      for (var property in outputObject) {
-        if (!outputObject.hasOwnProperty(property)) {
-          continue;
-        }
-
-      }
-
-      // 4 assigning key and value names
-      var timeObject = {};
-      var energyValueObject = {};
-      var key = "time";
-      var value = "energy";
-      timeObject[key] = property;
-      energyValueObject[value] = outputObject[property];
-
-      // 5 combining keys and values pairs into single array of objects
-      function extend(obj, src) {
-        for (var key in src) {
-          if (src.hasOwnProperty(key)) obj[key] = src[key];
-        }
-        return obj;
-      }
-
-      var combinedObject = extend(timeObject, energyValueObject);
-      enerConsBlockValues.push(combinedObject);
-
-      // 6 sum up values for same keys
-      var holder = {};
-      enerConsBlockValues.forEach(function(d) {
-        if (holder.hasOwnProperty(d.time)) {
-          holder[d.time] = holder[d.time] + d.energy;
-        } else {
-          holder[d.time] = d.energy;
-        }
-      });
-
-      var combinedObject2 = [];
-
-      for (var prop in holder) {
-        combinedObject2.push({
-          time: prop,
-          energy: holder[prop]
-        });
-      }
-
-      // 7 conveting object into single arrays
-      for (var property in combinedObject2) {
-        if (!combinedObject2.hasOwnProperty(property)) {
-          continue;
-        }
-        // currentTxTimeNew.push(property);
-        // enerProductionNew.push(combinedObject2[property]);
-        currentConsTxTimeNew.push(combinedObject2[property].time);
-        enerConsumptionNew.push(combinedObject2[property].energy);
-      }
-
-      // replacing the original values
-      currentConsTxTime = currentConsTxTimeNew;
-      enerConsumption = enerConsumptionNew;
-      if (enerConsumption.length > 10) {
-        enerConsumption = enerConsumption.slice(-10);
-        currentConsTxTime = currentConsTxTime.slice(-10);
-      }
-
-      //Plotly.newPlot('realTimeProGraph', data, timeSeriesGraphLayout);
-
-    } else {
-      console.log(error);
-    }
-  });
-}
-
 // Energy production mapping setup
 var EnerProductionEvent;
 // real time energy time graph
@@ -471,38 +341,37 @@ function wathRealTimeEnergy() {
         currentProTxTime = currentProTxTime.slice(-10);
       }
 
-      var proData = {
-        type: "scatter",
-        mode: "lines",
-        name: 'Producer',
-        x: currentProTxTime,
-        y: enerProduction,
-        line: {color: '#009933'}
-      }
+  function toDate(ts) {
+    return new Date(ts);
+  }
 
-      if (enerConsumption.length > 10) {
-        enerConsumption = enerConsumption.slice(-10);
-        currentConsTxTime = currentConsTxTime.slice(-10);
-      }
+  var proData = {
+    type: 'date',
+    mode: "lines+markers",
+    name: 'Producer',
 
+    x: currentProTxTime.map(toDate),
+    y: enerProduction,
+    line: {
+      color: '#009933'
+    }
+  }
       var consData = {
         type: "scatter",
-        mode: "lines",
+        mode: "lines+markers",
         name: 'Consumer',
-        x: currentConsTxTime,
+        x: currentConsTxTime.map(toDate),
         y: enerConsumption,
         line: {color: '#cc6600'}
       }
 
-      console.log(currentProTxTime);
-      console.log('#####################');
-      console.log(currentConsTxTime);
       var data = [proData,consData];
 
       var layout = {
         xaxis: {
           title: 'Time',
-          showline: true,
+          tickformat: "%H:%M:%S",
+          //tickvals: currentConsTxTime.map(toDate),
           linecolor: 'lightgray',
           linewidth: 0.5,
           titlefont: {
@@ -511,7 +380,6 @@ function wathRealTimeEnergy() {
         },
         yaxis: {
           title: 'Energy [kWh] per Block',
-          showline: true,
           tickformat: "none",
           linecolor: 'lightgray',
           linewidth: 0.5,
@@ -767,7 +635,6 @@ consAccntList.addEventListener('click', activateConsAccnt);
 
 function activateConsAccnt(e) {
   if (e.target.nodeName == 'LI') {
-console.log(consAccntList);
     document.getElementById('consAccntTitle').innerHTML = e.target.innerHTML;
 
     // get registration details for individual account
@@ -844,6 +711,143 @@ console.log(consAccntList);
   }
 }
 
+// ** Energy consumption mapping setup
+
+var EnerConsumptionEvent;
+// real time energy time graph
+var enerConsumption = [];
+var currentConsTxTime = [];
+var enerConsBlockValues = [];
+
+// real time energy table
+// creating table header
+var header2 = [];
+header2.push(['Eth Address', 'Time', 'Amount']);
+
+function consRealTimeEner() {
+  EnerConsumptionEvent = consumptionContract.EnerConsumptionEvent({
+    fromBlock: 'latest',
+    toBlock: 'latest'
+  });
+
+  EnerConsumptionEvent.watch(function(error, result) {
+
+    if (!error) {
+
+      // table starts from here
+      header2.push([result.args.oliAddr, timeConverter(result.args.eTime), result.args.enerAmount]);
+      //Create a HTML Table element.
+      var table2 = document.createElement("Table");
+      table2.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
+
+      //Get the count of columns.
+      var columnCount = header2[0].length;
+      //Add the header row.
+      var row = table2.insertRow(-1);
+      for (var i = 0; i < columnCount; i++) {
+        var headerCell = document.createElement("TH");
+        headerCell.innerHTML = header2[0][i];
+        row.appendChild(headerCell);
+      }
+      //Add the data rows.
+      for (var i = 1; i < header2.length; i++) {
+        row = table2.insertRow(-1);
+        for (var j = 0; j < columnCount; j++) {
+          var cell = row.insertCell(-1);
+          cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
+          cell.innerHTML = header2[i][j];
+        }
+      }
+
+      var realTimeEnergyConsTable = document.getElementById("realTimeConsumption");
+      realTimeEnergyConsTable.innerHTML = "";
+      realTimeEnergyConsTable.appendChild(table2);
+
+      // ploting real time energy production graph
+      // slicing last ten values
+      enerConsumption.push(result.args.enerAmount.c[0]);
+      currentConsTxTime.push(currentTime());
+
+      // 1
+      var enerConsumptionNew = [],
+        currentConsTxTimeNew = [];
+      // 2 creating single sorted object
+      var outputObject = {};
+      currentConsTxTime.forEach((key, i) => outputObject[key] = enerConsumption[i]);
+
+      // 3 conveting object into single arrays
+      for (var property in outputObject) {
+        if (!outputObject.hasOwnProperty(property)) {
+          continue;
+        }
+
+      }
+
+      // 4 assigning key and value names
+      var timeObject = {};
+      var energyValueObject = {};
+      var key = "time";
+      var value = "energy";
+      timeObject[key] = property;
+      energyValueObject[value] = outputObject[property];
+
+      // 5 combining keys and values pairs into single array of objects
+      function extend(obj, src) {
+        for (var key in src) {
+          if (src.hasOwnProperty(key)) obj[key] = src[key];
+        }
+        return obj;
+      }
+
+      var combinedObject = extend(timeObject, energyValueObject);
+      enerConsBlockValues.push(combinedObject);
+
+      // 6 sum up values for same keys
+      var holder = {};
+      enerConsBlockValues.forEach(function(d) {
+        if (holder.hasOwnProperty(d.time)) {
+          holder[d.time] = holder[d.time] + d.energy;
+        } else {
+          holder[d.time] = d.energy;
+        }
+      });
+
+      var combinedObject2 = [];
+
+      for (var prop in holder) {
+        combinedObject2.push({
+          time: prop,
+          energy: holder[prop]
+        });
+      }
+
+      // 7 conveting object into single arrays
+      for (var property in combinedObject2) {
+        if (!combinedObject2.hasOwnProperty(property)) {
+          continue;
+        }
+        // currentTxTimeNew.push(property);
+        // enerProductionNew.push(combinedObject2[property]);
+        currentConsTxTimeNew.push(combinedObject2[property].time);
+        enerConsumptionNew.push(combinedObject2[property].energy);
+      }
+
+      // replacing the original values
+      currentConsTxTime = currentConsTxTimeNew;
+      enerConsumption = enerConsumptionNew;
+      if (enerConsumption.length > 10) {
+        enerConsumption = enerConsumption.slice(-10);
+        currentConsTxTime = currentConsTxTime.slice(-10);
+      }
+
+      //Plotly.newPlot('realTimeProGraph', data, timeSeriesGraphLayout);
+
+    } else {
+      console.log(error);
+    }
+  });
+}
+
 // windows onload functions
 function start() {
   getAllProducers();
@@ -851,8 +855,8 @@ function start() {
   producerList();
   consumerList();
   getProCounter();
-  consRealTimeEner();
   wathRealTimeEnergy();
+  consRealTimeEner();
   getAllConsumers();
   getConsCounter();
 }

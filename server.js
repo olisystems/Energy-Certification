@@ -14,7 +14,7 @@ console.log('\n local server is running on port ' + port + '!');
 // ---------------------------------------------------------------------
 
 // public folder for static files
-app.use(express.static('public'));
+app.use(express.static('app'));
 
 // enable body parsing for json format
 app.use(bodyParser.json());

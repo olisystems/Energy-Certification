@@ -1,139 +1,121 @@
-body {
-  padding-top: 50px;
-  -webkit-overflow-scrolling: touch;
--webkit-font-smoothing: antialiased;
--webkit-backface-visibility: hidden;
-}
+body {-webkit-overflow-scrolling: touch;
 
-.elements{
+  padding-top: 50px;-webkit-font-smoothing: antialiased;-webkit-backface-visibility: hidden;
+  }
+
+.elements {
   margin: 10px;
 }
-#loader{
+
+#loader {display: none;
+
   width: 50px;
-  display: none;
-}
-#proList{
+  }
+
+#proList {
   word-wrap: break-word;
 }
-.scroll{
-  height:250px;
-  overflow-y: scroll;
-}
+
+.scroll {overflow-y: scroll;
+
+  height: 250px;
+  }
 
 .header h1 {
-  position: relative;
-  top: 18px;
-  left: 10px;
-}
+  position: relative;top: 18px;left: 10px;
+  }
 
-.navbar {
+.navbar {color: white;
   background-color: #154360;
-  color: white;
-}
+  }
 
 .container-fluid {
-  align-content: center;
-  margin-bottom: 10px;
-}
+  align-content: center;margin-bottom: 10px;
+  }
 
-.headalign {
-  text-align: center;
-  margin: 30px;
-  color: orange;
-}
+.headalign {margin: 30px;
+
+  text-align: center;color: orange;
+  }
 
 .card {
   margin-bottom: 20px;
 }
 
-
 .card-block {
-  display: table;
-  margin: auto;
-}
+  display: table;margin: auto;
+  }
 
 .card-deck {
-  margin: 0 auto;
-  margin-bottom: 20px;
-}
+  margin: 0 auto;margin-bottom: 20px;
+  }
 
 .card-title {
-  padding: 10px;
-  background: #154360;
-  color: white;
-}
+  padding: 10px;color: white;background: #154360;
+  }
 
-button,
-p {
-  position: center;
-  margin: 10px;
-  white-space: normal !important;
-  word-wrap: break-word;
-}
+button, p {
+  position: center;margin: 10px;white-space: normal !important;word-wrap: break-word;
+  }
 
-.oliCharts {
-  width: 100% !important;
-  position: center;
-  word-break: break-all;
-  word-wrap: break-word;
-  padding: 10px;
-}
+.oliCharts {position: center;
+
+  width: 100% !important;padding: 10px;word-wrap: break-word;word-break: break-all;
+  }
 
 div.scroll {
-  float: left;
-  overflow-y: auto;
-  height: 200px;
-}
+  float: left;overflow-y: auto;height: 200px;
+  }
 
-.card,
-#map {
-  overflow: hidden;
-  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  -webkit-transition: .25s box-shadow;
-  transition: .25s box-shadow;
-}
+.card, #map {
+  overflow: hidden;-webkit-transition: .25s box-shadow;transition: .25s box-shadow;box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  }
 
 .card:focus {
   box-shadow: 0 6px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
-#map {
-  height: 100%;
-  width: 100% !important;
-  position: center;
-  margin: auto;
-}
+#map {position: center;width: 100% !important;
+  height: 100%;margin: auto;
+  }
 
 ol {
-  margin:0 0 1.5em;
-  padding:0;
-  counter-reset:item;
-}
+  margin: 0 0 1.5em;padding: 0;counter-reset: item;cursor: pointer;
+  }
 
 ol>li {
-  margin:0;
-  padding:0.5em 0 0 3em;
-  text-indent:-2em;
-  list-style-type:none;
-  counter-increment:item;
+  margin: 0;padding: 0.5em 0 0 3em;list-style-type: none;counter-increment: item;-webkit-transition: font-size 0.3s ease, background-color 0.3s ease;-moz-transition: font-size 0.3s ease, background-color 0.3s ease;-ms-transition: font-size 0.3s ease, background-color 0.3s ease;-o-transition: font-size 0.3s ease, background-color 0.3s ease;transition: font-size 0.3s ease, background-color 0.3s ease;text-indent: -2em;border-bottom: 1px solid #ccc;
+  }
+
+li:last-child {
+  border: none;
 }
+
+li:hover {background: #f6f6f6;
+
+  font-size: 18px;
+  }
+
+/* shorten the width of border line */
+
+/* ol>li:after {
+content: "";
+display: block;
+width: 100%;
+border-bottom: 1px solid #ccc;
+} */
 
 ol>li:before {
-  display:inline-block;
-  width:1.5em;
-  padding-right:0.5em;
-  font-weight:bold;
-  text-align:right;
-  content:counter(item) ".";
-}
+  display: inline-block;width: 1.5em;padding-right: 0.5em;content: counter(item) ".";text-align: right;font-weight: bold;
+  }
 
-#proCounterDiv{
+#proCounterDiv {
   text-align: center;
 }
-#proCounter, #consCounter{
-  display: inline-block;
-  margin: 10px;
-}
+
+#proCounter, #consCounter {
+  display: inline-block;margin: 10px;
+  }
 
 /* disable plotly graphs toolbar*/
 
@@ -141,13 +123,14 @@ ol>li:before {
   display: none !important;
 }
 
-.active{
+.active {
   background-color: #8cd98c;
 }
-#accntTitle{
+
+#accntTitle {
   color: #2d862d;
 }
 
-#proBalanceDiv, #consBalanceDiv{
+#proBalanceDiv, #consBalanceDiv {
   float: right;
 }

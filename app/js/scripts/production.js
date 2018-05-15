@@ -1,6 +1,14 @@
-import {productionContract} from './contracts.js';
-import {timeConverter, currentTime} from './time-format.js';
-import {currentConsTxTime, enerConsumption} from './consumption.js';
+import {
+  productionContract
+} from './contracts.js';
+import {
+  timeConverter,
+  currentTime
+} from './time-format.js';
+import {
+  currentConsTxTime,
+  enerConsumption
+} from './consumption.js';
 import map from './map.js';
 
 /*
@@ -15,7 +23,7 @@ function watchNewProducers() {
     fromBlock: 'latest',
     toBlock: 'latest'
   });
-  proRegEvent.watch(function(error, result) {
+  proRegEvent.watch(function (error, result) {
     if (error) {
       console.log(error);
     } else {
@@ -33,7 +41,7 @@ function getAllProducers() {
   productionContract.ProducerRegs({}, {
     fromBlock: 0,
     toBlock: 'latest'
-  }).get(function(error, result) {
+  }).get(function (error, result) {
     if (error) {
       console.error(error);
     } else {
@@ -79,7 +87,7 @@ function getAllProducers() {
 
       var producer = L.icon({
         iconUrl: '../img/producer.png',
-        iconSize: [50,50]
+        iconSize: [50, 50]
       });
 
       var proMarkers = [];
@@ -98,7 +106,9 @@ function getAllProducers() {
         var proPopup = "Eth address: " + result[i].args.pvAddr.slice(0, 7) + '...' + "<br>" + "Producer: " + result[i].args.owner + "<br>" + "Location: " + ((result[i].args.latitude) / 10000) + ", " + ((result[i].args.longitude) / 10000);
 
         var proMarkerLocation = new L.LatLng(proLatitude, proLongitude);
-        var proMarkers = new L.Marker(proMarkerLocation, {icon: producer});
+        var proMarkers = new L.Marker(proMarkerLocation, {
+          icon: producer
+        });
         map.addLayer(proMarkers);
         proMarkers.bindPopup(proPopup);
       }
@@ -108,8 +118,8 @@ function getAllProducers() {
 }
 
 // check if a producer is already registered or not
-$('#proRegInfoButton').click(function() {
-  productionContract.proAccntsArr($('#inputProAddr').val(), function(error, result) {
+$('#proRegInfoButton').click(function () {
+  productionContract.proAccntsArr($('#inputProAddr').val(), function (error, result) {
     if (!error) {
       $('#proRegInfo').html(' ' + result);
     } else {
@@ -117,7 +127,7 @@ $('#proRegInfoButton').click(function() {
     }
   })
 })
-$('#resetProButton').click(function() {
+$('#resetProButton').click(function () {
   document.getElementById('inputProAddr').value = "";
   $('#proRegInfo').html('');
 });
@@ -125,7 +135,7 @@ $('#resetProButton').click(function() {
 // producer accounts list
 
 function producerList() {
-  productionContract.getProAccntsList(function(error, result) {
+  productionContract.getProAccntsList(function (error, result) {
     if (!error) {
       result.shift();
       for (var i = 0; i < result.length; i++) {
@@ -139,7 +149,7 @@ function producerList() {
 
 // producer Counter
 function getProCounter() {
-  productionContract.countProducers(function(error, result) {
+  productionContract.countProducers(function (error, result) {
     if (!error) {
       $('#proCounter').html(' ' + result);
     } else {
@@ -163,7 +173,7 @@ function wathRealTimeEnergy() {
     toBlock: 'latest'
   });
 
-  EnerProductionEvent.watch(function(error, result) {
+  EnerProductionEvent.watch(function (error, result) {
     if (!error) {
       // table starts from here
       header1.push([result.args.oliAddr, timeConverter(result.args.eTime), result.args.enerAmount]);
@@ -237,7 +247,7 @@ function wathRealTimeEnergy() {
 
       var holder = {};
 
-      enerProBlockValues.forEach(function(d) {
+      enerProBlockValues.forEach(function (d) {
         if (holder.hasOwnProperty(d.time)) {
           holder[d.time] = holder[d.time] + d.energy;
         } else {
@@ -273,31 +283,33 @@ function wathRealTimeEnergy() {
         currentProTxTime = currentProTxTime.slice(-10);
       }
 
-  function toDate(ts) {
-    return new Date(ts);
-  }
+      function toDate(ts) {
+        return new Date(ts);
+      }
 
-  var proData = {
-    type: 'date',
-    mode: "lines+markers",
-    name: 'Producer',
+      var proData = {
+        type: 'date',
+        mode: "lines+markers",
+        name: 'Producer',
 
-    x: currentProTxTime.map(toDate),
-    y: enerProduction,
-    line: {
-      color: '#009933'
-    }
-  }
+        x: currentProTxTime.map(toDate),
+        y: enerProduction,
+        line: {
+          color: '#009933'
+        }
+      }
       var consData = {
         type: "scatter",
         mode: "lines+markers",
         name: 'Consumer',
         x: currentConsTxTime.map(toDate),
         y: enerConsumption,
-        line: {color: '#cc6600'}
+        line: {
+          color: '#cc6600'
+        }
       }
 
-      var data = [proData,consData];
+      var data = [proData, consData];
 
       var layout = {
         xaxis: {
@@ -340,13 +352,14 @@ function wathRealTimeEnergy() {
 var proAccntList = document.getElementById('proAccountList');
 
 proAccntList.addEventListener('click', activateProAccnt);
+
 function activateProAccnt(e) {
   if (e.target.nodeName == 'LI') {
 
     document.getElementById('proAccntTitle').innerHTML = e.target.innerHTML;
 
     // get registration details for individual account
-    productionContract.getProAccntDetails(e.target.innerHTML, function(error, result) {
+    productionContract.getProAccntDetails(e.target.innerHTML, function (error, result) {
       if (error) {
         console.log(error);
       } else {
@@ -355,7 +368,7 @@ function activateProAccnt(e) {
     })
 
     // total amount of energy produced by individual producer
-    productionContract.getProBalance(e.target.innerHTML, function(error, result) {
+    productionContract.getProBalance(e.target.innerHTML, function (error, result) {
       if (!error) {
         $('#proAccntBalance').html('' + result);
       } else {
@@ -364,7 +377,7 @@ function activateProAccnt(e) {
     })
 
     // producer account table
-    productionContract.getProEnerProduction(e.target.innerHTML, function(error, result) {
+    productionContract.getProEnerProduction(e.target.innerHTML, function (error, result) {
       if (error) {
         console.error(error);
       } else {
@@ -420,4 +433,10 @@ function activateProAccnt(e) {
   }
 }
 
-export {getAllProducers, watchNewProducers, producerList, getProCounter, wathRealTimeEnergy};
+export {
+  getAllProducers,
+  watchNewProducers,
+  producerList,
+  getProCounter,
+  wathRealTimeEnergy
+};

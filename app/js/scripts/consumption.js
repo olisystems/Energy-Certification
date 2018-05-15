@@ -1,5 +1,10 @@
-import {consumptionContract} from './contracts.js';
-import {timeConverter, currentTime} from './time-format.js';
+import {
+  consumptionContract
+} from './contracts.js';
+import {
+  timeConverter,
+  currentTime
+} from './time-format.js';
 import map from './map.js';
 
 /*
@@ -14,7 +19,7 @@ function watchNewConsumers() {
     fromBlock: 'latest',
     toBlock: 'latest'
   });
-  consRegEvent.watch(function(error, result) {
+  consRegEvent.watch(function (error, result) {
     if (error) {
       console.log(error);
     } else {
@@ -31,7 +36,7 @@ function getAllConsumers() {
   consumptionContract.ConsumerRegs({}, {
     fromBlock: 0,
     toBlock: 'latest'
-  }).get(function(error, result) {
+  }).get(function (error, result) {
     if (error) {
       console.error(error);
     } else {
@@ -75,7 +80,7 @@ function getAllConsumers() {
       // spatial distribution map
       var consumer = L.icon({
         iconUrl: '../img/consumer.png',
-        iconSize: [50,50]
+        iconSize: [50, 50]
       });
 
       var consMarkers = [];
@@ -94,7 +99,9 @@ function getAllConsumers() {
         var consPopup = "Eth address: " + result[i].args.pvAddr.slice(0, 7) + '...' + "<br>" + "Consumer: " + result[i].args.owner + "<br>" + "Location: " + ((result[i].args.latitude) / 10000) + ", " + ((result[i].args.longitude) / 10000);
 
         var consMarkerLocation = new L.LatLng(consLatitude, consLongitude);
-        var consMarkers = new L.Marker(consMarkerLocation, {icon: consumer});
+        var consMarkers = new L.Marker(consMarkerLocation, {
+          icon: consumer
+        });
         map.addLayer(consMarkers);
         consMarkers.bindPopup(consPopup);
       }
@@ -103,8 +110,8 @@ function getAllConsumers() {
 }
 
 // check if a consumer is already registered or not
-$('#consRegInfoButton').click(function() {
-  consumptionContract.consAccntsArr($('#inputConsAddr').val(), function(error, result) {
+$('#consRegInfoButton').click(function () {
+  consumptionContract.consAccntsArr($('#inputConsAddr').val(), function (error, result) {
     if (!error) {
       $('#consRegInfo').html(' ' + result);
     } else {
@@ -112,7 +119,7 @@ $('#consRegInfoButton').click(function() {
     }
   })
 })
-$('#resetConsButton').click(function() {
+$('#resetConsButton').click(function () {
   document.getElementById('inputConsAddr').value = "";
   $('#consRegInfo').html('');
 });
@@ -120,7 +127,7 @@ $('#resetConsButton').click(function() {
 // producer accounts list
 
 function consumerList() {
-  consumptionContract.getConsAccntsList(function(error, result) {
+  consumptionContract.getConsAccntsList(function (error, result) {
     if (!error) {
       result.shift();
       for (var i = 0; i < result.length; i++) {
@@ -134,7 +141,7 @@ function consumerList() {
 
 // consumer Counter
 function getConsCounter() {
-  consumptionContract.countConsumers(function(error, result) {
+  consumptionContract.countConsumers(function (error, result) {
     if (!error) {
       $('#consCounter').html(' ' + result);
     } else {
@@ -152,7 +159,7 @@ function activateConsAccnt(e) {
     document.getElementById('consAccntTitle').innerHTML = e.target.innerHTML;
 
     // get registration details for individual account
-    consumptionContract.getConsAccntDetails(e.target.innerHTML, function(error, result) {
+    consumptionContract.getConsAccntDetails(e.target.innerHTML, function (error, result) {
       if (error) {
         console.log(error);
       } else {
@@ -161,7 +168,7 @@ function activateConsAccnt(e) {
     })
 
     // total amount of energy consumed by individual consumer
-    consumptionContract.getConsBalance(e.target.innerHTML, function(error, result) {
+    consumptionContract.getConsBalance(e.target.innerHTML, function (error, result) {
       if (!error) {
         $('#consAccntBalance').html('' + result);
       } else {
@@ -170,7 +177,7 @@ function activateConsAccnt(e) {
     })
 
     // * table
-    consumptionContract.getConsEnerConsumption(e.target.innerHTML, function(error, result) {
+    consumptionContract.getConsEnerConsumption(e.target.innerHTML, function (error, result) {
       if (error) {
         console.error(error);
       } else {
@@ -244,7 +251,7 @@ function consRealTimeEner() {
     toBlock: 'latest'
   });
 
-  EnerConsumptionEvent.watch(function(error, result) {
+  EnerConsumptionEvent.watch(function (error, result) {
 
     if (!error) {
 
@@ -318,7 +325,7 @@ function consRealTimeEner() {
 
       // 6 sum up values for same keys
       var holder = {};
-      enerConsBlockValues.forEach(function(d) {
+      enerConsBlockValues.forEach(function (d) {
         if (holder.hasOwnProperty(d.time)) {
           holder[d.time] = holder[d.time] + d.energy;
         } else {
@@ -362,4 +369,11 @@ function consRealTimeEner() {
   });
 }
 
-export {currentConsTxTime, enerConsumption, getAllConsumers, consumerList, getConsCounter, consRealTimeEner};
+export {
+  currentConsTxTime,
+  enerConsumption,
+  getAllConsumers,
+  consumerList,
+  getConsCounter,
+  consRealTimeEner
+};

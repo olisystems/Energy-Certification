@@ -35,4 +35,7 @@ function currentTime() {
   return formattedTime;
 }
 
-export{timeConverter, currentTime};
+export {
+  timeConverter,
+  currentTime
+};

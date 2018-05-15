@@ -18,10 +18,10 @@ var homeMarker = L.marker([48.77538056, 9.16277778], {
   icon: home
 }).addTo(map);
 homeMarker.bindPopup("OLI Systems GmbH");
-homeMarker.on('mouseover', function(e) {
+homeMarker.on('mouseover', function (e) {
   this.openPopup();
 });
-homeMarker.on('mouseout', function(e) {
+homeMarker.on('mouseout', function (e) {
   this.closePopup();
 });
 

@@ -19,5 +19,5 @@ app.use(express.static('app'));
 // enable body parsing for json format
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-	extended: false
+  extended: false
 }));

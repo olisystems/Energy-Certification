@@ -35,7 +35,7 @@ function watchNewProducers() {
 // producer registration
 // creating table header
 var proHeader = [];
-proHeader.push(['Eth Address', 'Owner', 'Device Type', 'Peak Power +', 'Peak Power -', 'Coordinates [Lat-Long]', 'Voltage Level', 'Location', 'Install Date']);
+proHeader.push(['Eth Address', 'Owner', 'Device Type', 'Peak Power (+) [W]', 'Coordinates [Lat-Long]', 'Voltage Level [V]', 'Location', 'Install Date']);
 
 function getAllProducers() {
   productionContract.ProducerRegs({}, {
@@ -48,7 +48,7 @@ function getAllProducers() {
 
       // table starts from here
       for (var i = 0; i < result.length; i++) {
-        proHeader.push([result[i].args.pvAddr, result[i].args.owner, result[i].args.deviceType, result[i].args.peakPowerPos, result[i].args.peakPowerNeg, (result[i].args.latitude) / 10000 + ' ' + (result[i].args.longitude) / 10000, result[i].args.voltageLevel, result[i].args.location, result[i].args.installDate]);
+        proHeader.push([result[i].args.pvAddr, result[i].args.owner, result[i].args.deviceType, result[i].args.peakPowerPos, (result[i].args.latitude) / 10000 + ' ' + (result[i].args.longitude) / 10000, result[i].args.voltageLevel, result[i].args.location, result[i].args.installDate]);
         //header.push([addrArray[i], ownerArray[i], deviceTypeArray[i], peakPowerPosArray[i], peakPowerNegArray[i], coordinatesArray[i], voltageLevelArray[i], locationArray[i], installDateArray[i]]);
       }
 
@@ -73,7 +73,6 @@ function getAllProducers() {
         row = proTable.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
           var cell = row.insertCell(-1);
-          cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
           cell.innerHTML = proHeader[i][j];
         }
       }
@@ -195,7 +194,6 @@ function wathRealTimeEnergy() {
         row = table1.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
           var cell = row.insertCell(-1);
-          cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
           cell.innerHTML = header1[i][j];
         }
       }
@@ -363,7 +361,7 @@ function activateProAccnt(e) {
       if (error) {
         console.log(error);
       } else {
-        $('#proAccntRegDetails').html('<b>Owner: </b>' + result[0] + '<br>' + '<b>Device Type: </b>' + result[1] + '<br>' + '<b>Peak Power (+): </b>' + result[2] + '<br>' + '<b>Location Type: </b>' + result[3] + '<br>' + '<b>Latitude: </b>' + result[4] / 10000 + '<br>' + '<b>Longitude: </b>' + result[5] / 10000 + '<br>' + '<b>Install Date: </b>' + result[6]);
+        $('#proAccntRegDetails').html('<b>Owner: </b>' + result[0] + '<br>' + '<b>Device Type: </b>' + result[1] + '<br>' + '<b>Peak Power (+) [W]: </b>' + result[2] + '<br>' + '<b>Location Type: </b>' + result[3] + '<br>' + '<b>Latitude: </b>' + result[4] / 10000 + '<br>' + '<b>Longitude: </b>' + result[5] / 10000 + '<br>' + '<b>Install Date: </b>' + result[6]);
       }
     })
 
@@ -386,7 +384,7 @@ function activateProAccnt(e) {
         proAccountTable.innerHTML = '';
 
         var header3 = [];
-        header3.push(['Eth Address', 'Time', 'Energy', 'Block Number', 'BlockHash', 'Gas Price [wei]']);
+        header3.push(['Eth Address', 'Time', 'Power [W]', 'Block Number', 'BlockHash', 'Gas Price [wei]']);
 
         // table starts from here
         for (var i = 0; i < result[1].length; i++) {
@@ -414,7 +412,6 @@ function activateProAccnt(e) {
           row = proAccntTable.insertRow(-1);
           for (var j = 0; j < columnCount; j++) {
             var cell = row.insertCell(-1);
-            cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
             cell.innerHTML = header3[i][j];
           }
         }

@@ -30,7 +30,8 @@ function watchNewConsumers() {
 
 // creating table header
 var consHeader = [];
-consHeader.push(['Eth Address', 'Owner', 'Device Type', 'Peak Power +', 'Peak Power -', 'Coordinates [Lat-Long]', 'Voltage Level', 'Location', 'Install Date']);
+
+consHeader.push(['Eth Address', 'Owner', 'Device Type', 'Peak Power (-) [W]', 'Coordinates [Lat-Long]', 'Voltage Level [V]', 'Location', 'Install Date']);
 
 function getAllConsumers() {
   consumptionContract.ConsumerRegs({}, {
@@ -43,14 +44,14 @@ function getAllConsumers() {
 
       // table starts from here
       for (var i = 0; i < result.length; i++) {
-        consHeader.push([result[i].args.pvAddr, result[i].args.owner, result[i].args.deviceType, result[i].args.peakPowerPos, result[i].args.peakPowerNeg, (result[i].args.latitude) / 10000 + ' ' + (result[i].args.longitude) / 10000, result[i].args.voltageLevel, result[i].args.location, result[i].args.installDate]);
+        consHeader.push([result[i].args.pvAddr, result[i].args.owner, result[i].args.deviceType, result[i].args.peakPowerNeg, (result[i].args.latitude) / 10000 + ' ' + (result[i].args.longitude) / 10000, result[i].args.voltageLevel, result[i].args.location, result[i].args.installDate]);
         //header.push([addrArray[i], ownerArray[i], deviceTypeArray[i], peakPowerPosArray[i], peakPowerNegArray[i], coordinatesArray[i], voltageLevelArray[i], locationArray[i], installDateArray[i]]);
       }
 
       //Create a HTML Table element.
       var consTable = document.createElement("Table");
       consTable.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
-
+      //consTable.style.cssText = '  position: -webkit-sticky; position: sticky; top: -1px;z-index: 5; background: #fff; table-layout: fixed; width: 100%; font-size: 12px; word-break: break-word; display: block;'
       //Get the count of columns.
       var columnCount = consHeader[0].length;
 
@@ -68,10 +69,11 @@ function getAllConsumers() {
         row = consTable.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
           var cell = row.insertCell(-1);
-          cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
+          //cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
           cell.innerHTML = consHeader[i][j];
         }
       }
+
 
       var consRegTable = document.getElementById("consRegs");
       consRegTable.innerHTML = "";
@@ -163,7 +165,7 @@ function activateConsAccnt(e) {
       if (error) {
         console.log(error);
       } else {
-        $('#consAccntRegDetails').html('<b>Owner: </b>' + result[0] + '<br>' + '<b>Device Type: </b>' + result[1] + '<br>' + '<b>Peak Power (+): </b>' + result[2] + '<br>' + '<b>Location Type: </b>' + result[3] + '<br>' + '<b>Latitude: </b>' + result[4] / 10000 + '<br>' + '<b>Longitude: </b>' + result[5] / 10000 + '<br>' + '<b>Install Date: </b>' + result[6]);
+        $('#consAccntRegDetails').html('<b>Owner: </b>' + result[0] + '<br>' + '<b>Device Type: </b>' + result[1] + '<br>' + '<b>Peak Power (-) [W]: </b>' + result[2] + '<br>' + '<b>Location Type: </b>' + result[3] + '<br>' + '<b>Latitude: </b>' + result[4] / 10000 + '<br>' + '<b>Longitude: </b>' + result[5] / 10000 + '<br>' + '<b>Install Date: </b>' + result[6]);
       }
     })
 
@@ -186,8 +188,7 @@ function activateConsAccnt(e) {
         consAccountTable.innerHTML = '';
 
         var header4 = [];
-        header4.push(['Eth Address', 'Time', 'Energy', 'Block Number', 'BlockHash', 'Gas Price [wei]']);
-
+        header4.push(['Eth Address', 'Time', 'Power [W]', 'Block Number', 'BlockHash', 'Gas Price [wei]']);
         // table starts from here
         for (var i = 0; i < result[1].length; i++) {
           header4.push([result[0], timeConverter(result[1][i].c), result[2][i].c, result[3][i].c, result[4][i], result[5][i].c]);
@@ -215,7 +216,6 @@ function activateConsAccnt(e) {
           row = consAccountTable.insertRow(-1);
           for (var j = 0; j < columnCount; j++) {
             var cell = row.insertCell(-1);
-            cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
             cell.innerHTML = header4[i][j];
           }
         }
@@ -275,7 +275,7 @@ function consRealTimeEner() {
         row = table2.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
           var cell = row.insertCell(-1);
-          cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
+          //cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
           cell.innerHTML = header2[i][j];
         }
       }

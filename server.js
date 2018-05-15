@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 // set up server
 // ---------------------------------------------------------------------
 const app = express();
-const port = 8000;
+const port = 80;
 app.listen(process.env.PORT || port);
 console.log('\n local server is running on port ' + port + '!');
 

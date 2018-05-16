@@ -1,12 +1,26 @@
 body {
   -webkit-overflow-scrolling: touch;
 
-padding-top: 50px;
+/* padding-top: 50px; */
 
 -webkit-font-smoothing: antialiased;
 
 -webkit-backface-visibility: hidden;
   }
+
+.navbar{
+  margin-bottom: 10px;
+  color: white;
+  background-color: #154360;
+}
+nav a:hover{
+  background-color:#154360;
+}
+
+.btn{
+  margin: 10px;
+}
+
 
 .elements {
   margin: 10px;
@@ -36,11 +50,6 @@ top: 18px;
 left: 10px;
   }
 
-.navbar {
-  color: white;
-
-background-color: #154360;
-  }
 
 .container-fluid {
   align-content: center;
@@ -175,7 +184,7 @@ li:last-child {
 li:hover {
   background: #f6f6f6;
 
-font-size: 22px;
+font-size: 20px;
   }
 
 /* shorten the width of border line */

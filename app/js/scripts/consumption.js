@@ -155,9 +155,74 @@ function getConsCounter() {
 // individual consumer account details table
 var consAccntList = document.getElementById('consAccountList');
 consAccntList.addEventListener('click', activateConsAccnt);
+var currentConsMarker = {};
 
 function activateConsAccnt(e) {
   if (e.target.nodeName == 'LI') {
+
+    // current pro map popup
+    consumptionContract.ConsumerRegs({}, {
+      fromBlock: 0,
+      toBlock: 'latest'
+    }).get(function (error, result) {
+      if (error) {
+        console.error(error);
+      } else {
+
+        var ethAddr = [];
+        var consLoc = [];
+        var consLocObject = {};
+        var consLocEntries = [];
+        var currentConsCord = [];
+
+        for (var i = 0; i < result.length; i++) {
+          consLoc.push((result[i].args.latitude) / 10000 + ', ' + (result[i].args.longitude) / 10000);
+          ethAddr.push(result[i].args.pvAddr);
+        }
+
+        // mappin eth address to the coordinates in a single object
+        ethAddr.forEach((key, i) => consLocObject[key] = consLoc[i]);
+
+        // storing entries of single object into list of items
+        for (var i = 0; i < Object.keys(consLocObject).length; i++) {
+          consLocEntries.push(Object.entries(consLocObject)[i]);
+        }
+
+        for (var i = 0; i < consLocEntries.length; i++) {
+          if (e.target.innerHTML == consLocEntries[i][0]) {
+            currentConsCord = (consLocObject[e.target.innerHTML]);
+            currentConsCord = currentConsCord.split(',')
+
+            var currentConsLat = currentConsCord[0].trim();
+            var currentConsLon = currentConsCord[1].trim();
+
+            var currentConsIcon = L.icon({
+              iconUrl: '../img/consumer.png',
+              iconSize: [30, 40]
+            });
+
+            var popupContent = "Eth address: " + result[i].args.pvAddr.slice(0, 7) + '...' + "<br>" + "Consumer: " + result[i].args.owner + "<br>" + "Location: " + ((result[i].args.latitude) / 10000) + ", " + ((result[i].args.longitude) / 10000);
+            var popupOptions = {
+              'maxWidth': '500',
+              'className': 'currentCons-popup'
+            }
+
+            if (currentConsMarker != undefined) {
+              map.removeLayer(currentConsMarker);
+            };
+
+            currentConsMarker = L.marker([currentConsLat, currentConsLon], {
+              icon: currentConsIcon
+            }).addTo(map);
+            currentConsMarker.bindPopup(popupContent, popupOptions).openPopup();
+
+          }
+        }
+
+      }
+    })
+
+    // displaying pro registration details
     document.getElementById('consAccntTitle').innerHTML = e.target.innerHTML;
 
     // get registration details for individual account
@@ -172,7 +237,7 @@ function activateConsAccnt(e) {
     // total amount of energy consumed by individual consumer
     consumptionContract.getConsBalance(e.target.innerHTML, function (error, result) {
       if (!error) {
-        $('#consAccntBalance').html('' + result);
+        document.getElementById('consAccntBalance').innerHTML = result;
       } else {
         console.log(error);
       }
@@ -253,64 +318,64 @@ function consRealTimeEner() {
 
   EnerConsumptionEvent.watch(function (error, result) {
 
-    if (!error) {
+        if (!error) {
 
-      // table starts from here
-      header2.push([result.args.oliAddr, timeConverter(result.args.eTime), result.args.enerAmount]);
-      //Create a HTML Table element.
-      var table2 = document.createElement("Table");
-      table2.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
+          // table starts from here
+          header2.push([result.args.oliAddr, timeConverter(result.args.eTime), result.args.enerAmount]);
+          //Create a HTML Table element.
+          var table2 = document.createElement("Table");
+          table2.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
 
-      //Get the count of columns.
-      var columnCount = header2[0].length;
-      //Add the header row.
-      var row = table2.insertRow(-1);
-      for (var i = 0; i < columnCount; i++) {
-        var headerCell = document.createElement("TH");
-        headerCell.innerHTML = header2[0][i];
-        row.appendChild(headerCell);
-      }
-      //Add the data rows.
-      for (var i = 1; i < header2.length; i++) {
-        row = table2.insertRow(-1);
-        for (var j = 0; j < columnCount; j++) {
-          var cell = row.insertCell(-1);
-          //cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
-          cell.innerHTML = header2[i][j];
-        }
-      }
+          //Get the count of columns.
+          var columnCount = header2[0].length;
+          //Add the header row.
+          var row = table2.insertRow(-1);
+          for (var i = 0; i < columnCount; i++) {
+            var headerCell = document.createElement("TH");
+            headerCell.innerHTML = header2[0][i];
+            row.appendChild(headerCell);
+          }
+          //Add the data rows.
+          for (var i = 1; i < header2.length; i++) {
+            row = table2.insertRow(-1);
+            for (var j = 0; j < columnCount; j++) {
+              var cell = row.insertCell(-1);
+              //cell.style.cssText = 'white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;';
+              cell.innerHTML = header2[i][j];
+            }
+          }
 
-      var realTimeEnergyConsTable = document.getElementById("realTimeConsumption");
-      realTimeEnergyConsTable.innerHTML = "";
-      realTimeEnergyConsTable.appendChild(table2);
+          var realTimeEnergyConsTable = document.getElementById("realTimeConsumption");
+          realTimeEnergyConsTable.innerHTML = "";
+          realTimeEnergyConsTable.appendChild(table2);
 
-      // ploting real time energy production graph
-      // slicing last ten values
-      enerConsumption.push(result.args.enerAmount.c[0]);
-      currentConsTxTime.push(currentTime());
+          // ploting real time energy production graph
+          // slicing last ten values
+          enerConsumption.push(result.args.enerAmount.c[0]);
+          currentConsTxTime.push(currentTime());
 
-      // 1
-      var enerConsumptionNew = [],
-        currentConsTxTimeNew = [];
-      // 2 creating single sorted object
-      var outputObject = {};
-      currentConsTxTime.forEach((key, i) => outputObject[key] = enerConsumption[i]);
+          // 1
+          var enerConsumptionNew = [],
+            currentConsTxTimeNew = [];
+          // 2 creating single sorted object
+          var outputObject = {};
+          currentConsTxTime.forEach((key, i) => outputObject[key] = enerConsumption[i]);
 
-      // 3 conveting object into single arrays
-      for (var property in outputObject) {
-        if (!outputObject.hasOwnProperty(property)) {
-          continue;
-        }
+          // 3 conveting object into single arrays
+          for (var property in outputObject) {
+            if (!outputObject.hasOwnProperty(property)) {
+              continue;
+            }
 
-      }
+          }
 
-      // 4 assigning key and value names
-      var timeObject = {};
-      var energyValueObject = {};
-      var key = "time";
-      var value = "energy";
-      timeObject[key] = property;
-      energyValueObject[value] = outputObject[property];
+          // 4 assigning key and value names
+          var timeObject = {};
+          var energyValueObject = {};
+          var key = "time";
+          var value = "energy";
+          timeObject[key] = property;
+          energyValueObject[value] = outputObject[property];
 
       // 5 combining keys and values pairs into single array of objects
       function extend(obj, src) {

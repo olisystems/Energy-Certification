@@ -10,6 +10,7 @@ import {
   enerConsumption
 } from './consumption.js';
 import map from './map.js';
+import web3 from './contracts.js';
 
 /*
  * Energy Production Contract
@@ -348,12 +349,77 @@ function wathRealTimeEnergy() {
 
 // individual producer account details table
 var proAccntList = document.getElementById('proAccountList');
-
 proAccntList.addEventListener('click', activateProAccnt);
+var currentProMarker = {};
 
 function activateProAccnt(e) {
   if (e.target.nodeName == 'LI') {
 
+    // current pro map popup
+    productionContract.ProducerRegs({}, {
+      fromBlock: 0,
+      toBlock: 'latest'
+    }).get(function (error, result) {
+      if (error) {
+        console.error(error);
+      } else {
+
+        var ethAddr = [];
+        var proLoc = [];
+        var proLocObject = {};
+        var proLocEntries = [];
+        var currentProCord = [];
+
+        for (var i = 0; i < result.length; i++) {
+          proLoc.push((result[i].args.latitude) / 10000 + ', ' + (result[i].args.longitude) / 10000);
+          ethAddr.push(result[i].args.pvAddr);
+        }
+
+        // mappin eth address to the coordinates in a single object
+        ethAddr.forEach((key, i) => proLocObject[key] = proLoc[i]);
+
+        // storing entries of single object into list of items
+        for (var i = 0; i < Object.keys(proLocObject).length; i++) {
+          proLocEntries.push(Object.entries(proLocObject)[i]);
+        }
+
+        for (var i = 0; i < proLocEntries.length; i++) {
+          if (e.target.innerHTML == proLocEntries[i][0]) {
+            currentProCord = (proLocObject[e.target.innerHTML]);
+            currentProCord = currentProCord.split(',')
+
+            var currentProLat = currentProCord[0].trim();
+            var currentProLon = currentProCord[1].trim();
+
+            var currentProIcon = L.icon({
+              iconUrl: '../img/producer.png',
+              iconSize: [30, 40]
+            });
+
+            var popupContent = "Eth address: " + result[i].args.pvAddr.slice(0, 7) + '...' + "<br>" + "Producer: " + result[i].args.owner + "<br>" + "Location: " + ((result[i].args.latitude) / 10000) + ", " + ((result[i].args.longitude) / 10000);
+            var popupOptions = {
+              'maxWidth': '500',
+              'className': 'currentPro-popup' // classname for another popup
+            }
+
+            if (currentProMarker != undefined) {
+              map.removeLayer(currentProMarker);
+            }
+
+            currentProMarker = L.marker([currentProLat, currentProLon], {
+              icon: currentProIcon
+            }).addTo(map);
+
+
+            currentProMarker.bindPopup(popupContent, popupOptions).openPopup();
+
+          }
+        }
+
+      }
+    })
+
+    // displaying pro registration details
     document.getElementById('proAccntTitle').innerHTML = e.target.innerHTML;
 
     // get registration details for individual account
@@ -368,7 +434,7 @@ function activateProAccnt(e) {
     // total amount of energy produced by individual producer
     productionContract.getProBalance(e.target.innerHTML, function (error, result) {
       if (!error) {
-        $('#proAccntBalance').html('' + result);
+        document.getElementById('proAccntBalance').innerHTML = result;
       } else {
         console.log(error);
       }
@@ -428,7 +494,21 @@ function activateProAccnt(e) {
     e.target.classList.add('active');
 
   }
+
 }
+
+setInterval(function () {
+
+  var blockNumber = web3.eth.blockNumber;
+  var txNumber = web3.eth.getBlockTransactionCount('latest');
+  var gasUsed = (web3.eth.getBlock('latest').gasUsed) / 1000000;
+  gasUsed = gasUsed.toFixed(2);
+
+  document.getElementById('blockNumber').innerHTML = blockNumber;
+  document.getElementById('txMined').innerHTML = txNumber;
+  document.getElementById('gasUsed').innerHTML = gasUsed;
+
+}, 3000);
 
 export {
   getAllProducers,

@@ -172,6 +172,18 @@ ol>li:before {
   font-weight: bold;
 }
 
+#proAccntTitle {
+  color: #009933;
+}
+
+#consAccntTitle {
+  color: #e68a00;
+}
+
+#gasUsed, #blockNumber, #txMined, #gasPrice{
+  color: #565655
+}
+
 /* disable plotly graphs toolbar*/
 
 .modebar {

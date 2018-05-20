@@ -190,6 +190,10 @@ ol>li:before {
   display: none !important;
 }
 
+.activeConsumer{
+  background-color: #e68a00;
+}
+
 .active {
   background-color: #8cd98c;
 }

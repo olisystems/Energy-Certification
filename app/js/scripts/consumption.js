@@ -290,10 +290,10 @@ function activateConsAccnt(e) {
 
     // removing the background color for ul-selected items
     for (var i = 0; i < e.target.parentNode.children.length; i++) {
-      e.target.parentNode.children[i].classList.remove('active');
+      e.target.parentNode.children[i].classList.remove('activeConsumer');
     }
     // adding background color to active item
-    e.target.classList.add('active');
+    e.target.classList.add('activeConsumer');
   }
 }
 

@@ -1,6 +1,8 @@
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
-contract EnergyConsumption {
+import './Owned.sol';
+
+contract EnergyConsumption is Owned {
 
   struct Consumer {
     string owner;
@@ -48,8 +50,8 @@ contract EnergyConsumption {
   * Registration
   */
 
-  function setConsumer(string _owner, string _deviceType, uint32 _peakPowerPos, uint32 _peakPowerNeg, uint32 _latitude, uint32 _longitude, uint32 _voltageLevel, string _location, string _installDate) {
-    if (!consAccntsArr(tx.origin)){
+  function setConsumer(string _owner, string _deviceType, uint32 _peakPowerPos, uint32 _peakPowerNeg, uint32 _latitude, uint32 _longitude, uint32 _voltageLevel, string _location, string _installDate) onlyOwner {
+    if (!consAccntsArr(tx.origin)) {
       // mapping address to index
       accntIndexArr[tx.origin] = consAccntList.length;
       consumers[tx.origin] = Consumer(_owner, _deviceType, _peakPowerPos, _peakPowerNeg, _latitude, _longitude, _voltageLevel, _location, _installDate);
@@ -68,12 +70,12 @@ contract EnergyConsumption {
   }
 
   // getting registration details
-  function getConsumer() constant returns (address, string, string, uint32, uint32, uint32, uint32, uint32, string, string){
+  function getConsumer() constant returns (address, string, string, uint32, uint32, uint32, uint32, uint32, string, string) {
     return (tx.origin, consumers[tx.origin].owner, consumers[tx.origin].deviceType, consumers[tx.origin].peakPowerPos, consumers[tx.origin].peakPowerNeg, consumers[tx.origin].latitude, consumers[tx.origin].longitude, consumers[tx.origin].voltageLevel, consumers[tx.origin].location, consumers[tx.origin].installDate);
   }
 
   // get registation details for individual accounts
-  function getConsAccntDetails(address _consAccntAddr) constant returns (string, string, uint32, string, uint32, uint32, string){
+  function getConsAccntDetails(address _consAccntAddr) constant returns (string, string, uint32, string, uint32, uint32, string) {
     return (consumers[_consAccntAddr].owner, consumers[_consAccntAddr].deviceType, consumers[_consAccntAddr].peakPowerPos, consumers[_consAccntAddr].location, consumers[_consAccntAddr].latitude, consumers[_consAccntAddr].longitude, consumers[_consAccntAddr].installDate);
   }
 
@@ -92,9 +94,9 @@ contract EnergyConsumption {
   */
 
   // getting energy time and amount
-  function setEnerConsumption(uint32 _enerValue) {
+  function setEnerConsumption(uint32 _enerValue) onlyOwner {
     // check if consumer already exist
-    if (consAccntsArr(tx.origin)){
+    if (consAccntsArr(tx.origin)) {
       enerConsumptions[tx.origin] = EnerConsumption(now, _enerValue);
 
       // total energy balance
@@ -112,19 +114,19 @@ contract EnergyConsumption {
 
   }
 
-  function getEnerConsumption()constant returns(address, uint, uint32){
+  function getEnerConsumption()constant returns(address, uint, uint32) {
     return (tx.origin, enerConsumptions[tx.origin].enerTime, enerConsumptions[tx.origin].enerValue);
   }
 
   // getting energy consumption details for individual accounts
 
-  function getConsEnerConsumption(address _consAccntAddr)constant returns (address, uint[], uint32[], uint[], bytes32[], uint[]){
+  function getConsEnerConsumption(address _consAccntAddr)constant returns (address, uint[], uint32[], uint[], bytes32[], uint[]) {
     return (_consAccntAddr, transactions[_consAccntAddr].txTime, transactions[_consAccntAddr].txValue, transactions[_consAccntAddr].blockNumber, transactions[_consAccntAddr].blockHash, transactions[_consAccntAddr].txGasPrice);
   }
 
   // retrieving individula consumer total amount of energy consumed
 
-  function getConsBalance(address _consAccntAddr)constant returns (uint){
+  function getConsBalance(address _consAccntAddr)constant returns (uint) {
     return (consBalance[_consAccntAddr]);
   }
 

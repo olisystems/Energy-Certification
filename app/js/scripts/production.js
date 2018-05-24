@@ -427,8 +427,14 @@ function activateProAccnt(e) {
       if (error) {
         console.log(error);
       } else {
-        $('#proAccntRegDetails').html('<b>Owner: </b>' + result[0] + '<br>' + '<b>Device Type: </b>' + result[1] + '<br>' + '<b>Peak Power (+) [W]: </b>' + result[2] + '<br>' + '<b>Location Type: </b>' + result[3] + '<br>' + '<b>Latitude: </b>' + result[4] / 10000 + '<br>' + '<b>Longitude: </b>' + result[5] / 10000 + '<br>' + '<b>Install Date: </b>' + result[6]);
-      }
+        $('#proOwner').html(result[0]);
+        $('#proDeviceType').html(result[1]);
+        // $('#proPeakPower').html(result[2]);
+        document.getElementById('proPeakPower').innerHTML = result[2];
+        $('#proLocationType').html(result[3]);
+        $('#proLat').html(result[4] / 10000);
+        $('#proLon').html(result[5] / 10000);
+        $('#proInstallDate').html(result[6]);}
     })
 
     // total amount of energy produced by individual producer

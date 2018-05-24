@@ -1,3 +1,4 @@
+pro
 <!DOCTYPE html>
 <html lang="en">
 
@@ -133,7 +134,9 @@
           <div class="card-body">
             <h5>Producer's Transaction History</h5>
             <hr>
-            <h5>Account Address: <span id="proAccntTitle"></h5>
+            <h5>Account Address:
+              <span id="proAccntTitle">
+            </h5>
             <div style="height:230px; width: 100%;" class="scroll table table-striped table-bordered text-center" id="test">
               <table id="proAccount"></table>
             </div>
@@ -146,7 +149,9 @@
           <div class="card-body">
             <h5>Consumer's Transaction History</h5>
             <hr>
-            <h5 >Account Address: <span id="consAccntTitle"></span></h5>
+            <h5>Account Address:
+              <span id="consAccntTitle"></span>
+            </h5>
             <div style="height:230px; width: 100%;" class="scroll table table-striped table-bordered text-center">
               <table id="consAccount"></table>
             </div>
@@ -191,13 +196,32 @@
           <div class="card-body scroll" style="height:350px; width: 100%;">
             <h5>Producer's Registration Details</h5>
             <hr>
-            <div style="float:right;">
-              <h5> Total Production [W]:
-                <span id="proAccntBalance"></span>
-              </h5>
+
+            <div class="row">
+
+              <div class="col-sm-12">
+                <h5> Total Production [W]:
+                  <span id="proAccntBalance"></span>
+                </h5>
+              </div>
+
+              <div class="col-sm-6 lead">Owner:</div>
+              <div class="col-sm-6" id="proOwner"></div>
+              <div class="col-sm-6 lead">Device Type:</div>
+              <div class="col-sm-6" id="proDeviceType"></div>
+              <div class="col-sm-6 lead">Peak Power (+) [W]:</div>
+              <div class="col-sm-6" id="proPeakPower"></div>
+              <div class="col-sm-6 lead">Location Type:</div>
+              <div class="col-sm-6" id="proLocationType"></div>
+              <div class="col-sm-6 lead">Latitude:</div>
+              <div class="col-sm-6" id="proLat"></div>
+              <div class="col-sm-6 lead">Latitude:</div>
+              <div class="col-sm-6" id="proLon"></div>
+              <div class="col-sm-6 lead">Install Date:</div>
+              <div class="col-sm-6" id="proInstallDate"></div>
+
             </div>
-            <div id="proAccntRegDetails" class="scroll lead" style="height:220px; width: 100%;">
-            </div>
+
           </div>
         </div>
       </div>
@@ -207,18 +231,38 @@
           <div class="card-body scroll" style="height:350px; width: 100%;">
             <h5>Consumer's Registration Details</h5>
             <hr>
-            <div style="float:right;">
-              <h5> Total Consumption [W]:
-                <span id="consAccntBalance"></span>
-              </h5>
+
+            <div class="row">
+
+              <div class="col-sm-12">
+                <h5> Total Consumption [W]:
+                  <span id="consAccntBalance"></span>
+                </h5>
+              </div>
+
+              <div class="col-sm-6 lead">Owner:</div>
+              <div class="col-sm-6" id="consOwner"></div>
+              <div class="col-sm-6 lead">Device Type:</div>
+              <div class="col-sm-6" id="consDeviceType"></div>
+              <div class="col-sm-6 lead">Peak Power (+) [W]:</div>
+              <div class="col-sm-6" id="consPeakPower"></div>
+              <div class="col-sm-6 lead">Location Type:</div>
+              <div class="col-sm-6" id="consLocationType"></div>
+              <div class="col-sm-6 lead">Latitude:</div>
+              <div class="col-sm-6" id="consLat"></div>
+              <div class="col-sm-6 lead">Latitude:</div>
+              <div class="col-sm-6" id="consLon"></div>
+              <div class="col-sm-6 lead">Install Date:</div>
+              <div class="col-sm-6" id="consInstallDate"></div>
+
             </div>
-            <div id="consAccntRegDetails" class="scroll lead" style="height:220px; width: 100%;">
-            </div>
+
           </div>
         </div>
       </div>
 
       <div class="col-sm-4">
+
         <div class="card" style="height:350px">
           <div class="card-body scroll">
             <h5>Check Registration</h5>

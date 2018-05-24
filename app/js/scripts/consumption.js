@@ -230,7 +230,14 @@ function activateConsAccnt(e) {
       if (error) {
         console.log(error);
       } else {
-        $('#consAccntRegDetails').html('<b>Owner: </b>' + result[0] + '<br>' + '<b>Device Type: </b>' + result[1] + '<br>' + '<b>Peak Power (-) [W]: </b>' + result[2] + '<br>' + '<b>Location Type: </b>' + result[3] + '<br>' + '<b>Latitude: </b>' + result[4] / 10000 + '<br>' + '<b>Longitude: </b>' + result[5] / 10000 + '<br>' + '<b>Install Date: </b>' + result[6]);
+        $('#consOwner').html(result[0]);
+        $('#consDeviceType').html(result[1]);
+        // $('#test2').html(result[2]);
+        document.getElementById('consPeakPower').innerHTML = result[2];
+        $('#consLocationType').html(result[3]);
+        $('#consLat').html(result[4] / 10000);
+        $('#consLon').html(result[5] / 10000);
+        $('#consInstallDate').html(result[6]);
       }
     })
 

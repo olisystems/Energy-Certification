@@ -24,11 +24,6 @@ nav a:hover {
   margin: 10px;
 }
 
-#loader {
-  display: none;
-  width: 50px;
-}
-
 #proList {
   word-wrap: break-word;
 }
@@ -198,20 +193,9 @@ ol>li:before {
   background-color: #8cd98c;
 }
 
-#proBalanceDiv, #consBalanceDiv {
-  float: right;
-}
-
-#proAccntRegDetails {
-  padding: 0px 10px 0px 10px;
-  border-left: 6px solid green;
-  background-color: #F7F7F7;
-}
-
-#consAccntRegDetails {
-  padding: 0px 10px 0px 10px;
-  border-left: 6px solid #e68a00;
-  background-color: #F7F7F7;
+.lead{
+  color: #17202A;
+  font-weight: 400;
 }
 
 TH {

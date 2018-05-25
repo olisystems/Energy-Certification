@@ -1,77 +1,65 @@
 pragma solidity ^0.4.20;
 
-contract OliCoin {
+import './IERC20.sol';
+import './SafeMath.sol';
 
-    uint public constant _totalSupply = 1000000;
+contract OliCoin is IERC20 {
 
-    string public constant symbol = "OLC";
-    string public constant name = "Oli Coin";
-    uint8 public constant decimals = 3;
+  using SafeMath for uint256;
 
-    mapping(address => uint256) balances;
-    mapping(address => mapping(address => uint256)) allowed;
+  /* setting up the value for the total supply in the constructor function */
+  function OliCoin(uint256 initialSupply) {
+    totalSupply = 1000;
 
-    event Transfer(address indexed _from, address indexed _to, uint256 _tokens);
-    event Approval(address indexed _tokenOwner, address indexed _spender, uint256 _tokens);
+    /* assign the total supply to the balance of the owner */
+    balances[msg.sender] = totalSupply;
+  }
 
-    function OliCoin(){
+  /* transfer tokens function  */
+  function transfer(address _to, uint256 _tokens) returns (bool success) {
+    /* check if sender has enough token to transfer */
+    require(balances[msg.sender] >= _tokens && _tokens > 0);
 
-        balances[msg.sender] = _totalSupply;
-    }
+    balances[msg.sender] = balances[msg.sender].sub(_tokens);
+    balances[_to] = balances[_to].add(_tokens);
 
-    function totalSupply() constant returns(uint256 totalSupply){
+    Transfer(msg.sender, _to, _tokens);
+    return true;
+  }
 
-        return _totalSupply;
-    }
+  /* checking out the balances */
+  function balanceOf(address _tokenOwner) constant returns(uint256 _tokens) {
+    return balances[_tokenOwner];
+  }
 
-    // checking the balance of an account
-    function balanceOf(address _tokenOwner) constant returns (uint256 balance){
+  /* approve spender to spend tokens */
+  function approve(address _spender, uint256 _tokens) returns (bool success) {
+    require(_tokens > 0
+      && balances[msg.sender] > 0);
 
-        return balances[_tokenOwner];
-    }
+    allowances[msg.sender][_spender] = _tokens;
 
-    // trnasfer tokens
-    function trnasfer(address _to, uint256 _tokens) returns (bool success) {
+    Approval(msg.sender, _spender, _tokens);
+    return true;
+  }
 
-        require(balances[msg.sender] >= _tokens && _tokens > 0);
+  /* checking the amount of allowed tokens */
+  function allowance(address _tokenOwner, address _spender) constant returns (uint remaining) {
+    return allowances[_tokenOwner][_spender];
+  }
 
-        balances[msg.sender] -= _tokens;
-        balances[_to] += _tokens;
+  /* spending allowed tokens on behalf of owner */
+  function transferFrom(address _from, address _to, uint256 _tokens) returns (bool success) {
+    require(_tokens > 0
+      && balances[_from] >= _tokens
+      && allowances[_from][msg.sender] >= _tokens);
 
-        Transfer(msg.sender, _to, _tokens);
-        return true;
-    }
+    balances[_from] = balances[_from].sub(_tokens);
+    balances[_to] = balances[_to].add(_tokens);
 
-    // checking permissions to spend tokens
-    function transferFrom(address _from, address _to, uint256 _tokens) returns (bool success){
+    allowances[_from][msg.sender] = allowances[_from][msg.sender].sub(_tokens);
 
-        require (allowed[_from][msg.sender] >= _tokens
-        && balances[_from] >= _tokens
-        && _tokens > 0);
-
-        balances[_from] -= _tokens;
-        balances[_to] += _tokens;
-
-        // decrement the allownce
-
-        allowed[_from][msg.sender] -= _tokens;
-        Transfer (_from, _to, _tokens);
-        return true;
-    }
-
-    // allow to withdraw tokens
-    function approve(address _spender, uint256 _tokens) returns (bool success){
-
-        allowed[msg.sender][_spender] = _tokens;
-        Approval(msg.sender, _spender, _tokens);
-        return true;
-
-    }
-
-    // returns the remaining number of allowed tokens
-    function allownce(address _tokenOwner, address _spender) constant returns (uint256 remaining){
-
-        return allowed[_tokenOwner][_spender];
-    }
-
+    Transfer(_from, _to, _tokens);
+    return true;
+  }
 }

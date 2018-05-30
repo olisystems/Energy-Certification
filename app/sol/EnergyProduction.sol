@@ -1,8 +1,6 @@
 pragma solidity ^0.4.20;
 
-import './Owned.sol';
-
-contract EnergyProduction is Owned {
+contract EnergyProduction {
 
   struct Producer {
     string owner;
@@ -50,7 +48,7 @@ contract EnergyProduction is Owned {
   * Registration
   */
 
-  function setProducer(string _owner, string _deviceType, uint32 _peakPowerPos, uint32 _peakPowerNeg, uint32 _latitude, uint32 _longitude, uint32 _voltageLevel, string _location, string _installDate) onlyOwner {
+  function setProducer(string _owner, string _deviceType, uint32 _peakPowerPos, uint32 _peakPowerNeg, uint32 _latitude, uint32 _longitude, uint32 _voltageLevel, string _location, string _installDate) {
     if (!proAccntsArr(tx.origin)) {
       // mapping address to index
       accntIndexArr[tx.origin] = proAccntList.length;
@@ -94,7 +92,7 @@ contract EnergyProduction is Owned {
   */
 
   // getting energy time and amount
-  function setEnerProduction(uint32 _enerValue) onlyOwner {
+  function setEnerProduction(uint32 _enerValue) {
     // check if producer already exist
     if (proAccntsArr(tx.origin)) {
       enerProductions[tx.origin] = EnerProduction(now, _enerValue);
@@ -128,6 +126,20 @@ contract EnergyProduction is Owned {
 
   function getProBalance(address _proAccntAddr)constant returns (uint) {
     return (proBalance[_proAccntAddr]);
+  }
+
+  /* Oli Coin Stuff */
+
+  function getDeviceTypeForCoin (address addr) constant returns (string) {
+    return (producers[tx.origin].deviceType);
+  }
+
+  function getLocationForCoin (address addr) constant returns (string) {
+    return (producers[tx.origin].location);
+  }
+
+  function getEnerProductionForCoin(address addr)constant returns(uint32[]) {
+    return (transactions[tx.origin].txValue);
   }
 
 }

@@ -2,18 +2,15 @@ pragma solidity ^0.4.20;
 
 import './IERC20.sol';
 import './SafeMath.sol';
+import './Owned.sol';
+import './EnergyProduction.sol';
 
-contract OliCoin is IERC20 {
+contract OliCoin is IERC20, Owned {
 
-  using SafeMath for uint256;
-
-  /* setting up the value for the total supply in the constructor function */
-  function OliCoin(uint256 initialSupply) {
-    totalSupply = 1000;
-
-    /* assign the total supply to the balance of the owner */
-    balances[msg.sender] = totalSupply;
-  }
+  using SafeMath for uint;
+  /* instantiating parent contract*/
+  EnergyProduction p = EnergyProduction(0x038f160ad632409bfb18582241d9fd88c1a072ba);
+  uint256 public totalSupply;
 
   /* transfer tokens function  */
   function transfer(address _to, uint256 _tokens) returns (bool success) {
@@ -62,4 +59,47 @@ contract OliCoin is IERC20 {
     Transfer(_from, _to, _tokens);
     return true;
   }
+
+  /* minting new coins */
+  function mintToken() {
+    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("Battery")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Urban"))){
+      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 1;
+      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 1;
+    }
+    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("Battery")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Rural"))){
+      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 2;
+      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 2;
+    }
+
+    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("CHP")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Urban"))){
+      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 2;
+      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 2;
+    }
+    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("CHP")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Rural"))){
+      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 3;
+      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 3;
+    }
+
+    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("Wind")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Urban"))){
+      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 3;
+      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 3;
+    }
+    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("Wind")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Rural"))){
+      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 4;
+      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 4;
+    }
+
+    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("PV")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Urban"))){
+      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 4;
+      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 4;
+    }
+    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("PV")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Rural"))){
+      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 5;
+      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 5;
+    }
+
+  }
+
 }
+
+"a", "Battery", 54,45,45,45,45, "Rural"

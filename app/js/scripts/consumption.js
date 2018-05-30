@@ -315,7 +315,7 @@ var enerConsBlockValues = [];
 // real time energy table
 // creating table header
 var header2 = [];
-header2.push(['Eth Address', 'Time', 'Amount']);
+header2.push(['Eth Address', 'Time', 'Power [W]']);
 
 function consRealTimeEner() {
   EnerConsumptionEvent = consumptionContract.EnerConsumptionEvent({

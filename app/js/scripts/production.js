@@ -165,7 +165,7 @@ var enerProduction = [];
 var currentProTxTime = [];
 var enerProBlockValues = [];
 var header1 = [];
-header1.push(['Eth Address', 'Time', 'Amount']);
+header1.push(['Eth Address', 'Time', 'Power [W]']);
 
 function wathRealTimeEnergy() {
   EnerProductionEvent = productionContract.EnerProductionEvent({

@@ -11,6 +11,7 @@ import {
 } from './consumption.js';
 import map from './map.js';
 import web3 from './contracts.js';
+import mintToken from './token.js';
 
 /*
  * Energy Production Contract
@@ -340,6 +341,8 @@ function wathRealTimeEnergy() {
       };
 
       Plotly.newPlot('realTimeProGraph', data, layout);
+
+      mintToken();
 
     } else {
       console.log(error);

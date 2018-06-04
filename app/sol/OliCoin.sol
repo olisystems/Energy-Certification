@@ -2,14 +2,13 @@ pragma solidity ^0.4.20;
 
 import './IERC20.sol';
 import './SafeMath.sol';
-import './Owned.sol';
 import './EnergyProduction.sol';
 
-contract OliCoin is IERC20, Owned {
+contract OliCoin is IERC20 {
 
   using SafeMath for uint;
   /* instantiating parent contract*/
-  EnergyProduction p = EnergyProduction(0x038f160ad632409bfb18582241d9fd88c1a072ba);
+  EnergyProduction p = EnergyProduction(0x5e72914535f202659083db3a02c984188fa26e9f);
   uint256 public totalSupply;
 
   /* transfer tokens function  */
@@ -61,45 +60,76 @@ contract OliCoin is IERC20, Owned {
   }
 
   /* minting new coins */
+  function getEnerProductionForCoin()public view returns(uint32[]){
+    return p.getEnerProductionForCoin(msg.sender);
+  }
+
+  string deviceType;
+  string location;
+
   function mintToken() {
-    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("Battery")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Urban"))){
-      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 1;
-      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 1;
-    }
-    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("Battery")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Rural"))){
-      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 2;
-      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 2;
+    uint multiplier;
+    multiplier = getMultiplier();
+    deviceType = getDeviceType();
+    location = getLocation();
+
+    balances[msg.sender] = balances[msg.sender].add((p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * multiplier);
+    totalSupply = totalSupply.add((p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * multiplier);
+  }
+
+
+  function getDeviceType() constant returns (string){
+    return p.getDeviceTypeForCoin(msg.sender);
+  }
+
+  function getLocation() constant returns (string){
+    return p.getLocationForCoin(msg.sender);
+  }
+
+  function getMultiplier() returns (uint){
+    if (uint(keccak256(deviceType)) == uint(keccak256("Battery"))) {
+      if(uint(keccak256(location)) == uint(keccak256("Urban"))){
+        return 4;
+      } else {
+        return 3;
+      }
     }
 
-    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("CHP")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Urban"))){
-      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 2;
-      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 2;
-    }
-    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("CHP")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Rural"))){
-      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 3;
-      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 3;
-    }
-
-    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("Wind")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Urban"))){
-      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 3;
-      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 3;
-    }
-    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("Wind")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Rural"))){
-      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 4;
-      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 4;
+    if (uint(keccak256(deviceType)) == uint(keccak256("CHP"))) {
+      if(uint(keccak256(location)) == uint(keccak256("Urban"))){
+        return 3;
+      } else {
+        return 2;
+      }
     }
 
-    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("PV")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Urban"))){
-      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 4;
-      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 4;
-    }
-    if (uint(keccak256(p.getDeviceTypeForCoin(msg.sender))) == uint(keccak256("PV")) && uint(keccak256(p.getLocationForCoin(msg.sender))) == uint(keccak256("Rural"))){
-      balances[msg.sender] += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 5;
-      totalSupply += (p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * 5;
+    if (uint(keccak256(deviceType)) == uint(keccak256("PV"))) {
+      if(uint(keccak256(location)) == uint(keccak256("Urban"))){
+        return 3;
+      } else {
+        return 2;
+      }
     }
 
+    else {
+      if(uint(keccak256(deviceType)) == uint(keccak256("Urban"))){
+        return 3;
+      } else {
+        return 2;
+      }
+    }
+  }
+
+  function getTotalSupply() public view returns (uint256) {
+    return totalSupply;
+  }
+
+    function proDeviceType(address addr) public view returns (string){
+    return p.getDeviceTypeForCoin(addr);
+  }
+
+  function proLocation(address addr) public view returns (string){
+    return p.getLocationForCoin(addr);
   }
 
 }
-
-"a", "Battery", 54,45,45,45,45, "Rural"

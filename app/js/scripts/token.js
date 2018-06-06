@@ -1,9 +1,9 @@
 import {
   oliCoinContract,
-  productionContract
+  productionContract,
+  parentContract,
+  childContract
 } from './contracts.js';
-
-
 
 // producer accounts list
 
@@ -37,44 +37,18 @@ proAccntList.addEventListener('click', activateProAccnt);
 function activateProAccnt(e) {
   if (e.target.nodeName == 'LI') {
 
-    // gettitg current producer device Type
-    oliCoinContract.proDeviceType(e.target.innerHTML, function (error, result) {
-      if (!error) {
-        $('#proDeviceType').html(result);
-      } else {
-        console.log(error);
-      }
-    })
+    // getting balance of current Producer
+    setInterval(function () {
 
+      oliCoinContract.balanceOf(e.target.innerHTML, function (error, result) {
+        if (!error) {
+          $('#proCoinBalance').html(result.c[0]);
+        }else {
+          console.log(error);
+        }
+      })
 
-
-    // // getting current producer location Type
-    // oliCoinContract.proLocationType(e.targer.innerHTML, function (error, result) {
-    //   if (!error) {
-    //
-    //     $('#proLocationType').html(result[0]);
-    //   }else {
-    //     console.log(error);
-    //   }
-    // })
-
-    // // total amount of energy produced by individual producer
-    // productionContract.getProBalance(e.target.innerHTML, function (error, result) {
-    //   if (!error) {
-    //     $('#proAccntBalance').html(result);
-    //   } else {
-    //     console.log(error);
-    //   }
-    // })
-    //
-    // // getting balance of current Producer
-    // oliCoinContract.balanceOf(e.targer.innerHTML, function (error, result) {
-    //   if (!error) {
-    //     $('#proCoinBalance').html(result);
-    //   }else {
-    //     console.log(error);
-    //   }
-    // })
+    }, 3000);
 
     // get registration details for individual account
     productionContract.getProAccntDetails(e.target.innerHTML, function (error, result) {
@@ -100,6 +74,8 @@ function activateProAccnt(e) {
       }
     })
 
+
+
     // removing the background color for ul-selected items
     for (var i = 0; i < e.target.parentNode.children.length; i++) {
       e.target.parentNode.children[i].classList.remove('active');
@@ -111,18 +87,24 @@ function activateProAccnt(e) {
   }
 
 }
+function test() {
+  // minting new tokens
+  console.log(2);
+childContract.getValue(0x40e3779cb0808012556e3b3d0593bc80f24d3458, function (error, result) {
+  if (!error) {
+    console.log(result);
+  }
+});
 
-// minting new tokens
-
-function mintToken() {
-  oliCoinContract.mintToken();
 }
+
 
 function tokenization() {
 
   producerList();
+  // test();
 
 }
 window.onload = tokenization();
 
-export default mintToken;
+export default test;

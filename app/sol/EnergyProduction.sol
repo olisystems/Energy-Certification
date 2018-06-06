@@ -49,12 +49,12 @@ contract EnergyProduction {
     */
 
     function setProducer(string _owner, string _deviceType, uint32 _peakPowerPos, uint32 _peakPowerNeg, uint32 _latitude, uint32 _longitude, uint32 _voltageLevel, string _location, string _installDate) {
-        if (!proAccntsArr(msg.sender)) {
+        if (!proAccntsArr(tx.origin)) {
             // mapping address to index
-            accntIndexArr[msg.sender] = proAccntList.length;
-            producers[msg.sender] = Producer(_owner, _deviceType, _peakPowerPos, _peakPowerNeg, _latitude, _longitude, _voltageLevel, _location, _installDate);
-            proAccntList.push(msg.sender) - 1;
-            ProducerRegs(msg.sender, _owner, _deviceType, _peakPowerPos, _peakPowerNeg, _latitude, _longitude, _voltageLevel, _location, _installDate);
+            accntIndexArr[tx.origin] = proAccntList.length;
+            producers[tx.origin] = Producer(_owner, _deviceType, _peakPowerPos, _peakPowerNeg, _latitude, _longitude, _voltageLevel, _location, _installDate);
+            proAccntList.push(tx.origin) - 1;
+            ProducerRegs(tx.origin, _owner, _deviceType, _peakPowerPos, _peakPowerNeg, _latitude, _longitude, _voltageLevel, _location, _installDate);
         }
     }
 
@@ -69,7 +69,7 @@ contract EnergyProduction {
 
     // getting registration details
     function getProducer() constant returns (address, string, string, uint32, uint32, uint32, uint32, uint32, string, string) {
-        return (msg.sender, producers[msg.sender].owner, producers[msg.sender].deviceType, producers[msg.sender].peakPowerPos, producers[msg.sender].peakPowerNeg, producers[msg.sender].latitude, producers[msg.sender].longitude, producers[msg.sender].voltageLevel, producers[msg.sender].location, producers[msg.sender].installDate);
+        return (tx.origin, producers[tx.origin].owner, producers[tx.origin].deviceType, producers[tx.origin].peakPowerPos, producers[tx.origin].peakPowerNeg, producers[tx.origin].latitude, producers[tx.origin].longitude, producers[tx.origin].voltageLevel, producers[tx.origin].location, producers[tx.origin].installDate);
     }
 
     // get registation details for individual accounts
@@ -94,26 +94,26 @@ contract EnergyProduction {
     // getting energy time and amount
     function setEnerProduction(uint32 _enerValue) {
         // check if producer already exist
-        if (proAccntsArr(msg.sender)) {
-            enerProductions[msg.sender] = EnerProduction(now, _enerValue);
+        if (proAccntsArr(tx.origin)) {
+            enerProductions[tx.origin] = EnerProduction(now, _enerValue);
 
             // total energy balance
-            proBalance[msg.sender] += _enerValue;
+            proBalance[tx.origin] += _enerValue;
 
             // indidual accounts transaction history
-            transactions[msg.sender].txTime.push(now) - 1;
-            transactions[msg.sender].txValue.push(_enerValue) - 1;
-            transactions[msg.sender].blockNumber.push(block.number);
-            transactions[msg.sender].blockHash.push(block.blockhash(block.number - 1));
-            transactions[msg.sender].txGasPrice.push(tx.gasprice) - 1;
+            transactions[tx.origin].txTime.push(now) - 1;
+            transactions[tx.origin].txValue.push(_enerValue) - 1;
+            transactions[tx.origin].blockNumber.push(block.number);
+            transactions[tx.origin].blockHash.push(block.blockhash(block.number - 1));
+            transactions[tx.origin].txGasPrice.push(tx.gasprice) - 1;
         }
 
-        EnerProductionEvent(msg.sender, now, _enerValue);
+        EnerProductionEvent(tx.origin, now, _enerValue);
 
     }
 
     function getEnerProduction() constant returns (address, uint, uint32) {
-        return (msg.sender, enerProductions[msg.sender].enerTime, enerProductions[msg.sender].enerValue);
+        return (tx.origin, enerProductions[tx.origin].enerTime, enerProductions[tx.origin].enerValue);
     }
 
     // getting energy production details for individual accounts

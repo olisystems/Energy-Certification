@@ -2,7 +2,7 @@ pragma solidity ^0.4.20;
 
 import './Owned.sol';
 
-contract EnergyConsumption is Owned {
+contract EnergyConsumption {
 
     struct Consumer {
         string owner;

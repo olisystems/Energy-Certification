@@ -1,7 +1,5 @@
 pragma solidity ^0.4.20;
 
-import './Owned.sol';
-
 contract EnergyConsumption {
 
     struct Consumer {
@@ -50,7 +48,7 @@ contract EnergyConsumption {
     * Registration
     */
 
-    function setConsumer(string _owner, string _deviceType, uint32 _peakPowerPos, uint32 _peakPowerNeg, uint32 _latitude, uint32 _longitude, uint32 _voltageLevel, string _location, string _installDate) onlyOwner {
+    function setConsumer(string _owner, string _deviceType, uint32 _peakPowerPos, uint32 _peakPowerNeg, uint32 _latitude, uint32 _longitude, uint32 _voltageLevel, string _location, string _installDate) {
         if (!consAccntsArr(msg.sender)) {
             // mapping address to index
             accntIndexArr[msg.sender] = consAccntList.length;
@@ -94,7 +92,7 @@ contract EnergyConsumption {
     */
 
     // getting energy time and amount
-    function setEnerConsumption(uint32 _enerValue) onlyOwner {
+    function setEnerConsumption(uint32 _enerValue) {
         // check if consumer already exist
         if (consAccntsArr(msg.sender)) {
             enerConsumptions[msg.sender] = EnerConsumption(now, _enerValue);

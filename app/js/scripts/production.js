@@ -342,9 +342,6 @@ function wathRealTimeEnergy() {
 
       Plotly.newPlot('realTimeProGraph', data, layout);
 
-      test();
-      console.log(1);
-
     } else {
       console.log(error);
     }

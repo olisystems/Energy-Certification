@@ -20,15 +20,15 @@ function producerList() {
   })
 }
 
-function totalSupply(){
-  oliCoinContract.getTotalSupply(function (error, result) {
-    if(!error){
-      $('#totalSuppy').html(result);
-    } else {
-      console.log(error);
-    }
-  })
-}
+// function totalSupply(){
+//   oliCoinContract.getTotalSupply(function (error, result) {
+//     if(!error){
+//       $('#totalSuppy').html(result);
+//     } else {
+//       console.log(error);
+//     }
+//   })
+// }
 
 // individual producer account details table
 var proAccntList = document.getElementById('proAccountList');
@@ -38,17 +38,17 @@ function activateProAccnt(e) {
   if (e.target.nodeName == 'LI') {
 
     // getting balance of current Producer
-    setInterval(function () {
-
-      oliCoinContract.balanceOf(e.target.innerHTML, function (error, result) {
-        if (!error) {
-          $('#proCoinBalance').html(result.c[0]);
-        }else {
-          console.log(error);
-        }
-      })
-
-    }, 3000);
+    // setInterval(function () {
+    //
+    //   oliCoinContract.balanceOf(e.target.innerHTML, function (error, result) {
+    //     if (!error) {
+    //       $('#proCoinBalance').html(result.c[0]);
+    //     }else {
+    //       console.log(error);
+    //     }
+    //   })
+    //
+    // }, 3000);
 
     // get registration details for individual account
     productionContract.getProAccntDetails(e.target.innerHTML, function (error, result) {
@@ -74,8 +74,6 @@ function activateProAccnt(e) {
       }
     })
 
-
-
     // removing the background color for ul-selected items
     for (var i = 0; i < e.target.parentNode.children.length; i++) {
       e.target.parentNode.children[i].classList.remove('active');
@@ -87,24 +85,9 @@ function activateProAccnt(e) {
   }
 
 }
-function test() {
-  // minting new tokens
-  console.log(2);
-childContract.getValue(0x40e3779cb0808012556e3b3d0593bc80f24d3458, function (error, result) {
-  if (!error) {
-    console.log(result);
-  }
-});
-
-}
-
 
 function tokenization() {
 
   producerList();
-  // test();
-
 }
 window.onload = tokenization();
-
-export default test;

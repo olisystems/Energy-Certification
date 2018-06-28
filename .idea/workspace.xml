@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f4616f3-0eec-4115-a317-99fe32a3ab99" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/certification.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/certification.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/certification.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/certification.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/certification.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/certification.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/home.js" afterDir="false" />
@@ -12,7 +11,21 @@
       <change beforePath="$PROJECT_DIR$/app/js/scripts/production.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/scripts/production.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/scripts/token.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/scripts/token.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/sol/EnergyConsumption.sol" beforeDir="false" afterPath="$PROJECT_DIR$/app/sol/EnergyConsumption.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/sol/EnergyProduction.sol" beforeDir="false" afterPath="$PROJECT_DIR$/app/sol/EnergyProduction.sol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/sol/OliCoin.sol" beforeDir="false" afterPath="$PROJECT_DIR$/app/sol/OliCoin.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/build/contracts/EnergyConsumption.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/build/contracts/EnergyProduction.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/build/contracts/Migrations.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/build/contracts/mortal.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/build/contracts/owned.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/contracts/EnergyBrowser.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/contracts/Migrations.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/contracts/mortal.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/contracts/owned.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/migrations/1_initial_migration.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/migrations/2_deploy_contracts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/truffle-config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle_compilation/truffle.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/app/js/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,21 +36,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="EnergyConsumption.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/sol/EnergyConsumption.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="15" selection-end-line="133" />
+            <state relative-caret-position="221">
+              <caret line="13" column="15" selection-end-line="131" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OliCoin.sol" pinned="false" current-in-tab="true">
+      <file leaf-file-name="OliCoin.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/sol/OliCoin.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="757">
-              <caret line="142" lean-forward="true" selection-end-line="142" />
+            <state relative-caret-position="784">
+              <caret line="136" selection-end-line="136" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Crowdsale.sol" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/sol/Crowdsale.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-667">
+              <caret line="17" lean-forward="true" selection-end-line="101" />
             </state>
           </provider>
         </entry>
@@ -51,6 +73,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/sol/OliCoin.sol" />
+        <option value="$PROJECT_DIR$/app/sol/Crowdsale.sol" />
       </list>
     </option>
   </component>
@@ -71,10 +94,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="140" />
-    <option name="y" value="20" />
-    <option name="width" value="1400" />
-    <option name="height" value="970" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1696" />
+    <option name="height" value="1026" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -103,9 +126,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -181,11 +204,14 @@
       <updated>1528124379040</updated>
       <workItem from="1528124383690" duration="129000" />
       <workItem from="1528124545500" duration="717000" />
+      <workItem from="1528389123010" duration="260000" />
+      <workItem from="1528389404072" duration="10000" />
+      <workItem from="1530177462354" duration="637000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="846000" />
+    <option name="totallyTimeSpent" value="1753000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
@@ -214,9 +240,9 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,8 +261,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/sol/OliCoin.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="757">
+        <state relative-caret-position="2431">
+          <caret line="143" selection-end-line="143" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sol/EnergyConsumption.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="15" selection-end-line="133" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sol/OliCoin.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2431">
+          <caret line="143" selection-end-line="143" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sol/EnergyConsumption.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="15" selection-end-line="133" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sol/OliCoin.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2414">
           <caret line="142" lean-forward="true" selection-end-line="142" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sol/EnergyConsumption.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="15" selection-end-line="131" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sol/OliCoin.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="784">
+          <caret line="136" selection-end-line="136" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sol/Crowdsale.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-667">
+          <caret line="17" lean-forward="true" selection-end-line="101" />
         </state>
       </provider>
     </entry>

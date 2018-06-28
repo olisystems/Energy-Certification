@@ -14,12 +14,12 @@ contract OliCoin is IERC20 {
     /* transfer tokens function  */
     function transfer(address _to, uint256 _tokens) returns (bool success) {
         /* check if sender has enough token to transfer */
-        require(balances[tx.origin] >= _tokens && _tokens > 0);
+        require(balances[msg.sender] >= _tokens && _tokens > 0);
 
-        balances[tx.origin] = balances[tx.origin].sub(_tokens);
+        balances[msg.sender] = balances[msg.sender].sub(_tokens);
         balances[_to] = balances[_to].add(_tokens);
 
-        Transfer(tx.origin, _to, _tokens);
+        Transfer(msg.sender, _to, _tokens);
         return true;
     }
 
@@ -31,11 +31,11 @@ contract OliCoin is IERC20 {
     /* approve spender to spend tokens */
     function approve(address _spender, uint256 _tokens) returns (bool success) {
         require(_tokens > 0
-        && balances[tx.origin] > 0);
+        && balances[msg.sender] > 0);
 
-        allowances[tx.origin][_spender] = _tokens;
+        allowances[msg.sender][_spender] = _tokens;
 
-        Approval(tx.origin, _spender, _tokens);
+        Approval(msg.sender, _spender, _tokens);
         return true;
     }
 
@@ -48,12 +48,12 @@ contract OliCoin is IERC20 {
     function transferFrom(address _from, address _to, uint256 _tokens) returns (bool success) {
         require(_tokens > 0
         && balances[_from] >= _tokens
-        && allowances[_from][tx.origin] >= _tokens);
+        && allowances[_from][msg.sender] >= _tokens);
 
         balances[_from] = balances[_from].sub(_tokens);
         balances[_to] = balances[_to].add(_tokens);
 
-        allowances[_from][tx.origin] = allowances[_from][tx.origin].sub(_tokens);
+        allowances[_from][msg.sender] = allowances[_from][msg.sender].sub(_tokens);
 
         Transfer(_from, _to, _tokens);
         return true;
@@ -61,14 +61,7 @@ contract OliCoin is IERC20 {
 
     /* minting new coins */
     function getEnerProductionForCoin() public view returns (uint32[]){
-        return p.getEnerProductionForCoin(tx.origin);
-    }
-
-    string name;
-
-    function setName(string _name) public view returns (string){
-        name = _name;
-        return name;
+        return p.getEnerProductionForCoin(msg.sender);
     }
 
     string deviceType;
@@ -81,17 +74,17 @@ contract OliCoin is IERC20 {
         location = getLocation();
         multiplier = getMultiplier();
 
-        balances[tx.origin] = balances[tx.origin].add((p.getEnerProductionForCoin(tx.origin)[p.getEnerProductionForCoin(tx.origin).length - 1]) * multiplier);
-        totalSupply = totalSupply.add((p.getEnerProductionForCoin(tx.origin)[p.getEnerProductionForCoin(tx.origin).length - 1]) * multiplier);
+        balances[msg.sender] = balances[msg.sender].add((p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * multiplier);
+        totalSupply = totalSupply.add((p.getEnerProductionForCoin(msg.sender)[p.getEnerProductionForCoin(msg.sender).length - 1]) * multiplier);
     }
 
 
     function getDeviceType() constant returns (string){
-        return p.getDeviceTypeForCoin(tx.origin);
+        return p.getDeviceTypeForCoin(msg.sender);
     }
 
     function getLocation() constant returns (string){
-        return p.getLocationForCoin(tx.origin);
+        return p.getLocationForCoin(msg.sender);
     }
 
     function getMultiplier() returns (uint){

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>OLI Systems Web3 Browser</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="./css/main.css">
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin="" />
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark nav-color pb-3">
+
+    <a class="navbar-brand" href="http://www.my-oli.com/de/" target="_blank">OLI Systems</a>
+    <!-- menu items -->
+    <button class="navbar-toggler" type="button" data-toggle='collapse' data-target='#navbarSupportedContent'>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./certification.html" target=_blank>Energy Certification</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./bgm.html" target="_blank">BGM Mockup</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row top-bar">
+      <div class="col-md-2 col-sm-4 col-xs-6 top-bar-counts">
+        <span>Total Producer</span>
+        <div class="counter" id="proCounter"></div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 top-bar-counts">
+        <span>Total Consumer</span>
+        <div class="counter" id="consCounter"></div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 top-bar-counts">
+        <span>Gas Price [Gwei]</span>
+        <div class="counter" id="gasPrice">18</div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 top-bar-counts">
+        <span>Latest Block Number</span>
+        <div class="counter" id="blockNumber"></div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 top-bar-counts">
+        <span>Transactions in Latest Block</span>
+        <div class="counter" id="txMined"></div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 top-bar-counts">
+        <span>Gas Used [mgas]</span>
+        <div class="counter" id="gasUsed"></div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card" style="height:370px">
+          <div class="card-body">
+            <h5>Producer Registration Details</h5>
+            <hr>
+            <div style="height:270px; width: 100%;" class="scroll table table-striped table-bordered text-center" id="proRegs">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="card" style="height:370px">
+          <div class="card-body">
+            <h5>Consumer Registration Details</h5>
+            <hr>
+            <div style="height:270px; width: 100%;" class="scroll table table-striped table-bordered text-center" id="consRegs">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card" style="height:370px">
+          <div class="card-body">
+            <h5>Real Time Energy Production</h5>
+            <hr>
+            <div style="height:270px; width: 100%;" class="scroll table table-striped table-bordered text-center" id="realTimeProdunction">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="card" style="height:370px">
+          <div class="card-body">
+            <h5>Energy Production & Consumption per Block</h5>
+            <hr>
+            <div id="realTimeProGraph" style="width: 100%; height: 270px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="card" style="height:370px">
+          <div class="card-body">
+            <h5>Real Time Energy Consumption</h5>
+            <hr>
+            <div style="height:270px; width: 100%;" class="scroll table table-striped table-bordered text-center" id="realTimeConsumption">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-6">
+        <div class="card" style="height:370px">
+          <div class="card-body">
+            <h5>Producer's Transaction History</h5>
+            <hr>
+            <h5>Account Address:
+              <span id="proAccntTitle">
+            </h5>
+            <div style="height:230px; width: 100%;" class="scroll table table-striped table-bordered text-center" id="test">
+              <table id="proAccount"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="card" style="height:370px">
+          <div class="card-body">
+            <h5>Consumer's Transaction History</h5>
+            <hr>
+            <h5>Account Address:
+              <span id="consAccntTitle"></span>
+            </h5>
+            <div style="height:230px; width: 100%;" class="scroll table table-striped table-bordered text-center">
+              <table id="consAccount"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body" style="height:370px; width: 100%;">
+            <h5>List of Registered Producers</h5>
+            <hr>
+            <ol id="proAccountList" class="scroll" style="height:270px"></ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div id="map" style="width: 100%; height: 370px"></div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body" style="height:370px; width: 100%;">
+            <h5>List of Registered Consumers</h5>
+            <hr>
+            <ol id="consAccountList" class="scroll" style="height:270px"></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body scroll" style="height:350px; width: 100%;">
+            <h5>Producer's Registration Details</h5>
+            <hr>
+
+            <div class="row">
+
+              <div class="col-sm-12">
+                <h5> Total Production [kWh]:
+                  <span id="proAccntBalance"></span>
+                </h5>
+              </div>
+
+              <div class="col-sm-5 lead">Owner:</div>
+              <div class="col-sm-7" id="proOwner"></div>
+              <div class="col-sm-5 lead">Device Type:</div>
+              <div class="col-sm-7" id="proDeviceType"></div>
+              <div class="col-sm-5 lead">Peak Power (+) [W]:</div>
+              <div class="col-sm-7" id="proPeakPower"></div>
+              <div class="col-sm-5 lead">Location Type:</div>
+              <div class="col-sm-7" id="proLocationType"></div>
+              <div class="col-sm-5 lead">Latitude:</div>
+              <div class="col-sm-7" id="proLat"></div>
+              <div class="col-sm-5 lead">Latitude:</div>
+              <div class="col-sm-7" id="proLon"></div>
+              <div class="col-sm-5 lead">Install Date:</div>
+              <div class="col-sm-7" id="proInstallDate"></div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body scroll" style="height:350px; width: 100%;">
+            <h5>Consumer's Registration Details</h5>
+            <hr>
+
+            <div class="row">
+
+              <div class="col-sm-12">
+                <h5> Total Consumption [kWh]:
+                  <span id="consAccntBalance"></span>
+                </h5>
+              </div>
+
+              <div class="col-sm-5 lead">Owner:</div>
+              <div class="col-sm-7" id="consOwner"></div>
+              <div class="col-sm-5 lead">Device Type:</div>
+              <div class="col-sm-7" id="consDeviceType"></div>
+              <div class="col-sm-5 lead">Peak Power (+) [W]:</div>
+              <div class="col-sm-7" id="consPeakPower"></div>
+              <div class="col-sm-5 lead">Location Type:</div>
+              <div class="col-sm-7" id="consLocationType"></div>
+              <div class="col-sm-5 lead">Latitude:</div>
+              <div class="col-sm-7" id="consLat"></div>
+              <div class="col-sm-5 lead">Latitude:</div>
+              <div class="col-sm-7" id="consLon"></div>
+              <div class="col-sm-5 lead">Install Date:</div>
+              <div class="col-sm-7" id="consInstallDate"></div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+
+        <div class="card" style="height:350px">
+          <div class="card-body scroll">
+            <h5>Check Registration</h5>
+            <hr>
+            <input type="text" class="elements col-sm-10" id="inputProAddr">
+            <button type="button" class="btn btn-info" id="proRegInfoButton">Check Registration</button>
+            <button type="button" class="btn" id="resetProButton">Reset</button>
+            <h1 id="proRegInfo" class="text-center" </h1>
+          </div>
+        </div>
+
+        <!-- <div class="card" style="height:190px">
+          <div class="card-body scroll">
+            <h5>Check Consumer's Registration</h5>
+            <hr>
+            <input type="text" class="elements col-sm-10" id="inputConsAddr">
+            <button type="button" class="btn btn-info" id="consRegInfoButton">Check Registration</button>
+            <button type="button" class="btn" id="resetConsButton">Reset</button>
+            <h1 id="consRegInfo" class="text-center" </h1>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

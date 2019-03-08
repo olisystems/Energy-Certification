@@ -34,5 +34,6 @@ async function start() {
   consumerList();
   getConsCounter();
   await consRealTimeEner();
+  getEthAccounts();
 }
 window.onload = start();

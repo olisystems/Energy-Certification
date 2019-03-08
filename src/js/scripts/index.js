@@ -1,4 +1,3 @@
-
 import {
   getAllProducers,
   watchNewProducers,
@@ -34,5 +33,5 @@ async function start() {
   consumerList();
   getConsCounter();
   await consRealTimeEner();
-}
+  }
 window.onload = start();

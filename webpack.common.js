@@ -6,7 +6,8 @@ module.exports = {
   entry: {
     main: './src/js/scripts/index.js',
     certification: './src/js/scripts/token.js',
-    bgm: './src/js/scripts/bgm.js'
+    bgm: './src/js/scripts/bgm.js',
+    explorer: './src/js/scripts/explorer.js'
   },
   plugins: [
     //new CleanWebpackPlugin('app', {} ),
@@ -24,6 +25,11 @@ module.exports = {
       template: './src/bgm.html',
       filename: 'bgm.html',
       chunks: ['bgm']
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/explorer.html',
+      filename: 'explorer.html',
+      chunks: ['explorer']
     })
   ],
   output: {

@@ -6,7 +6,8 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: {
     main: './src/js/scripts/index.js',
-    certification: './src/js/scripts/token.js'
+    certification: './src/js/scripts/token.js',
+    explorer: './src/js/scripts/explorer.js'
   },
   output: {
     filename: '[name].bundle.js',

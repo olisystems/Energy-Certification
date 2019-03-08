@@ -71,7 +71,6 @@ color: white;
 
 background: #154360;
   } */
-
 hr {
   background-color: #eee;
   border: 0 none;
@@ -119,7 +118,7 @@ div.scroll {
 }
 
 ol {
-  margin: 0 0 1.5em;
+  margin: 0 0 0;
   padding: 0;
   counter-reset: item;
   cursor: pointer;
@@ -175,17 +174,16 @@ ol>li:before {
   color: #e68a00;
 }
 
-#gasUsed, #blockNumber, #txMined, #gasPrice{
+#gasUsed, #blockNumber, #txMined, #gasPrice {
   color: #565655
 }
 
 /* disable plotly graphs toolbar*/
-
 .modebar {
   display: none !important;
 }
 
-.activeConsumer{
+.activeConsumer {
   background-color: #e68a00;
 }
 
@@ -193,7 +191,7 @@ ol>li:before {
   background-color: #8cd98c;
 }
 
-.lead{
+.lead {
   color: #17202A;
   font-weight: 400;
 }
@@ -208,6 +206,7 @@ TH {
   overflow: hidden;
   white-space: nowrap;
 }
+
 th:hover {
   overflow-x: visible;
   height: auto;
@@ -233,7 +232,6 @@ td:hover {
 }
 
 /*current consumer popop style*/
-
 .currentCons-popup .leaflet-popup-content-wrapper {
   background: #e68a00;
   color: white;
@@ -254,7 +252,6 @@ td:hover {
 }
 
 /*current producer popop style*/
-
 .currentPro-popup .leaflet-popup-content-wrapper {
   background: #00b33c;
   color: white;
@@ -316,4 +313,128 @@ td:hover {
   .top-bar .top-bar-counts .counter {
     font-size: 40px
   }
+}
+
+/* ===================== styling explorer page ===================== */
+.main {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-input {
+  padding: 10px;
+  margin: 20px;
+  display: flex;
+}
+
+.user-input input {
+  flex: 1;
+  border: 2px solid #154360;
+  border-radius: 30px;
+  height: 50px;
+  font-size: 16pt;
+}
+
+.search-icon {
+  padding-left: 10px;
+  color: #154360;
+  cursor: pointer;
+}
+
+.infographics{
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.infographics-headings{
+  /* background-color: white;
+  border: 2px solid #154360; */
+  padding: 10px;
+  margin: 10px;
+}
+
+.infographics-headings-span{
+  color: #009933;
+}
+
+#smart-contract{
+  flex: 2;
+}
+#start-block{
+  flex: 1;
+}
+#end-block{
+  flex: 1;
+}
+
+.display-data {
+  width: 100%;
+  margin: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.display-data-col{
+  box-sizing: border-box;
+  border: 2px solid #154360;
+  background-color: white;
+  padding: 10px;
+  flex-basis: 48%;
+  overflow: scroll;
+}
+
+.display-data-col ol>li:hover {
+  background: orange;
+  font-size: 16px;
+}
+
+.display-data-col ol>li {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+div.display-data > div:nth-child(1){
+  max-height: 520px;
+}
+
+#txObject{
+  margin-bottom: 0px;
+}
+
+::-webkit-scrollbar {
+width: 0px;
+background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+background: lightgrey;
+}
+
+.remove{
+  display: none;
+}
+
+@media (max-width: 801px) {
+  .input-contract-address {
+    padding: 2px;
+  }
+
+  .infographics{
+    max-width: 100%;
+    flex-direction: column;
+  }
+  .infographics-headings{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
 }

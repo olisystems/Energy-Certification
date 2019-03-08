@@ -1,0 +1,10 @@
+.main{
+  background: black;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.block{
+  border: 2px solid black;
+}

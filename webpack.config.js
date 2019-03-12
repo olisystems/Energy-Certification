@@ -5,9 +5,9 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: {
-    main: './src/js/scripts/index.js',
-    certification: './src/js/scripts/token.js',
-    explorer: './src/js/scripts/explorer.js'
+    main: './src/js/index.js',
+    certification: './src/js/token.js',
+    explorer: './src/js/explorer.js'
   },
   output: {
     filename: '[name].bundle.js',

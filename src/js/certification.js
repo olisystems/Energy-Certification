@@ -5,9 +5,11 @@ import {
   childContract,
 } from './contracts.js';
 
+const $ = require("jquery");
+
 // producer accounts list
 function producerList() {
-  productionContract.methods.getProAccntsList().call(function (error, result) {
+  productionContract.methods.getProAccntsList().call(function(error, result) {
     if (!error) {
       result.shift();
       for (var i = 0; i < result.length; i++) {
@@ -30,8 +32,7 @@ function producerList() {
 // }
 
 // individual producer account details table
-var proAccntList = document.getElementById('proAccountList');
-proAccntList.addEventListener('click', activateProAccnt);
+$('#proAccountList').click(activateProAccnt);
 
 function activateProAccnt(e) {
   if (e.target.nodeName == 'LI') {
@@ -50,24 +51,24 @@ function activateProAccnt(e) {
     // }, 3000);
 
     // get registration details for individual account
-    productionContract.methods.getProAccntDetails(e.target.innerHTML).call(function (error, result) {
+    productionContract.methods.getProAccntDetails($(e.target).html()).call(function(error, result) {
       if (error) {
         console.log(error);
       } else {
         $('#proOwner').html(result[0]);
         $('#proDeviceType').html(result[1]);
-        // $('#proPeakPower').html(result[2]);
-        document.getElementById('proPeakPower').innerHTML = result[2];
+        $('#proPeakPower').html(result[2]);
         $('#proLocationType').html(result[3]);
         $('#proLat').html(result[4] / 10000);
         $('#proLon').html(result[5] / 10000);
-        $('#proInstallDate').html(result[6]);}
+        $('#proInstallDate').html(result[6]);
+      }
     })
 
     // total amount of energy produced by individual producer
-    productionContract.methods.getProBalance(e.target.innerHTML).call(function (error, result) {
+    productionContract.methods.getProBalance($(e.target).html()).call(function(error, result) {
       if (!error) {
-        document.getElementById('proAccntBalance').innerHTML = result;
+        $('#proAccntBalance').html(result);
       } else {
         console.log(error);
       }
@@ -78,15 +79,8 @@ function activateProAccnt(e) {
       e.target.parentNode.children[i].classList.remove('active');
     }
     // adding background color to active item
-
-    e.target.classList.add('active');
-
+    $(e.target).addClass('active');
   }
-
 }
 
-function tokenization() {
-
-  producerList();
-}
-window.onload = tokenization();
+producerList();

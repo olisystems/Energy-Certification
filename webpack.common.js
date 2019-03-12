@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: {
     main: './src/js/index.js',
-    certification: './src/js/token.js',
+    certification: './src/js/certification.js',
     bgm: './src/js/bgm.js',
     explorer: './src/js/explorer.js'
   },

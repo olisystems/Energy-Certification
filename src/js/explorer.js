@@ -1,4 +1,5 @@
 import web3 from './contracts.js';
+const $ = require("jquery");
 
 async function getTxsByAccount(contractAddress, startBlockNumber, endBlockNumber) {
   // check endBlockNumber is null

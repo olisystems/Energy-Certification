@@ -424,6 +424,10 @@ background: lightgrey;
   display: none;
 }
 
+.sampleAddress{
+  color: lightgrey;
+}
+
 @media (max-width: 801px) {
   #contract-address {
     width: 100%;

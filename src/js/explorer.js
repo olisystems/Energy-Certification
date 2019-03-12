@@ -36,10 +36,8 @@ async function getTxsByAccount(contractAddress, startBlockNumber, endBlockNumber
   }
 }
 
-//0xDDaD3758d3A062d17792093fdaB71b962969F9a0
-//0x757aAf7309b999b5e4173409A69cbc3743F66B47
-// 0x8547Da7a6623489F9a167A9cE06cfEdEdD943A4F
-// 0x9a076b4295023cAef221D16dE5cCCa90CB445dc1
+// 0xB35ade92c443B3b111ddA47C6af8872110fB7a03
+// 0xB35ade92c443B3b111ddA47C6af8872110fB7a03
 
 $('#search-button').click(() => {
   let test = $('#contract-address').val().split(',');
@@ -47,7 +45,7 @@ $('#search-button').click(() => {
   $("#txHashes").empty();
   $("#display-data-div").removeClass("remove");
   $("#infographics-div").removeClass("remove");
-  getTxsByAccount($('#contract-address').val());
+  getTxsByAccount($('#contract-address').val().trim());
   //getTxsByAccount("0xDDaD3758d3A062d17792093fdaB71b962969F9a0");
   // clear input box
   $('#contract-address').val('');

@@ -24,7 +24,7 @@ async function getTxsByAccount(contractAddress, startBlockNumber, endBlockNumber
         // filter out transactions for a specific smart contract
         if (contractAddress == tx.to) {
           $("#txHashes").prepend("<li>" + tx.hash + "</li>");
-          $("#txObject").html(JSON.stringify(tx,  null, 2));
+          $("#txObject").html(JSON.stringify(tx, null, 2));
           //console.log(parseInt(tx.input.slice(tx.input.length - 5, tx.input.length)));
           $("#smart-contract").html(contractAddress);
           $("#start-block").html(startBlockNumber);
@@ -38,7 +38,7 @@ async function getTxsByAccount(contractAddress, startBlockNumber, endBlockNumber
 //0xDDaD3758d3A062d17792093fdaB71b962969F9a0
 //0x757aAf7309b999b5e4173409A69cbc3743F66B47
 
-$('#search-button').click(function () {
+$('#search-button').click(() => {
   let test = $('#contract-address').val().split(',');
   // document.getElementById("smart-contract").innerHTML = $('#contract-address').val();
   $("#txHashes").empty();
@@ -48,4 +48,10 @@ $('#search-button').click(function () {
   //getTxsByAccount("0xDDaD3758d3A062d17792093fdaB71b962969F9a0");
   // clear input box
   $('#contract-address').val('');
+});
+// enabling enter to submit input data
+$("#contract-address").keyup(event => {
+  if (event.keyCode === 13) {
+    $("#search-button").click();
+  }
 });

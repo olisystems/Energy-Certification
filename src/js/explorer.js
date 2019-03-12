@@ -38,6 +38,8 @@ async function getTxsByAccount(contractAddress, startBlockNumber, endBlockNumber
 
 //0xDDaD3758d3A062d17792093fdaB71b962969F9a0
 //0x757aAf7309b999b5e4173409A69cbc3743F66B47
+// 0x8547Da7a6623489F9a167A9cE06cfEdEdD943A4F
+// 0x9a076b4295023cAef221D16dE5cCCa90CB445dc1
 
 $('#search-button').click(() => {
   let test = $('#contract-address').val().split(',');
@@ -56,3 +58,21 @@ $("#contract-address").keyup(event => {
     $("#search-button").click();
   }
 });
+
+// individual tx object
+$('#txHashes').click(getTxObject);
+
+async function getTxObject(e) {
+  if (e.target.nodeName == 'LI') {
+    let txObj = await web3.eth.getTransaction($(e.target).html());
+    // filter out empty blocks
+      $("#txObject").html(JSON.stringify(txObj, null, 2));
+
+      // removing the background color for ul-selected items
+      for (var i = 0; i < e.target.parentNode.children.length; i++) {
+        e.target.parentNode.children[i].classList.remove('active');
+      }
+      // adding background color to active item
+      $(e.target).addClass('active');
+  }
+}

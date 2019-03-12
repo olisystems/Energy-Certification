@@ -8,6 +8,7 @@ import {
 import map from './map.js';
 import web3 from './contracts.js';
 
+const $ = require("jquery");
 /*
  * Energy Consumption Contract
  */

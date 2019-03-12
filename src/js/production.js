@@ -11,7 +11,9 @@ import {
 } from './consumption.js';
 import map from './map.js';
 import web3 from './contracts.js';
-import test from './token.js';
+
+const $ = require("jquery");
+import Plotly from 'plotly.js-dist';
 
 /*
  * Energy Production Contract
@@ -103,7 +105,7 @@ function getAllProducers() {
         var proPopup = "Eth address: " + result[i].returnValues.pvAddr.slice(0, 7) + '...' + "<br>" + "Producer: " + result[i].returnValues.owner + "<br>" + "Location: " + ((result[i].returnValues.latitude) / 10000) + ", " + ((result[i].returnValues.longitude) / 10000);
 
         var proMarkerLocation = new L.LatLng(proLatitude, proLongitude);
-        var proMarkers = new L.Marker(proMarkerLocation, {
+        proMarkers = new L.Marker(proMarkerLocation, {
           icon: producer
         });
         map.addLayer(proMarkers);
@@ -123,20 +125,19 @@ $('#proRegInfoButton').click(function() {
       console.log(error);
       console.log(result);
     }
-  })
-})
+  });
+});
+
 $('#resetProButton').click(function() {
   document.getElementById('inputProAddr').value = "";
   $('#proRegInfo').html('');
 });
 
 // producer accounts list
-
 function producerList() {
   productionContract.methods.getProAccntsList().call(function(error, result) {
 
     if (!error) {
-
       result.shift();
       for (var i = 0; i < result.length; i++) {
         $("#proAccountList").prepend("<li>" + result[i] + "</li>");
@@ -144,7 +145,7 @@ function producerList() {
     } else {
       console.log(error);
     }
-  })
+  });
 }
 
 // producer Counter
@@ -155,7 +156,7 @@ function getProCounter() {
     } else {
       console.log(error);
     }
-  })
+  });
 }
 
 // Energy production mapping setup
@@ -210,7 +211,6 @@ async function watchRealTimeEnergy() {
         currentTxTimeNew = [];
       // 2 creating single sorted object
       var outputObject = {};
-
       currentProTxTime.forEach((key, i) => outputObject[key] = enerProduction[i]);
 
       // 3 conveting object into single arrays
@@ -218,7 +218,6 @@ async function watchRealTimeEnergy() {
         if (!outputObject.hasOwnProperty(property)) {
           continue;
         }
-
       }
 
       // 4 assigning key and value names
@@ -241,9 +240,7 @@ async function watchRealTimeEnergy() {
       enerProBlockValues.push(combinedObject);
 
       // 6 sum up values for same keys
-
       var holder = {};
-
       enerProBlockValues.forEach(function(d) {
 
         if (holder.hasOwnProperty(d.time)) {
@@ -254,7 +251,6 @@ async function watchRealTimeEnergy() {
       });
 
       var combinedObject2 = [];
-
       for (var prop in holder) {
         combinedObject2.push({
           time: prop,
@@ -295,7 +291,7 @@ async function watchRealTimeEnergy() {
         line: {
           color: '#009933'
         }
-      }
+      };
       var consData = {
         type: "scatter",
         mode: "lines+markers",
@@ -305,7 +301,7 @@ async function watchRealTimeEnergy() {
         line: {
           color: '#cc6600'
         }
-      }
+      };
 
       var data = [proData, consData];
       var layout = {
@@ -406,7 +402,7 @@ function activateProAccnt(e) {
             var popupOptions = {
               'maxWidth': '500',
               'className': 'currentPro-popup' // classname for another popup
-            }
+            };
 
             if (currentProMarker != undefined) {
               map.removeLayer(currentProMarker);
@@ -415,14 +411,11 @@ function activateProAccnt(e) {
             currentProMarker = L.marker([currentProLat, currentProLon], {
               icon: currentProIcon
             }).addTo(map);
-
             currentProMarker.bindPopup(popupContent, popupOptions).openPopup();
-
           }
         }
-
       }
-    })
+    });
 
     // displaying pro registration details
     document.getElementById('proAccntTitle').innerHTML = e.target.innerHTML;
@@ -441,7 +434,7 @@ function activateProAccnt(e) {
         $('#proLon').html(result[5] / 10000);
         $('#proInstallDate').html(result[6]);
       }
-    })
+    });
 
     // total amount of energy produced by individual producer
     productionContract.methods.getProBalance(e.target.innerHTML).call(function(error, result) {
@@ -450,10 +443,9 @@ function activateProAccnt(e) {
       } else {
         console.log(error);
       }
-    })
+    });
 
     // producer account table
-
     productionContract.methods.getProEnerProduction(e.target.innerHTML).call(function(error, result) {
       if (error) {
         console.error(error);
@@ -474,9 +466,7 @@ function activateProAccnt(e) {
 
             for (var i = 0; i < result.length; i++) {
               if (result[i].returnValues[0] == e.target.innerHTML) {
-
                 header3.push([result[i].returnValues[0], timeConverter(result[i].returnValues[1]), result[i].returnValues[2], result[i].returnValues[3], result[i].returnValues[4], result[i].returnValues[5]]);
-
               }
             }
 
@@ -505,25 +495,20 @@ function activateProAccnt(e) {
               }
             }
           }
-        })
+        });
       }
-    })
+    });
 
     // removing the background color for ul-selected items
     for (var i = 0; i < e.target.parentNode.children.length; i++) {
       e.target.parentNode.children[i].classList.remove('active');
     }
     // adding background color to active item
-
     e.target.classList.add('active');
-
   }
-
 }
 
-
 setInterval(function() {
-
   // block number of latest mined block
   web3.eth.getBlockNumber().then(data => {
     document.getElementById('blockNumber').innerHTML = data;
@@ -538,7 +523,7 @@ setInterval(function() {
   web3.eth.estimateGas(web3.eth.getBlock('latest')).then(data => {
     document.getElementById('gasUsed').innerHTML = (data / 1000000).toFixed(2);
 
-  })
+  });
 
 }, 3000);
 

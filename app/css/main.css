@@ -329,10 +329,12 @@ td:hover {
   padding: 10px;
   margin: 20px;
   display: flex;
+  justify-content: space-between;
 }
 
-.user-input input {
-  flex: 1;
+#contract-address {
+  width: 800px;
+  padding: 10px;
   border: 2px solid #154360;
   border-radius: 30px;
   height: 50px;
@@ -423,10 +425,9 @@ background: lightgrey;
 }
 
 @media (max-width: 801px) {
-  .input-contract-address {
-    padding: 2px;
+  #contract-address {
+    width: 100%;
   }
-
   .infographics{
     max-width: 100%;
     flex-direction: column;
@@ -436,5 +437,4 @@ background: lightgrey;
     white-space: nowrap;
     overflow: hidden;
   }
-
 }

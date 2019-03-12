@@ -33,10 +33,5 @@ async function start() {
   consumerList();
   getConsCounter();
   await consRealTimeEner();
-<<<<<<< HEAD
-  getEthAccounts();
 }
-=======
-  }
->>>>>>> d0f02c8c549f9e3f425fcbfe56999c48b34b534b
 window.onload = start();

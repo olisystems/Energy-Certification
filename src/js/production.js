@@ -27,7 +27,6 @@ function watchNewProducers() {
   }, function(error, result) {
     if (error) {
       console.log(error);
-
     } else {
       //document.getElementById("newProducer").innerHTML +="<br />" +  "<br />" + result.args.pvAddr + ', ' + result.args.owner + ', ' + result.args.deviceType + ', ' + result.args.manufacturer + ', ' + result.args.peakPowerPos + ', ' + result.args.peakPowerNeg + ', ' + (result.args.latitude)/10000 + ', ' + (result.args.longitude)/10000 + ', ' + result.args.voltageLevel + ', ' + result.args.location + ', ' + result.args.installDate;
     }
@@ -49,69 +48,68 @@ function getAllProducers() {
       console.error(error);
     } else {
       // table starts from here
-      for (var i = 0; i < result.length; i++) {
+      for (let i = 0; i < result.length; i++) {
         proHeader.push([result[i].returnValues.pvAddr, result[i].returnValues.owner, result[i].returnValues.deviceType, result[i].returnValues.peakPowerPos, (result[i].returnValues.latitude) / 10000 + ' ' + (result[i].returnValues.longitude) / 10000, result[i].returnValues.voltageLevel, result[i].returnValues.location, result[i].returnValues.installDate]);
         //header.push([addrArray[i], ownerArray[i], deviceTypeArray[i], peakPowerPosArray[i], peakPowerNegArray[i], coordinatesArray[i], voltageLevelArray[i], locationArray[i], installDateArray[i]]);
       }
       //Create a HTML Table element.
-      var proTable = document.createElement("Table");
+      let proTable = document.createElement("Table");
       proTable.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
 
       //Get the count of columns.
-      var columnCount = proHeader[0].length;
+      let columnCount = proHeader[0].length;
 
       //Add the header row.
-      var row = proTable.insertRow(-1);
+      let row = proTable.insertRow(-1);
 
-      for (var i = 0; i < columnCount; i++) {
-        var headerCell = document.createElement("TH");
+      for (let i = 0; i < columnCount; i++) {
+        let headerCell = document.createElement("TH");
         headerCell.innerHTML = proHeader[0][i];
         row.appendChild(headerCell);
       }
 
       //Add the data rows.
-      for (var i = 1; i < proHeader.length; i++) {
+      for (let i = 1; i < proHeader.length; i++) {
         row = proTable.insertRow(-1);
-        for (var j = 0; j < columnCount; j++) {
-          var cell = row.insertCell(-1);
+        for (let j = 0; j < columnCount; j++) {
+          let cell = row.insertCell(-1);
           cell.innerHTML = proHeader[i][j];
         }
       }
 
-      var proRegTable = document.getElementById("proRegs");
+      let proRegTable = document.getElementById("proRegs");
       proRegTable.innerHTML = "";
       proRegTable.appendChild(proTable);
 
       // spatial distribution map
       // difining marker icons
 
-      var producer = L.icon({
+      let producer = L.icon({
         iconUrl: '../img/producer.png',
         iconSize: [50, 50]
       });
-      var proMarkers = [];
-      var proLat1 = [];
-      var proLon1 = [];
+      let proMarkers = [];
+      let proLat1 = [];
+      let proLon1 = [];
 
-      for (var i = 0; i < result.length; i++) {
+      for (let i = 0; i < result.length; i++) {
         proLat1.push((result[i].returnValues.latitude) / 10000);
         proLon1.push((result[i].returnValues.longitude) / 10000);
         proMarkers.push((result[i].returnValues.latitude) / 10000 + ', ' + (result[i].returnValues.longitude) / 10000);
       }
 
-      for (var i = 0; i < proLat1.length; i++) {
-        var proLongitude = proLon1[i];
-        var proLatitude = proLat1[i];
-        var proPopup = "Eth address: " + result[i].returnValues.pvAddr.slice(0, 7) + '...' + "<br>" + "Producer: " + result[i].returnValues.owner + "<br>" + "Location: " + ((result[i].returnValues.latitude) / 10000) + ", " + ((result[i].returnValues.longitude) / 10000);
+      for (let i = 0; i < proLat1.length; i++) {
+        let proLongitude = proLon1[i];
+        let proLatitude = proLat1[i];
+        let proPopup = "Eth address: " + result[i].returnValues.pvAddr.slice(0, 7) + '...' + "<br>" + "Producer: " + result[i].returnValues.owner + "<br>" + "Location: " + ((result[i].returnValues.latitude) / 10000) + ", " + ((result[i].returnValues.longitude) / 10000);
 
-        var proMarkerLocation = new L.LatLng(proLatitude, proLongitude);
+        let proMarkerLocation = new L.LatLng(proLatitude, proLongitude);
         proMarkers = new L.Marker(proMarkerLocation, {
           icon: producer
         });
         map.addLayer(proMarkers);
         proMarkers.bindPopup(proPopup);
       }
-
     }
   });
 }
@@ -139,7 +137,7 @@ function producerList() {
 
     if (!error) {
       result.shift();
-      for (var i = 0; i < result.length; i++) {
+      for (let i = 0; i < result.length; i++) {
         $("#proAccountList").prepend("<li>" + result[i] + "</li>");
       }
     } else {
@@ -161,10 +159,10 @@ function getProCounter() {
 
 // Energy production mapping setup
 // real time energy time graph
-var enerProduction = [];
-var currentProTxTime = [];
-var enerProBlockValues = [];
-var header1 = [];
+let enerProduction = [];
+let currentProTxTime = [];
+let enerProBlockValues = [];
+let header1 = [];
 header1.push(['Eth Address', 'Time', 'Power [W]']);
 
 async function watchRealTimeEnergy() {
@@ -176,28 +174,28 @@ async function watchRealTimeEnergy() {
       // table starts from here
       header1.push([result.returnValues[0], timeConverter(result.returnValues[1]), result.returnValues[2]]);
       //Create a HTML Table element.
-      var table1 = document.createElement("Table");
+      let table1 = document.createElement("Table");
       table1.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
 
       //Get the count of columns.
-      var columnCount = header1[0].length;
+      let columnCount = header1[0].length;
       //Add the header row.
-      var row = table1.insertRow(-1);
-      for (var i = 0; i < columnCount; i++) {
-        var headerCell = document.createElement("TH");
+      let row = table1.insertRow(-1);
+      for (let i = 0; i < columnCount; i++) {
+        let headerCell = document.createElement("TH");
         headerCell.innerHTML = header1[0][i];
         row.appendChild(headerCell);
       }
       //Add the data rows.
-      for (var i = 1; i < header1.length; i++) {
+      for (let i = 1; i < header1.length; i++) {
         row = table1.insertRow(-1);
-        for (var j = 0; j < columnCount; j++) {
-          var cell = row.insertCell(-1);
+        for (let j = 0; j < columnCount; j++) {
+          let cell = row.insertCell(-1);
           cell.innerHTML = header1[i][j];
         }
       }
 
-      var realTimeEnergyProductionTable = document.getElementById("realTimeProdunction");
+      let realTimeEnergyProductionTable = document.getElementById("realTimeProdunction");
       realTimeEnergyProductionTable.innerHTML = "";
       realTimeEnergyProductionTable.appendChild(table1);
 
@@ -207,10 +205,10 @@ async function watchRealTimeEnergy() {
       currentProTxTime.push(await currentTime());
 
       // 1
-      var enerProductionNew = [],
+      let enerProductionNew = [],
         currentTxTimeNew = [];
       // 2 creating single sorted object
-      var outputObject = {};
+      let outputObject = {};
       currentProTxTime.forEach((key, i) => outputObject[key] = enerProduction[i]);
 
       // 3 conveting object into single arrays
@@ -221,26 +219,26 @@ async function watchRealTimeEnergy() {
       }
 
       // 4 assigning key and value names
-      var timeObject = {};
-      var energyValueObject = {};
-      var key = "time";
-      var value = "energy";
+      let timeObject = {};
+      let energyValueObject = {};
+      let key = "time";
+      let value = "energy";
       timeObject[key] = property;
       energyValueObject[value] = outputObject[property];
 
       // 5 combining keys and values pairs into single array of objects
       function extend(obj, src) {
-        for (var key in src) {
+        for (let key in src) {
           if (src.hasOwnProperty(key)) obj[key] = src[key];
         }
         return obj;
       }
 
-      var combinedObject = extend(timeObject, energyValueObject);
+      let combinedObject = extend(timeObject, energyValueObject);
       enerProBlockValues.push(combinedObject);
 
       // 6 sum up values for same keys
-      var holder = {};
+      let holder = {};
       enerProBlockValues.forEach(function(d) {
 
         if (holder.hasOwnProperty(d.time)) {
@@ -250,8 +248,8 @@ async function watchRealTimeEnergy() {
         }
       });
 
-      var combinedObject2 = [];
-      for (var prop in holder) {
+      let combinedObject2 = [];
+      for (let prop in holder) {
         combinedObject2.push({
           time: prop,
           energy: holder[prop]
@@ -259,7 +257,7 @@ async function watchRealTimeEnergy() {
       }
 
       // 7 conveting object into single arrays
-      for (var property in combinedObject2) {
+      for (let property in combinedObject2) {
         if (!combinedObject2.hasOwnProperty(property)) {
           continue;
         }
@@ -281,7 +279,7 @@ async function watchRealTimeEnergy() {
         return new Date(ts);
       }
 
-      var proData = {
+      let proData = {
         type: 'date',
         mode: "lines+markers",
         name: 'Producer',
@@ -292,7 +290,7 @@ async function watchRealTimeEnergy() {
           color: '#009933'
         }
       };
-      var consData = {
+      let consData = {
         type: "scatter",
         mode: "lines+markers",
         name: 'Consumer',
@@ -303,8 +301,8 @@ async function watchRealTimeEnergy() {
         }
       };
 
-      var data = [proData, consData];
-      var layout = {
+      let data = [proData, consData];
+      let layout = {
         xaxis: {
           title: 'Time',
           tickformat: "%H:%M:%S",
@@ -343,12 +341,12 @@ async function watchRealTimeEnergy() {
 }
 
 // individual producer account details table
-var proAccntList = document.getElementById('proAccountList');
+let proAccntList = document.getElementById('proAccountList');
 proAccntList.addEventListener('click', activateProAccnt);
-var currentProMarker = {};
+let currentProMarker = {};
 
 // latest block number
-var latestBlockNumber;
+let latestBlockNumber;
 
 web3.eth.getBlockNumber().then(data => {
   latestBlockNumber = data;
@@ -366,13 +364,13 @@ function activateProAccnt(e) {
         console.log(error);
       } else {
 
-        var ethAddr = [];
-        var proLoc = [];
-        var proLocObject = {};
-        var proLocEntries = [];
-        var currentProCord = [];
+        let ethAddr = [];
+        let proLoc = [];
+        let proLocObject = {};
+        let proLocEntries = [];
+        let currentProCord = [];
 
-        for (var i = 0; i < result.length; i++) {
+        for (let i = 0; i < result.length; i++) {
           proLoc.push((result[i].returnValues.latitude) / 10000 + ', ' + (result[i].returnValues.longitude) / 10000);
           ethAddr.push(result[i].returnValues.pvAddr);
         }
@@ -381,25 +379,25 @@ function activateProAccnt(e) {
         ethAddr.forEach((key, i) => proLocObject[key] = proLoc[i]);
 
         // storing entries of single object into list of items
-        for (var i = 0; i < Object.keys(proLocObject).length; i++) {
+        for (let i = 0; i < Object.keys(proLocObject).length; i++) {
           proLocEntries.push(Object.entries(proLocObject)[i]);
         }
 
-        for (var i = 0; i < proLocEntries.length; i++) {
+        for (let i = 0; i < proLocEntries.length; i++) {
           if (e.target.innerHTML == proLocEntries[i][0]) {
             currentProCord = (proLocObject[e.target.innerHTML]);
             currentProCord = currentProCord.split(',')
 
-            var currentProLat = currentProCord[0].trim();
-            var currentProLon = currentProCord[1].trim();
+            let currentProLat = currentProCord[0].trim();
+            let currentProLon = currentProCord[1].trim();
 
-            var currentProIcon = L.icon({
+            let currentProIcon = L.icon({
               iconUrl: '../img/producer.png',
               iconSize: [30, 40]
             });
 
-            var popupContent = "Eth address: " + result[i].returnValues.pvAddr.slice(0, 7) + '...' + "<br>" + "Producer: " + result[i].returnValues.owner + "<br>" + "Location: " + ((result[i].returnValues.latitude) / 10000) + ", " + ((result[i].returnValues.longitude) / 10000);
-            var popupOptions = {
+            let popupContent = "Eth address: " + result[i].returnValues.pvAddr.slice(0, 7) + '...' + "<br>" + "Producer: " + result[i].returnValues.owner + "<br>" + "Location: " + ((result[i].returnValues.latitude) / 10000) + ", " + ((result[i].returnValues.longitude) / 10000);
+            let popupOptions = {
               'maxWidth': '500',
               'className': 'currentPro-popup' // classname for another popup
             };
@@ -427,8 +425,7 @@ function activateProAccnt(e) {
       } else {
         $('#proOwner').html(result[0]);
         $('#proDeviceType').html(result[1]);
-        // $('#proPeakPower').html(result[2]);
-        document.getElementById('proPeakPower').innerHTML = result[2];
+        $('#proPeakPower').html(result[2]);
         $('#proLocationType').html(result[3]);
         $('#proLat').html(result[4] / 10000);
         $('#proLon').html(result[5] / 10000);
@@ -451,10 +448,10 @@ function activateProAccnt(e) {
         console.error(error);
       } else {
         // empty table before switching account
-        var proAccountTable = document.getElementById("proAccount");
+        let proAccountTable = document.getElementById("proAccount");
         proAccountTable.innerHTML = '';
 
-        var header3 = [];
+        let header3 = [];
         header3.push(['Eth Address', 'Time', 'Power [W]', 'Block Number', 'BlockHash', 'Gas Price [wei]']);
 
         // table starts from here
@@ -464,32 +461,32 @@ function activateProAccnt(e) {
         }, function(error, result) {
           if (!error) {
 
-            for (var i = 0; i < result.length; i++) {
+            for (let i = 0; i < result.length; i++) {
               if (result[i].returnValues[0] == e.target.innerHTML) {
                 header3.push([result[i].returnValues[0], timeConverter(result[i].returnValues[1]), result[i].returnValues[2], result[i].returnValues[3], result[i].returnValues[4], result[i].returnValues[5]]);
               }
             }
 
             //Create a HTML Table element.
-            var proAccntTable = document.getElementById('proAccount');
+            let proAccntTable = document.getElementById('proAccount');
             proAccntTable.style.cssText = 'table-layout: fixed;  width: 100%; font-size: 12px; word-break: break-word:display: block;';
 
             //Get the count of columns.
-            var columnCount = header3[0].length;
+            let columnCount = header3[0].length;
 
             //Add the header row.
-            var row = proAccntTable.insertRow(-1);
+            let row = proAccntTable.insertRow(-1);
 
-            for (var i = 0; i < columnCount; i++) {
-              var headerCell = document.createElement("TH");
+            for (let i = 0; i < columnCount; i++) {
+              let headerCell = document.createElement("TH");
               headerCell.innerHTML = header3[0][i];
               row.appendChild(headerCell);
             }
 
             //Add the data rows.
-            for (var i = 1; i < header3.length; i++) {
+            for (let i = 1; i < header3.length; i++) {
               row = proAccntTable.insertRow(-1);
-              for (var j = 0; j < columnCount; j++) {
+              for (let j = 0; j < columnCount; j++) {
                 var cell = row.insertCell(-1);
                 cell.innerHTML = header3[i][j];
               }

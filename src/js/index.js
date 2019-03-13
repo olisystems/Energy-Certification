@@ -16,8 +16,8 @@ import {
 import Bowser from 'bowser';
 const browser = Bowser.getParser(window.navigator.userAgent);
 //console.log(`The current browser is "${browser.getBrowserName()}"`);
-const getName = browser.getBrowserName();
-if (getName != "Chrome") {
+const getBrowser = browser.getBrowserName();
+if (getBrowser != "Chrome") {
   alert("Hi there, please open the link in Google Chrome for the best experience!");
 }
 

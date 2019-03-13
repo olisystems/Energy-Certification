@@ -5,7 +5,7 @@ Summer Semester 2018<br />
 MSc Photogrammetry and Geoinformatics<br />
 Hochschule für Technik Stuttgart
 
-[Dashboard](https://olisystems.github.io/Energy-Certification/)
+[Browser](oli-chain.com)
 
 ***
 
@@ -30,3 +30,19 @@ Hochschule für Technik Stuttgart
 OLI Systems GmbH
 
 ***
+
+## Instructions
+
+1. Download/clone the repository.
+2. Open the terminal in the current directory and run `npm run server`.
+
+Good luck and have fun!
+
+## Contributing
+
+1. Fork the repository.
+2. Create your new feature branch: `git checkout -b new-feature-branch`
+3. Stage your changes: `git add .`
+3. Commit the changes: `git commit -m "add commit message"`
+4. Push to the branch: `git push origin new-feature-branch`
+5. Submit a pull request.

@@ -21,6 +21,7 @@ async function getTxsByAccount(contractAddress, startBlockNumber, endBlockNumber
     let block = await web3.eth.getBlock(i, true);
     // filter out empty blocks
     if (block.transactions.length != 0) {
+      console.log(block.transactions);
       block.transactions.forEach(tx => {
         // filter out transactions for a specific smart contract
         if (contractAddress == tx.to) {
@@ -37,7 +38,7 @@ async function getTxsByAccount(contractAddress, startBlockNumber, endBlockNumber
 }
 
 // 0xB35ade92c443B3b111ddA47C6af8872110fB7a03
-// 0xB35ade92c443B3b111ddA47C6af8872110fB7a03
+// 0x3BF16b8f02669a046551a3380aDC154cd3BcFB38
 
 $('#search-button').click(() => {
   let test = $('#contract-address').val().split(',');
